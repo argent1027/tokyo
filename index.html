@@ -6,288 +6,1026 @@
     <title>峰和曼曼的東京 8 天 7 夜</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:wght@700;900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap');
-        body { font-family: 'Noto Sans TC', sans-serif; background-color: #f8fafc; }
-        .day-card { transition: transform 0.2s; }
-        .day-card:hover { transform: translateY(-5px); }
-        .yamanote-green { color: #008000; }
-        .bg-tokyo { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1200&q=80'); background-size: cover; background-position: center; }
+        :root {
+            --ink: #1a1a2e;
+            --red: #c0392b;
+            --gold: #d4a017;
+            --cream: #f5f0e8;
+            --mist: #e8e4dc;
+            --paper: #faf7f2;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans TC', 'Zen Kaku Gothic New', sans-serif;
+            background-color: var(--paper);
+            color: var(--ink);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            background: rgba(26,26,46,0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(212,160,23,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.25rem;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            color: #fff;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-logo span { color: var(--gold); }
+
+        .nav-links {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            font-size: 0.78rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 20px;
+            transition: all 0.25s;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            background: rgba(212,160,23,0.2);
+        }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #fff;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: rgba(26,26,46,0.98);
+            padding: 0.75rem 1rem 1rem;
+            gap: 0.25rem;
+        }
+
+        .mobile-menu.open { display: flex; }
+
+        .mobile-menu a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .mobile-menu a:hover { background: rgba(212,160,23,0.15); }
+
+        @media (max-width: 640px) {
+            .nav-links { display: none; }
+            .hamburger { display: flex; }
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            height: min(380px, 55vw);
+            min-height: 240px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1400&q=80');
+            background-size: cover;
+            background-position: center;
+            transform: scale(1.08);
+            animation: heroZoom 18s ease-in-out infinite alternate;
+        }
+
+        @keyframes heroZoom {
+            from { transform: scale(1.08); }
+            to   { transform: scale(1.18); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(160deg, rgba(26,26,46,0.72) 0%, rgba(192,57,43,0.35) 100%);
+        }
+
+        /* Japanese stripe */
+        .hero-stripe {
+            position: absolute;
+            top: 0; bottom: 0; left: 0;
+            width: 6px;
+            background: var(--red);
+        }
+
+        .hero-content { position: relative; z-index: 2; text-align: center; padding: 1rem 1.5rem; }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.6rem, 5vw, 3.2rem);
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.9s ease 0.2s forwards;
+        }
+
+        .hero-sub {
+            margin-top: 0.75rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.9s ease 0.5s forwards;
+        }
+
+        .hero-sub a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.25);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            transition: background 0.25s;
+        }
+
+        .hero-sub a:hover { background: rgba(255,255,255,0.22); }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll indicator */
+        .scroll-hint {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+            z-index: 2;
+        }
+
+        .scroll-hint span { font-size: 0.65rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase; }
+
+        @keyframes bounce {
+            0%,100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+
+        /* ===== INFO CARDS ===== */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+        }
+
+        @media (max-width: 760px) { .info-grid { grid-template-columns: 1fr; } }
+
+        .info-card {
+            background: #fff;
+            border-radius: 14px;
+            padding: 1.25rem 1.25rem 1.1rem;
+            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+            border-left: 4px solid transparent;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .info-card.visible { animation: fadeUp 0.6s ease forwards; }
+        .info-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-3px) !important; }
+        .info-card.green  { border-color: #16a34a; }
+        .info-card.blue   { border-color: #3b82f6; }
+        .info-card.orange { border-color: #f97316; }
+
+        .info-card h3 { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+        .info-card p, .info-card li { font-size: 0.78rem; color: #475569; line-height: 1.6; }
+        .info-card ul { padding-left: 0; list-style: none; }
+        .info-card ul li::before { content: "• "; }
+
+        /* ===== DAY CARDS ===== */
+        .day-card {
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 3px 18px rgba(0,0,0,0.07);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(28px);
+            transition: box-shadow 0.3s;
+        }
+
+        .day-card.visible { animation: fadeUp 0.7s ease forwards; }
+        .day-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+
+        .day-header {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-header::after {
+            content: '';
+            position: absolute;
+            right: -20px; top: -20px;
+            width: 100px; height: 100px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
+
+        .day-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .day-num .badge {
+            font-family: 'Noto Sans TC', sans-serif;
+            font-size: 0.68rem;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            letter-spacing: 0.04em;
+            font-weight: 400;
+        }
+
+        .day-subtitle { font-size: 0.78rem; color: rgba(255,255,255,0.8); }
+
+        .day-body { padding: 1.5rem; }
+
+        /* Activity items */
+        .activity {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .activity-tag {
+            flex-shrink: 0;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
+            margin-top: 2px;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+
+        .activity-body p { font-size: 0.88rem; line-height: 1.65; color: #334155; }
+
+        .activity-body .route {
+            font-size: 0.72rem;
+            color: #94a3b8;
+            margin-top: 0.35rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.3rem;
+        }
+
+        /* Divider */
+        .divider {
+            border: none;
+            border-top: 1px dashed #e2e8f0;
+            margin: 1.25rem 0;
+        }
+
+        /* Food section */
+        .food-box {
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+        }
+
+        .food-box h4 {
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .food-row {
+            display: flex;
+            gap: 0.6rem;
+            font-size: 0.75rem;
+            padding-top: 0.6rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .food-tag {
+            flex-shrink: 0;
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 0.18rem 0.5rem;
+            border-radius: 20px;
+            margin-top: 1px;
+            white-space: nowrap;
+        }
+
+        .food-items { line-height: 1.8; color: #475569; }
+        .food-items a { text-decoration: none; transition: opacity 0.2s; }
+        .food-items a:hover { opacity: 0.75; text-decoration: underline; }
+
+        /* Tip bar */
+        .tip-bar {
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--ink);
+            color: rgba(255,255,255,0.5);
+            text-align: center;
+            padding: 2.5rem 1rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+        }
+
+        footer strong { color: var(--gold); }
+
+        /* ===== PROGRESS LINE ===== */
+        .journey-line {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .journey-line::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 8px; bottom: 8px;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--red), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* ===== SCROLL ANIMATION UTILITY ===== */
+        [data-delay="1"] { animation-delay: 0.1s !important; }
+        [data-delay="2"] { animation-delay: 0.2s !important; }
+        [data-delay="3"] { animation-delay: 0.35s !important; }
+
+        /* ===== CURSOR TRAIL (desktop) ===== */
+        .cursor-dot {
+            pointer-events: none;
+            position: fixed;
+            width: 6px; height: 6px;
+            background: var(--red);
+            border-radius: 50%;
+            z-index: 9999;
+            transform: translate(-50%,-50%);
+            transition: transform 0.05s;
+        }
+
+        @media (max-width: 760px) { .cursor-dot { display: none; } }
+
+        /* ===== PARTICLE SAKURA ===== */
+        .sakura-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.35;
+        }
     </style>
 </head>
-<body class="text-slate-800">
+<body>
 
-    <nav class="bg-slate-900 text-white p-4 sticky top-0 z-50">
-        <div class="max-w-4xl mx-auto flex justify-between items-center">
-            <a href="index.html" class="font-bold text-xl">TOKYO 2026</a>
-            <div class="space-x-6">
-                <a href="index.html" class="nav-link">行程總覽</a>
-                <a href="souvenirs.html" class="nav-link">伴手禮清單</a>
-                <a href="foodmap.html" class="nav-link">美食地圖</a>
-				<a href="shop.html" class="nav-link">逛街地圖</a>
+<canvas class="sakura-canvas" id="sakura"></canvas>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a href="index.html" class="nav-logo">✈ <span>TOKYO</span> 2026</a>
+        <div class="nav-links">
+            <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
+            <a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
+            <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
+            <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
+        <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
+        <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
+        <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-stripe"></div>
+    <div class="hero-content">
+        <h1 class="hero-title">峰和曼曼的東京<br>8 天 7 夜</h1>
+        <div class="hero-sub">
+            <a href="https://maps.app.goo.gl/Ab949U9pBRij3jer9" target="_blank">
+                <i class="fa-solid fa-location-dot"></i> 住宿：池袋 大都會飯店
+            </a>
+        </div>
+    </div>
+    <div class="scroll-hint">
+        <span>Scroll</span>
+        <i class="fa-solid fa-chevron-down" style="color:#fff;font-size:0.7rem;"></i>
+    </div>
+</header>
+
+<!-- MAIN -->
+<main>
+    <!-- Info Cards -->
+    <div class="info-grid">
+        <div class="info-card green" data-delay="1">
+            <h3><i class="fa-solid fa-ticket" style="color:#16a34a;margin-right:6px;"></i>票券策略</h3>
+            <p><b>Day 4 ~ Day 6</b> 連續三天啟用 <b>JR 東京廣域周遊券</b>，搭乘新幹線與跨縣市特急，極大化高鐵價值！</p>
+        </div>
+        <div class="info-card blue" data-delay="2">
+            <h3><i class="fa-solid fa-pen" style="color:#3b82f6;margin-right:6px;"></i>Tip</h3>
+            <p>飯店到機場可搭乘利木津巴士(需預約)，回程免提大行李轉車。</p>
+        </div>
+        <div class="info-card orange" data-delay="3">
+            <h3><i class="fa-solid fa-lightbulb" style="color:#f97316;margin-right:6px;"></i>小叮嚀</h3>
+            <ul>
+                <li>手機綁定 Suica 卡方便市區轉乘</li>
+                <li>澀谷 Sky 觀景台需提前一個月預約</li>
+                <li>輕井澤新幹線於乘車前一個月開賣劃位</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Day Cards -->
+    <div class="journey-line">
+
+        <!-- DAY 01 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#1e293b;">
+                <div class="day-num">Day 01 <span class="badge">抵達與池袋初探</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f1f5f9;color:#475569;">抵達</span>
+                    <div class="activity-body">
+                        <p><b>17:15 抵達成田機場</b></p>
+                        <p class="route"><i class="fa-solid fa-route"></i>成田機場 → (搭乘 Skyliner) → 日暮里轉乘 → 約 20:30 池袋飯店 Check-in</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f1f5f9;color:#475569;">晚間</span>
+                    <div class="activity-body">
+                        <p><b>池袋周邊活動：</b>安頓好行李後，前往池袋東口逛 Bic Camera 暖身觀察 3C 新品，或至唐吉訶德(24H)採買零食。</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f1f5f9;color:#475569;">宵夜</span>
+                    <div class="activity-body">
+                        <p><b>第一晚的犒賞：</b>在池袋周邊享用精緻和牛燒肉，或是來碗熱騰騰的無敵家拉麵 (營業至凌晨 4 點)。</p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#f0f9ff;border:1px solid #e0f2fe;">
+                    <h4 style="color:#0369a1;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#e0f2fe;color:#0369a1;">晚餐</span>
+                        <div class="food-items">
+                            <b>池袋</b> <a href="https://maps.app.goo.gl/ssvaxapTJAtPQeqY9" target="_blank" style="color:#0284c7;">yellow 蛋包飯</a>　
+                            <a href="https://maps.app.goo.gl/QTypV34XB3y6A8c79" target="_blank" style="color:#0284c7;">元祖明太煮沾麵</a>　
+                            <a href="https://maps.app.goo.gl/q2RduZATB8t89UnTA" target="_blank" style="color:#0284c7;">無敵家拉麵</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <header class="bg-tokyo h-64 flex flex-col items-center justify-center text-white text-center px-4">
-        <h1 class="text-3xl md:text-5xl font-bold mb-2">峰和曼曼的東京 8 天 7 夜</h1>
-        <p class="text-lg opacity-90"> <a href="https://maps.app.goo.gl/Ab949U9pBRij3jer9" class="underline" target="_blank"> 住宿點：池袋 大都會飯店 </a></p>
-    </header>
-
-    <main class="max-w-4xl mx-auto px-4 py-8">
-        
-        <section class="mb-10 grid grid-cols-1 md:grid-cols-2 gap-4">
-		<!--
-            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-green-600">
-                <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-train yamanote-green mr-2"></i>核心動線</h3>
-                <p class="text-sm text-slate-600 font-medium">以池袋為圓心，JR 山手線為主軸。搭配湘南新宿線直達鎌倉。</p>
+        <!-- DAY 02 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#991b1b;">
+                <div class="day-num">Day 02 <span class="badge">傳統與科技：東半部美學考察</span></div>
             </div>
-        -->
-            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-blue-400">
-                <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-pen text-blue-400 mr-2"></i>Tip</h3>
-                <p class="text-sm text-slate-600 font-medium">飯店到機場可搭乘利木津巴士(需預約)</p>
-            </div>
-            
-            <div class="bg-white p-6 rounded-xl shadow-sm border-l-4 border-orange-400">
-                <h3 class="font-bold text-lg mb-2"><i class="fa-solid fa-lightbulb text-orange-400 mr-2"></i>小叮嚀</h3>
-                <p class="text-sm text-slate-600 font-medium">
-				<ul class="space-y-4">
-					<li class="flex">
-					  手機綁定 Suica 卡
-					</li>
-					<li class="flex">
-					  澀谷sky需提前預約
-					</li>
-				</ul>
-				</p>
-            </div>
-        </section>
-
-        <div class="space-y-8">
-            
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-slate-800 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 01</span>
-                    <span class="text-sm opacity-80">抵達與池袋入住</span>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fef2f2;color:#991b1b;">上午</span>
+                    <div class="activity-body">
+                        <p><b>上野：</b>逛阿美橫町，並觀察上野公園美術館群的建築美學。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋 (JR山手線) → <b>上野站 (JY05)</b></p>
+                    </div>
                 </div>
-                <div class="p-6">
-                    <ul class="space-y-4">
-                        <li class="flex">
-                            <span class="text-blue-500 font-bold w-16">抵達</span>
-                            <div>
-                                <p>17:15 抵達成田機場 (NRT)</p>
-                                <p class="text-sm text-slate-500 mt-1"><i class="fa-solid fa-route mr-1"></i>成田機場 → 日暮里 (Skyliner) → 池袋 (JR山手線)</p>
-                            </div>
-                        </li>
-                        <p class="mt-4 text-xs text-green-700 bg-green-50 p-2 rounded">💡 推薦：Skyliner 坐到「日暮里」轉 JR 山手線最快。抵達池袋站後，往<b>「西口(南)」</b>出口走，飯店就在旁邊。</p>                                                     
-                        <li class="flex">
-                            <span class="text-blue-500 font-bold w-16">活動</span>
-                            <p>辦理入住後，至池袋東口逛唐吉訶德(24H)、吃無敵家拉麵(營業到凌晨4點)</p>
-                        </li>
-                    </ul>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fef2f2;color:#991b1b;">中午</span>
+                    <div class="activity-body">
+                        <p><b>淺草與晴空塔：</b>淺草寺雷門、仲見世通散策；下午前往晴空塔欣賞塔身結構設計，觀察灣區都市規劃。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>上野 → 淺草站 → <b>押上站 (晴空塔)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fef2f2;color:#991b1b;">傍晚</span>
+                    <div class="activity-body">
+                        <p><b>秋葉原：</b>Yodobashi Akiba 採購高質感家電與 3C。隨後走訪 mAAch ecute 神田萬世橋 (紅磚舊車站改建的選物空間)。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>押上站 → <b>秋葉原站 (JY03)</b></p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#fff5f5;border:1px solid #fecaca;">
+                    <h4 style="color:#991b1b;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fecaca;color:#991b1b;">午餐</span>
+                        <div class="food-items">
+                            <b>阿美橫丁</b>
+                            <a href="https://maps.app.goo.gl/mCf9X4vfxwCtuobt5" target="_blank" style="color:#dc2626;"> American Diner Andra 漢堡排</a>　
+                            <a href="https://maps.app.goo.gl/iq8UawHyobPf2BFM6" target="_blank" style="color:#dc2626;">三浦三崎港 上野店</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fecaca;color:#991b1b;">晚餐</span>
+                        <div class="food-items">
+                            <b>秋葉原</b> <a href="https://maps.app.goo.gl/ba2Svnj5WYKfqNmr8" target="_blank" style="color:#dc2626;">丸五炸豬排</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fecaca;color:#991b1b;">小吃</span>
+                        <div class="food-items">
+                            <b>阿美橫丁</b> 鰻魚飯、<a href="https://maps.app.goo.gl/CoEsxzbQF3Ro8ksdA" target="_blank" style="color:#dc2626;">肉的大山</a>、<a href="https://maps.app.goo.gl/Ncz6F6dp2s5SBXPf6" target="_blank" style="color:#dc2626;">大章魚燒 みなとや</a><br>
+                            <b>淺草寺</b> <a href="https://maps.app.goo.gl/u714mUQzD49gsaR59" target="_blank" style="color:#dc2626;">淺草炸肉餅</a>、章魚燒仙貝、鰻魚飯糰、<a href="https://maps.app.goo.gl/tWUBED1EsB7DndZp9" target="_blank" style="color:#dc2626;">花月堂菠蘿麵包</a><br>
+                            <b>秋葉原</b> 月台牛奶、<a href="https://maps.app.goo.gl/H8MbhsdKqJTe4UtE9" target="_blank" style="color:#dc2626;">Cow Cow Kitchen 牛奶派</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-red-700 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 02</span>
-                    <span class="text-sm opacity-80">文化下町與秋葉原</span>
-                </div>
-                <div class="p-6">
-                    <ul class="space-y-4 text-slate-700">
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">早</span>
-                            <div>
-                                <p><b>淺草：</b>雷門、淺草寺</p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>池袋 (JR山手線) → 上野 (轉地鐵銀座線) → <b>淺草站 (G19)</b></p>
-                            </div>
-                        </li>
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">午</span>
-                            <div>
-                                <p><b>上野：</b>阿美橫丁採買</p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>淺草 (地鐵銀座線) → <b>上野站 (G16)</b></p>
-                            </div>
-                        </li>
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">晚</span>
-                            <div>
-                                <p><b>秋葉原：</b>電器動漫街</p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>上野 (JR山手線) → <b>秋葉原站 (JY03)</b></p>
-                            </div>
-                        </li>
-                    </ul>
-                    <p class="mt-4 text-xs text-green-700 bg-green-50 p-2 rounded">💡 小抄：秋葉原月台喝牛奶；回程搭 JR 山手線直達池袋。</p>
-                </div>
-            </div>
-            
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-green-700 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 03</span>
-                    <span class="text-sm opacity-80">西側潮流：三位一體動線</span>
-                </div>
-                <div class="p-6">
-                    <ul class="space-y-4 text-slate-700">
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">早</span>
-                            <div>
-                                <p><b>明治神宮 / 原宿：</b></p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>池袋 (JR山手線) → <b>原宿站 (JY19)</b></p>
-                            </div>
-                        </li>
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">午</span>
-                            <div>
-                                <p><b>表參道 / 貓街：</b></p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-person-walking mr-1"></i>由原宿步行至表參道，再沿貓街散步至澀谷</p>
-                            </div>
-                        </li>
-                        <li class="flex">
-                            <span class="font-bold w-12 text-slate-400">晚</span>
-                            <div>
-                                <p><b>澀谷：</b>Shibuya Sky 夜景</p>
-                                <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>由 <b>澀谷站 (JY20)</b> 搭 JR 山手線直達池袋</p>
-                            </div>
-                        </li>
-                    </ul>
-                    <p class="mt-4 text-xs text-green-700 bg-green-50 p-2 rounded">💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" class="underline" target="_blank"> 參考逛街路線 </a> </p>
-                </div>
-            </div>
-
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-blue-600 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 04</span>
-                    <span class="text-sm opacity-80 text-blue-100">鎌倉一日古都遠征</span>
-                </div>
-                <div class="p-6 text-slate-700">
-                    <p class="mb-4"><b>交通：</b>池袋站搭乘 <b>JR 湘南新宿線</b> (往逗子/小田原方向) → <b>鎌倉站</b></p>                                    
-                    <ul class="space-y-2 text-slate-700">
-                        <li>📍 鎌倉小町通商店街 (步行)</li>
-                        <li>📍 長谷大佛 (轉搭 江之電 至 <b>長谷站</b>)</li>
-                        <li>📍 灌籃高手平交道 (江之電 <b>鎌倉高校前站</b>)</li>
-                    </ul>                    
-                </div>
-            </div>
-
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-				<div class="bg-indigo-700 text-white px-6 py-3 flex justify-between items-center">
-					<span class="font-bold text-xl">Day 05</span>
-					<span class="text-sm opacity-80">今日方案 (四選一)：看體力與天氣決定</span>
-				</div>
-
-				<div class="p-6 text-slate-700 border-b border-dashed border-slate-200">
-					<div class="flex items-center mb-3">
-						<span class="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold mr-2">方案 A</span>
-						<span class="font-bold">新宿、惠比壽 (都會精華)</span>
-					</div>
-					<p class="text-xs text-slate-500 mb-2"><i class="fa-solid fa-train mr-1"></i>池袋 (JR山手線) → <b>新宿 / 惠比壽</b></p>
-					<p class="text-sm italic">適合：想大逛百貨公司、吃精緻餐廳，或當天下大雨時。</p>
-				</div>
-
-				<div class="p-6 text-slate-700 border-b border-dashed border-slate-200 bg-blue-50/30">
-					<div class="flex items-center mb-3">
-						<span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold mr-2">方案 B</span>
-						<span class="font-bold">富士山河口湖 (Klook一日遊)</span>
-					</div>
-					<p class="text-xs text-slate-500 mb-2"><i class="fa-solid fa-bus mr-1"></i>新宿站西口集合 (由池袋搭山手線前往)</p>
-					<p class="text-sm italic">適合：想看震撼富士山、懶得規劃交通，體力充足的晴天。</p>
-				</div>
-
-				<div class="p-6 text-slate-700 border-b border-dashed border-slate-200">
-					<div class="flex items-center mb-3">
-						<span class="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-xs font-bold mr-2">方案 C</span>
-						<span class="font-bold">川越小江戶 (穿越時空)</span>
-					</div>
-					<ul class="text-sm space-y-1 mb-2">
-						<li>📍 景點：冰川神社(釣鯛魚)、時之鐘老街、星巴克江戶風門市</li>
-						<li class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>池袋 (東武東上線) → <b>川越站</b> (約 30 min)</li>
-					</ul>
-					<p class="text-sm italic">適合：住池袋必去！半小時直達，想看老建築與吃地瓜甜點。</p>
-				</div>
-
-				<div class="p-6 text-slate-700 bg-slate-50">
-					<div class="flex items-center mb-3">
-						<span class="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-xs font-bold mr-2">方案 D</span>
-						<span class="font-bold">橫濱海風之旅 (海港浪漫)</span>
-					</div>
-					<ul class="text-sm space-y-1 mb-2">
-						<li>📍 景點：紅磚倉庫、杯麵博物館、鋼彈工廠、空中纜車</li>
-						<li class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>池袋 (JR 湘南新宿線) → <b>橫濱站</b> (約 45 min)</li>
-					</ul>
-					<p class="text-sm italic">適合：喜歡吹海風、看夜景、動手 DIY 泡麵，氣氛非常悠閒。</p>
-				</div>
-			</div>
-
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-				<div class="bg-teal-600 text-white px-6 py-3 flex justify-between items-center">
-					<span class="font-bold text-xl">Day 06</span>
-					<span class="text-sm opacity-80">銀座質感與台場海風</span>
-				</div>
-				<div class="p-6 text-slate-700">
-					<ul class="space-y-4">
-						<li class="flex items-start">
-							<i class="fa-solid fa-bag-shopping text-slate-400 mt-1 mr-3"></i>
-							<div>
-								<p><b>上午：銀座 (M16)</b> - 全球最大 Uniqlo 旗艦店、12層樓逛到腿軟。</p>
-							</div>
-						</li>
-						<li class="flex items-start">
-							<i class="fa-solid fa-train-subway text-slate-400 mt-1 mr-3"></i>
-							<div>
-								<p><b>轉乘：新橋站</b> - 換乘百合海鷗號 (像坐海邊雲霄飛車)。</p>
-							</div>
-						</li>
-						<li class="flex items-start">
-							<i class="fa-solid fa-robot text-slate-400 mt-1 mr-3"></i>
-							<div>
-								<p><b>下午/晚間：台場 (U07)</b> - 1:1 鋼彈、彩虹大橋夜景、海濱 Mall 漫步。</p>
-							</div>
-						</li>
-					</ul>
-					<p class="mt-4 text-xs text-teal-700 bg-teal-50 p-2 rounded italic">💡 建議：傍晚在台場海邊看日落與點燈，是整趟旅行最浪漫的時刻！</p>
-				</div>
-			</div>
-
-            <div class="day-card bg-white rounded-2xl shadow-md overflow-hidden">
-                <div class="bg-yellow-600 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 07</span>
-                    <span class="text-sm opacity-80">東京車站與池袋總清算</span>
-                </div>
-                <div class="p-6 text-slate-700">
-                    <ul class="space-y-4">
-                        <li>
-                            <p><b>東京車站：</b>紅磚建築、一番街</p>
-                            <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>池袋 (地鐵丸之內線) → <b>東京站 (M17)</b> 直達</p>
-                        </li>
-                        <li>
-                            <p><b>池袋：</b>Sunshine City 最後補貨</p>
-                            <p class="text-xs text-slate-500"><i class="fa-solid fa-train mr-1"></i>東京站 (JR山手線 / 地鐵丸之內線) → 回 <b>池袋站</b></p>
-                        </li>
-                    </ul>
-                    <p class="mt-4 text-xs text-red-600 bg-red-50 p-2 rounded font-bold underline">💡 最終清空購物清單，整理行李！</p>
-                </div>
-            </div>
-
-            <div class="day-card bg-slate-100 rounded-2xl shadow-inner overflow-hidden">
-                <div class="bg-slate-400 text-white px-6 py-3 flex justify-between items-center">
-                    <span class="font-bold text-xl">Day 08</span>
-                    <span class="text-sm opacity-80">平安歸賦</span>
-                </div>
-                <div class="p-6 text-center text-slate-500">
-                    <p>伴手禮最後衝刺採購。</p>     
-                    <div class="mt-4 text-sm text-slate-600">
-                        <p><i class="fa-solid fa-bus mr-1"></i><b>交通：</b>池袋大都會飯店搭乘利木津巴士直達成田機場</p>
-                        <p class="text-xs mt-1">(或 池袋站搭 JR山手線 → 日暮里站 → 轉 Skyliner)</p>
-                    </div>                          
-                </div>
-            </div>
-
         </div>
-    </main>
 
-    <footer class="bg-slate-800 text-white py-12 text-center mt-12">
-        <p class="opacity-60 text-sm">峰和曼曼 創造美好回憶</p>
-    </footer>
+        <!-- DAY 03 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#14532d;">
+                <div class="day-num">Day 03 <span class="badge">時尚美學核心：原宿、澀谷與慢活步調</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0fdf4;color:#14532d;">上午</span>
+                    <div class="activity-body">
+                        <p><b>原宿與表參道：</b>明治神宮吸收芬多精。隨後走訪表參道，重點觀察精品旗艦店的幾何建築與櫥窗設計。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋 (JR山手線) → <b>原宿站 (JY19)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0fdf4;color:#14532d;">下午</span>
+                    <div class="activity-body">
+                        <p><b>代官山 / 中目黑：</b>朝聖代官山蔦屋書店 (視覺美學)，以及中目黑星巴克臻選烘焙工坊 (建築層次感)。</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0fdf4;color:#14532d;">晚上</span>
+                    <div class="activity-body">
+                        <p><b>澀谷：</b>在全東京最高的 Shibuya Sky 戶外展望台，拍攝「Bento Grid」式的高空夜景。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>搭車返回 <b>澀谷站 (JY20)</b></p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#f0fdf4;border:1px solid #bbf7d0;">
+                    <h4 style="color:#14532d;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bbf7d0;color:#14532d;">午餐</span>
+                        <div class="food-items">
+                            <b>表參道</b> <a href="https://maps.app.goo.gl/mkBq54FbL1faCXpGA" target="_blank" style="color:#16a34a;">山笑 壽喜燒</a>　
+                            <b>原宿</b> <a href="https://maps.app.goo.gl/RdHntmo7FDGGFsNe6" target="_blank" style="color:#16a34a;">原宿餃子</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bbf7d0;color:#14532d;">晚餐</span>
+                        <div class="food-items">
+                            <b>澀谷</b>
+                            <a href="https://maps.app.goo.gl/ZR5EdH3UCCSbv1j36" target="_blank" style="color:#16a34a;">yellow 蛋包飯</a>　
+                            <a href="https://maps.app.goo.gl/fp7Sc4ZKypnGzD8Y6" target="_blank" style="color:#16a34a;">センタービーフ 牛肉飯</a>　
+                            <a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank" style="color:#16a34a;">Hayashi Ramen</a>　
+                            <a href="https://maps.app.goo.gl/u6YtiUh3VGrDSjRu7" target="_blank" style="color:#16a34a;">副大統領 咖哩飯🌟</a>　
+                            <a href="https://maps.app.goo.gl/GG3LpDjjCEXAHN4v9" target="_blank" style="color:#16a34a;">山下本氣 烏龍麵</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bbf7d0;color:#14532d;">小吃</span>
+                        <div class="food-items">
+                            <b>澀谷</b> <a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank" style="color:#16a34a;">GARIGUETTE 千層派</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="tip-bar" style="background:#f0fdf4;color:#14532d;">💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" target="_blank" style="color:#16a34a;text-decoration:underline;">參考逛街路線</a></p>
+            </div>
+        </div>
+
+        <!-- DAY 04 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#1e40af;">
+                <div class="day-num">Day 04 <span class="badge">古都鎌倉與橫濱港灣夜景</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#eff6ff;color:#1e40af;">上午</span>
+                    <div class="activity-body">
+                        <p><b>古都鎌倉巡禮：</b>抵達鎌倉站先逛站旁<b>小町通商店街</b>享用在地小吃。隨後轉乘「江之電」電車，先至<b>長谷站</b>步行探訪長谷大佛，最後至<b>鎌倉高校前站</b>朝聖灌籃高手經典平交道。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋站搭乘 <b>JR 湘南新宿線</b> 直達 <b>鎌倉站</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#eff6ff;color:#1e40af;">下午</span>
+                    <div class="activity-body">
+                        <p><b>港都橫濱浪漫行：</b>下午移防橫濱，先至<b>橫濱橋商店街</b>體驗在地下町風情。傍晚前往<b>JR 櫻木町站</b>，搭乘<b>橫濱空中纜車</b>跨越運海上空，散步至<b>紅磚倉庫</b>，享受百萬港灣夜景。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>由鎌倉/藤澤搭乘 <b>JR 根岸線/橫濱線</b> → <b>櫻木町站</b></p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#f0f9ff;border:1px solid #bae6fd;">
+                    <h4 style="color:#0369a1;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0369a1;">午餐</span>
+                        <div class="food-items">
+                            <b>鎌倉</b>
+                            <a href="https://maps.app.goo.gl/UCCRMc5VFFTZZu8Q8" target="_blank" style="color:#0284c7;">《米其林》咖哩飯</a> <span style="color:#ea580c;font-size:0.68rem;">💡千萬不要點大碗!</span>　
+                            <a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank" style="color:#0284c7;">《百年老店》峰本吻仔魚茶泡飯</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0369a1;">晚餐</span>
+                        <div class="food-items">
+                            <b>橫濱</b> <a href="https://maps.app.goo.gl/H427W8z79gcirVXu5" target="_blank" style="color:#0284c7;">海膽丼飯</a>　
+                            <a href="https://maps.app.goo.gl/CHP9Ew4HgBAjJgSn7" target="_blank" style="color:#0284c7;">阿夫利 沾麵</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0369a1;">小吃</span>
+                        <div class="food-items">
+                            <b>鎌倉</b> <a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank" style="color:#0284c7;">大佛燒</a>、<a href="https://maps.app.goo.gl/rtfuR2gTYydq5kTo6" target="_blank" style="color:#0284c7;">Hannari Inari 鮭魚卵千層杯</a><br>
+                            <b>江之島</b> <a href="https://maps.app.goo.gl/C7HpSU16vBVh9GqX6" target="_blank" style="color:#0284c7;">Giraffa 咖哩麵包</a>、<a href="https://maps.app.goo.gl/H8nNqKZVbpeBUVzQ7" target="_blank" style="color:#0284c7;">朝日堂海鮮仙貝</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 05 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#581c87;">
+                <div class="day-num">Day 05 <span class="badge">東京美學巔峰</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#faf5ff;color:#581c87;">上午</span>
+                    <div class="activity-body">
+                        <p><b>銀座 (空間藝術與極簡)：</b>參訪 Ginza Six 觀摩中庭藝術裝置；隨後至無印良品旗艦店考察空間設計。推薦順遊「銀座伊東屋 Itoya」及和光百貨古典鐘塔地標。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋 (地鐵丸之內線) → <b>銀座站 (M16)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#faf5ff;color:#581c87;">上午</span>
+                    <div class="activity-body">
+                        <p><b>東京車站：</b>至地下一樓「東京車站一番街」一次買齊名產。推薦順遊 KITTE 商場 6 樓頂樓花園，可免費俯瞰百年紅磚車站絕美全景！</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#faf5ff;color:#581c87;">下午</span>
+                    <div class="activity-body">
+                        <p><b>麻布台之丘 (有機都市綠洲)：</b>前往東京最新地標 Azabudai Hills，觀察建築大師 Thomas Heatherwick 的「有機曲線」幾何設計。推薦順遊 teamLab Borderless 沉浸美術館，或至 33 樓 Sky Room 觀景台近距離欣賞東京鐵塔。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>→ <b>神谷町站 (H05)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#faf5ff;color:#581c87;">晚上</span>
+                    <div class="activity-body">
+                        <p><b>六本木 (頂級都會夜景)：</b>漫步至六本木之丘，在巨大蜘蛛雕塑「Maman」前合影，並在展望台拍下東京鐵塔與城市夜景。</p>
+                        <p class="route"><i class="fa-solid fa-person-walking"></i>由麻布台之丘步行約 15 分鐘</p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#faf5ff;border:1px solid #e9d5ff;">
+                    <h4 style="color:#581c87;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#e9d5ff;color:#581c87;">午餐</span>
+                        <div class="food-items">
+                            <b>有樂町</b> <a href="https://maps.app.goo.gl/QCPUy1YRkvoXrr3i9" target="_blank" style="color:#7c3aed;">根室花丸 迴轉壽司</a>　
+                            <a href="https://maps.app.goo.gl/4BuBAEspjnCPf8P26" target="_blank" style="color:#7c3aed;">辻田 銀座 厲害拉麵</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#e9d5ff;color:#581c87;">晚餐</span>
+                        <div class="food-items">
+                            <b>東京車站 B1</b> <a href="https://maps.app.goo.gl/onxqPWPWQKGoEvVS8" target="_blank" style="color:#7c3aed;">六厘舍沾麵</a>　
+                            <b>東京車站 5F</b> <a href="https://maps.app.goo.gl/G7t71uKBv1zjxMKs5" target="_blank" style="color:#7c3aed;">根室花丸 迴轉壽司</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#e9d5ff;color:#581c87;">小吃</span>
+                        <div class="food-items">
+                            <b>銀座</b> <a href="https://maps.app.goo.gl/ZrTNsXxSvYmT9B7aA" target="_blank" style="color:#7c3aed;">Ginza Orions 高級布丁</a>、<a href="https://maps.app.goo.gl/ZHpXNywyArpNTmSU8" target="_blank" style="color:#7c3aed;">Age3 炸三明治</a><br>
+                            <b>東京車站</b> <a href="https://maps.app.goo.gl/iSTjKSz11xsSeb5t6" target="_blank" style="color:#7c3aed;">PATISSERIE 天花板泡芙 <span style="color:#dc2626;font-size:0.7rem;">💡一定要去吃!!</span></a>、
+                            <a href="https://maps.app.goo.gl/ngBFLW1wy9xmebKE7" target="_blank" style="color:#7c3aed;">DEPOT 高級布丁</a>、<a href="https://maps.app.goo.gl/kG7VRcnyTvh2SWrWA" target="_blank" style="color:#7c3aed;">治一郎 布丁</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="tip-bar" style="background:#faf5ff;color:#581c87;">💡 動線美學：東京車站紅磚 ➔ 銀座極簡 ➔ 麻布台有機曲線 ➔ 六本木高空夜景，橫跨百年的極致建築視覺饗宴！</p>
+            </div>
+        </div>
+
+        <!-- DAY 06 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#92400e;">
+                <div class="day-num">Day 06 <span class="badge">川越小江戶老街與新宿不夜城</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fff7ed;color:#92400e;">上午</span>
+                    <div class="activity-body">
+                        <p><b>川越浪漫結緣：</b>抵達川越站後，轉乘當地巴士直奔<b>冰川神社</b>，挑戰趣味十足的「釣鯛魚御守」，並漫步於繪馬隧道。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋站搭乘 <b>JR 埼京線 (直通川越線)</b> 一車直達 <b>川越站</b> (車程約40分)</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fff7ed;color:#92400e;">中午</span>
+                    <div class="activity-body">
+                        <p><b>藏造老街巡禮：</b>從神社步行前往藏造老街（一番街）。朝聖地標<b>時之鐘</b>，品嚐地瓜點心、鰻魚飯，並朝聖江戶建築風格<b>星巴克鐘撞通店</b>。</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fff7ed;color:#92400e;">傍晚</span>
+                    <div class="activity-body">
+                        <p><b>新宿巨獸朝聖：</b>回程於新宿站下車。從<b>東口</b>出站前往歌舞伎町朝聖 3D 貓螢幕與巨大哥吉拉頭；隨後至 <b>Lumine EST</b> 或 <b>NEWoMan</b> 進行時尚採買。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>自川越搭乘 <b>JR 埼京線</b> 快速直達 <b>新宿站 (JY17)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#fff7ed;color:#92400e;">晚間</span>
+                    <div class="activity-body">
+                        <p><b>科技考察與深夜美食：</b>穿過車站到<b>西口</b>，考察 Bic Camera 或 Yodobashi 的高階家電。宵夜可至充滿懷舊氛圍的<b>思出橫丁</b>，或直上新宿都廳 45 樓欣賞免費百萬夜景。</p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#fff7ed;border:1px solid #fed7aa;">
+                    <h4 style="color:#92400e;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fed7aa;color:#92400e;">午餐</span>
+                        <div class="food-items">
+                            <b>川越</b> <a href="https://maps.app.goo.gl/pT44yrBjnAqUgUHD7" target="_blank" style="color:#ea580c;">小川菊 鰻魚飯</a>　
+                            <a href="https://maps.app.goo.gl/zDfRFwFDyowAmSim7" target="_blank" style="color:#ea580c;">林屋 鰻魚飯</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fed7aa;color:#92400e;">晚餐</span>
+                        <div class="food-items">
+                            <b>池袋</b> <a href="https://maps.app.goo.gl/vG9yuUAftFzM6Q347" target="_blank" style="color:#ea580c;">一心炭助 仙台牛舌</a>　
+                            <b>有樂町</b> <a href="https://maps.app.goo.gl/q9W7yAnmPFnh1Y5FA" target="_blank" style="color:#ea580c;">根室花丸 迴轉壽司</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#fed7aa;color:#92400e;">小吃</span>
+                        <div class="food-items">
+                            <b>川越</b> <a href="https://maps.app.goo.gl/sdMsHv8MKYsfhxqUA" target="_blank" style="color:#ea580c;">福呂屋 日式點心</a>、<a href="https://maps.app.goo.gl/uuXHaARUytbPmuWu8" target="_blank" style="color:#ea580c;">川越布丁</a>、<a href="https://maps.app.goo.gl/QduyEDHvugk8a5vd9" target="_blank" style="color:#ea580c;">小江戶 地瓜片</a>
+                        </div>
+                    </div>
+                </div>
+                <p class="tip-bar" style="background:#fff7ed;color:#92400e;">💡 川越市內景點距 JR 川越站步行約 20-30 分鐘，建議抵達時先搭巴士到最遠的冰川神社，再一路慢慢逛回車站！</p>
+            </div>
+        </div>
+
+        <!-- DAY 07 -->
+        <div class="day-card">
+            <div class="day-header" style="background:#0c4a6e;">
+                <div class="day-num">Day 07 <span class="badge">灣區未來結構</span></div>
+            </div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0f9ff;color:#0c4a6e;">上午</span>
+                    <div class="activity-body">
+                        <p><b>豐洲市場 & 千客萬來：</b>享用新鮮海鮮丼與壽司早餐。漫步於 2024 全新落成的「千客萬來」，觀察重現江戶時代風情的木造老街建築美學。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>池袋站搭乘 <b>地鐵有樂町線</b> 直達 <b>豐洲站</b> (約 30 分鐘)</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0f9ff;color:#0c4a6e;">下午</span>
+                    <div class="activity-body">
+                        <p><b>台場 (灣區未來結構)：</b>朝聖 DiverCity 1:1 獨角獸鋼彈與動漫周邊，考察富士電視台的超現實懸空球體建築，並在多個巨型海濱 Mall 進行高效率購物。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>從豐洲站轉乘 <b>百合海鷗號</b> → <b>台場站 (U07)</b></p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f0f9ff;color:#0c4a6e;">晚間</span>
+                    <div class="activity-body">
+                        <p><b>灣區不夜海景：</b>在台場海濱公園拍攝自由女神像與彩虹大橋交織的百萬級炫麗夜景，並在景觀餐廳享用浪漫晚餐。</p>
+                        <p class="route"><i class="fa-solid fa-train"></i>自台場 <b>東京電訊站</b> 搭乘 <b>JR 埼京線</b>，30 分鐘直達池袋！</p>
+                    </div>
+                </div>
+                <hr class="divider">
+                <div class="food-box" style="background:#f0f9ff;border:1px solid #bae6fd;">
+                    <h4 style="color:#0c4a6e;"><i class="fa-solid fa-utensils"></i>美食名單</h4>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0c4a6e;">午餐</span>
+                        <div class="food-items">
+                            <b>豐洲「千客萬來」</b> <a href="https://maps.app.goo.gl/KhNwW5JbtWWUcEuK9" target="_blank" style="color:#0284c7;">うに虎 海膽專門店</a>　
+                            <a href="https://maps.app.goo.gl/m2AjurmZK4RxuA4b7" target="_blank" style="color:#0284c7;">神樂壽司</a><br>
+                            <b>豐洲市場 水產大樓 3F</b> <a href="https://maps.app.goo.gl/sHj4oyssQGm5tGUbA" target="_blank" style="color:#0284c7;">Ikino-ya 頂級海鮮丼</a>　
+                            <a href="https://maps.app.goo.gl/RDTMFZijbxkd8bae7" target="_blank" style="color:#0284c7;">大江戶 海鮮丼</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0c4a6e;">晚餐</span>
+                        <div class="food-items">
+                            <b>台場</b> <a href="https://maps.app.goo.gl/SnyCucvVE68eQFKC7" target="_blank" style="color:#0284c7;">札幌 MISONO 龍蝦拉麵</a>　
+                            <a href="https://maps.app.goo.gl/q8W9degnKZyYqHC88" target="_blank" style="color:#0284c7;">鶴橋風月 極品大阪燒</a>
+                        </div>
+                    </div>
+                    <div class="food-row">
+                        <span class="food-tag" style="background:#bae6fd;color:#0c4a6e;">小吃</span>
+                        <div class="food-items">
+                            <b>豐洲市場</b> <a href="https://maps.app.goo.gl/HBDiV1zbnVzTRA1k6" target="_blank" style="color:#0284c7;">濱風茶房 抹茶蒙布朗瀑布</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAY 08 -->
+        <div class="day-card" style="background:#f8fafc;">
+            <div class="day-header" style="background:#64748b;">
+                <div class="day-num">Day 08 <span class="badge">平安歸賦</span></div>
+            </div>
+            <div class="day-body" style="text-align:center;">
+                <p style="color:#475569;font-size:0.9rem;margin-bottom:1rem;">池袋 Sunshine City 或是車站周邊進行伴手禮最後衝刺與補漏。</p>
+                <div style="display:inline-flex;align-items:center;gap:0.5rem;background:#f1f5f9;padding:0.6rem 1.2rem;border-radius:30px;font-size:0.82rem;color:#475569;">
+                    <i class="fa-solid fa-bus" style="color:#64748b;"></i>
+                    池袋大都會飯店大廳直接搭乘利木津巴士直達成田機場
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /journey-line -->
+</main>
+
+<footer>
+    <p><strong>峰和曼曼</strong> 創造美好回憶 ✈</p>
+</footer>
+
+<script>
+// Cursor dot
+const dot = document.getElementById('cursorDot');
+document.addEventListener('mousemove', e => {
+    dot.style.left = e.clientX + 'px';
+    dot.style.top  = e.clientY + 'px';
+});
+
+// Hamburger
+function toggleMenu() {
+    document.getElementById('hamburger').classList.toggle('open');
+    document.getElementById('mobileMenu').classList.toggle('open');
+}
+
+// Intersection Observer for scroll animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.day-card, .info-card').forEach(el => observer.observe(el));
+
+// Sakura canvas
+(function() {
+    const canvas = document.getElementById('sakura');
+    const ctx = canvas.getContext('2d');
+    let W, H, petals = [];
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function randomPetal() {
+        return {
+            x: Math.random() * W,
+            y: -20,
+            r: 4 + Math.random() * 5,
+            speed: 0.6 + Math.random() * 1.2,
+            drift: (Math.random() - 0.5) * 0.8,
+            rot: Math.random() * Math.PI * 2,
+            rotSpeed: (Math.random() - 0.5) * 0.04,
+            opacity: 0.4 + Math.random() * 0.5
+        };
+    }
+
+    for (let i = 0; i < 18; i++) {
+        let p = randomPetal();
+        p.y = Math.random() * H;
+        petals.push(p);
+    }
+
+    function drawPetal(p) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.globalAlpha = p.opacity;
+        ctx.fillStyle = '#e88ea0';
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.r, p.r * 1.5, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    function animate() {
+        ctx.clearRect(0, 0, W, H);
+        petals.forEach((p, i) => {
+            drawPetal(p);
+            p.y += p.speed;
+            p.x += p.drift;
+            p.rot += p.rotSpeed;
+            if (p.y > H + 20) petals[i] = randomPetal();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
+})();
+</script>
 
 </body>
 </html>
