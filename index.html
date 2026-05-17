@@ -1,555 +1,627 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>峰和曼曼的東京 8 天 7 夜</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:wght@700;900&family=Zen+Kaku+Gothic+New:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --ink: #1a1a2e;
-            --red: #c0392b;
-            --gold: #d4a017;
-            --cream: #f5f0e8;
-            --mist: #e8e4dc;
-            --paper: #faf7f2;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Noto Sans TC', 'Zen Kaku Gothic New', sans-serif;
-            background-color: var(--paper);
-            color: var(--ink);
-            overflow-x: hidden;
-        }
-
-        /* ===== NAV ===== */
-        nav {
-            background: rgba(26,26,46,0.97);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(212,160,23,0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 1.25rem;
-            height: 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.3rem;
-            color: #fff;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-logo span { color: var(--gold); }
-
-        .nav-links {
-            display: flex;
-            gap: 0.25rem;
-        }
-
-        .nav-links a {
-            color: rgba(255,255,255,0.75);
-            text-decoration: none;
-            font-size: 0.78rem;
-            padding: 0.4rem 0.75rem;
-            border-radius: 20px;
-            transition: all 0.25s;
-            letter-spacing: 0.03em;
-            white-space: nowrap;
-        }
-
-        .nav-links a:hover {
-            color: #fff;
-            background: rgba(212,160,23,0.2);
-        }
-
-        /* Hamburger */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: #fff;
-            border-radius: 2px;
-            transition: all 0.3s;
-        }
-
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-        .mobile-menu {
-            display: none;
-            flex-direction: column;
-            background: rgba(26,26,46,0.98);
-            padding: 0.75rem 1rem 1rem;
-            gap: 0.25rem;
-        }
-
-        .mobile-menu.open { display: flex; }
-
-        .mobile-menu a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            font-size: 0.9rem;
-            padding: 0.6rem 0.75rem;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .mobile-menu a:hover { background: rgba(212,160,23,0.15); }
-
-        @media (max-width: 640px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            position: relative;
-            height: min(380px, 55vw);
-            min-height: 240px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-bg {
-            position: absolute;
-            inset: 0;
-            background-image: url('https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?auto=format&fit=crop&w=1400&q=80');
-            background-size: cover;
-            background-position: center;
-            transform: scale(1.08);
-            animation: heroZoom 18s ease-in-out infinite alternate;
-        }
-
-        @keyframes heroZoom {
-            from { transform: scale(1.08); }
-            to   { transform: scale(1.18); }
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(160deg, rgba(26,26,46,0.72) 0%, rgba(192,57,43,0.35) 100%);
-        }
-
-        /* Japanese stripe */
-        .hero-stripe {
-            position: absolute;
-            top: 0; bottom: 0; left: 0;
-            width: 6px;
-            background: var(--red);
-        }
-
-        .hero-content { position: relative; z-index: 2; text-align: center; padding: 1rem 1.5rem; }
-
-        .hero-title {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(1.6rem, 5vw, 3.2rem);
-            font-weight: 900;
-            color: #fff;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
-            line-height: 1.2;
-            letter-spacing: 0.02em;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeUp 0.9s ease 0.2s forwards;
-        }
-
-        .hero-sub {
-            margin-top: 0.75rem;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeUp 0.9s ease 0.5s forwards;
-        }
-
-        .hero-sub a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255,255,255,0.12);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #fff;
-            text-decoration: none;
-            padding: 0.5rem 1.25rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            transition: background 0.25s;
-        }
-
-        .hero-sub a:hover { background: rgba(255,255,255,0.22); }
-
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Scroll indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 18px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            opacity: 0.7;
-            animation: bounce 2s infinite;
-            z-index: 2;
-        }
-
-        .scroll-hint span { font-size: 0.65rem; color: #fff; letter-spacing: 0.1em; text-transform: uppercase; }
-
-        @keyframes bounce {
-            0%,100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(6px); }
-        }
-
-        /* ===== MAIN LAYOUT ===== */
-        main { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
-
-        /* ===== INFO CARDS ===== */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2.5rem;
-        }
-
-        @media (max-width: 760px) { .info-grid { grid-template-columns: 1fr; } }
-
-        .info-card {
-            background: #fff;
-            border-radius: 14px;
-            padding: 1.25rem 1.25rem 1.1rem;
-            box-shadow: 0 2px 14px rgba(0,0,0,0.06);
-            border-left: 4px solid transparent;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-
-        .info-card.visible { animation: fadeUp 0.6s ease forwards; }
-        .info-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-3px) !important; }
-        .info-card.green  { border-color: #16a34a; }
-        .info-card.blue   { border-color: #3b82f6; }
-        .info-card.orange { border-color: #f97316; }
-
-        .info-card h3 { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
-        .info-card p, .info-card li { font-size: 0.78rem; color: #475569; line-height: 1.6; }
-        .info-card ul { padding-left: 0; list-style: none; }
-        .info-card ul li::before { content: "• "; }
-
-        /* ===== DAY CARDS ===== */
-        .day-card {
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 3px 18px rgba(0,0,0,0.07);
-            overflow: hidden;
-            margin-bottom: 2rem;
-            opacity: 0;
-            transform: translateY(28px);
-            transition: box-shadow 0.3s;
-        }
-
-        .day-card.visible { animation: fadeUp 0.7s ease forwards; }
-        .day-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
-
-        .day-header {
-            padding: 1rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .day-header::after {
-            content: '';
-            position: absolute;
-            right: -20px; top: -20px;
-            width: 100px; height: 100px;
-            background: rgba(255,255,255,0.06);
-            border-radius: 50%;
-        }
-
-        .day-num {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .day-num .badge {
-            font-family: 'Noto Sans TC', sans-serif;
-            font-size: 0.68rem;
-            background: rgba(255,255,255,0.18);
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            letter-spacing: 0.04em;
-            font-weight: 400;
-        }
-
-        .day-subtitle { font-size: 0.78rem; color: rgba(255,255,255,0.8); }
-
-        .day-body { padding: 1.5rem; }
-
-        /* Activity items */
-        .activity {
-            display: flex;
-            gap: 0.75rem;
-            margin-bottom: 1.25rem;
-        }
-
-        .activity-tag {
-            flex-shrink: 0;
-            font-size: 0.68rem;
-            font-weight: 700;
-            padding: 0.25rem 0.6rem;
-            border-radius: 20px;
-            margin-top: 2px;
-            letter-spacing: 0.03em;
-            white-space: nowrap;
-        }
-
-        .activity-body p { font-size: 0.88rem; line-height: 1.65; color: #334155; }
-
-        .activity-body .route {
-            font-size: 0.72rem;
-            color: #94a3b8;
-            margin-top: 0.35rem;
-            display: flex;
-            align-items: flex-start;
-            gap: 0.3rem;
-        }
-
-        /* Divider */
-        .divider {
-            border: none;
-            border-top: 1px dashed #e2e8f0;
-            margin: 1.25rem 0;
-        }
-
-        /* Food section */
-        .food-box {
-            border-radius: 12px;
-            padding: 1rem 1.1rem;
-        }
-
-        .food-box h4 {
-            font-size: 0.7rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-
-        .food-row {
-            display: flex;
-            gap: 0.6rem;
-            font-size: 0.75rem;
-            padding-top: 0.6rem;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-
-        .food-tag {
-            flex-shrink: 0;
-            font-size: 0.62rem;
-            font-weight: 700;
-            padding: 0.18rem 0.5rem;
-            border-radius: 20px;
-            margin-top: 1px;
-            white-space: nowrap;
-        }
-
-        .food-items { line-height: 1.8; color: #475569; }
-        .food-items a { text-decoration: none; transition: opacity 0.2s; }
-        .food-items a:hover { opacity: 0.75; text-decoration: underline; }
-
-        /* Numbered food list */
-        .food-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.35rem; }
-        .food-list li { display: flex; align-items: baseline; gap: 0.45rem; font-size: 0.75rem; color: #475569; line-height: 1.5; }
-        .food-list li .num { flex-shrink: 0; width: 17px; height: 17px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 0.58rem; font-weight: 700; color: #fff; margin-top: 1px; }
-        .food-list li .loc { font-size: 0.68rem; color: #94a3b8; flex-shrink: 0; white-space: nowrap; }
-        .food-list li a { text-decoration: none; transition: opacity 0.2s; }
-        .food-list li a:hover { opacity: 0.75; text-decoration: underline; }
-        .food-list li .note { font-size: 0.64rem; font-weight: 600; }
-
-        /* Tip bar */
-        .tip-bar {
-            margin-top: 1rem;
-            font-size: 0.75rem;
-            padding: 0.6rem 0.9rem;
-            border-radius: 8px;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: var(--ink);
-            color: rgba(255,255,255,0.5);
-            text-align: center;
-            padding: 2.5rem 1rem;
-            font-size: 0.8rem;
-            letter-spacing: 0.08em;
-        }
-
-        footer strong { color: var(--gold); }
-
-        /* ===== PROGRESS LINE ===== */
-        .journey-line {
-            position: relative;
-            padding-left: 1.5rem;
-        }
-
-        .journey-line::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 8px; bottom: 8px;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--red), var(--gold));
-            border-radius: 2px;
-        }
-
-        /* ===== SCROLL ANIMATION UTILITY ===== */
-        [data-delay="1"] { animation-delay: 0.1s !important; }
-        [data-delay="2"] { animation-delay: 0.2s !important; }
-        [data-delay="3"] { animation-delay: 0.35s !important; }
-
-        /* ===== CURSOR TRAIL (desktop) ===== */
-        .cursor-dot {
-            pointer-events: none;
-            position: fixed;
-            width: 6px; height: 6px;
-            background: var(--red);
-            border-radius: 50%;
-            z-index: 9999;
-            transform: translate(-50%,-50%);
-            transition: transform 0.05s;
-        }
-
-        @media (max-width: 760px) { .cursor-dot { display: none; } }
-
-        /* ===== PARTICLE SAKURA ===== */
-        .sakura-canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.35;
-        }
-    </style>
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>峰和曼曼的東京 8 天 7 夜</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600;900&family=Shippori+Mincho:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d14; --ink2:#15151f; --ink3:#1e1e2c;
+  --paper:#f4ede0; --paper2:#e9dfca;
+  --gold:#d4a84b; --gold-bright:#f0c96b;
+  --red:#c0392b; --red-deep:#8a2820;
+  --mist:rgba(244,237,224,0.55);
+  --serif:'Shippori Mincho','Noto Serif JP',serif;
+  --jp:'Noto Serif JP',serif;
+  --sans:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--sans);
+  background:var(--ink);
+  color:var(--paper);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* film grain overlay */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  opacity:0.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ============ LOADER (電影開場) ============ */
+#loader{
+  position:fixed;inset:0;z-index:10000;background:var(--ink);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transition:opacity 1s ease 0.3s,visibility 1s ease 0.3s;
+}
+#loader.done{opacity:0;visibility:hidden;}
+.loader-jp{
+  font-family:var(--jp);font-weight:900;
+  font-size:clamp(3rem,12vw,7rem);color:var(--paper);
+  letter-spacing:0.3em;display:flex;
+}
+.loader-jp span{
+  opacity:0;transform:translateY(40px) rotateX(-90deg);
+  animation:charIn 0.8s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.loader-jp span:nth-child(1){animation-delay:0.2s;}
+.loader-jp span:nth-child(2){animation-delay:0.45s;}
+.loader-jp span:nth-child(3){animation-delay:0.7s;}
+@keyframes charIn{to{opacity:1;transform:translateY(0) rotateX(0);}}
+.loader-bar{
+  margin-top:2rem;width:0;height:1px;background:var(--gold);
+  animation:barGrow 1.6s ease 0.9s forwards;
+}
+@keyframes barGrow{to{width:min(220px,50vw);}}
+.loader-sub{
+  margin-top:1rem;font-size:0.7rem;letter-spacing:0.5em;
+  color:var(--gold);opacity:0;animation:fadeIn 0.6s ease 1.5s forwards;
+  padding-left:0.5em;
+}
+@keyframes fadeIn{to{opacity:1;}}
+
+/* ============ NAV ============ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  background:rgba(13,13,20,0);
+  transition:background 0.4s,border-color 0.4s,backdrop-filter 0.4s;
+  border-bottom:1px solid rgba(212,168,75,0);
+}
+nav.scrolled{
+  background:rgba(13,13,20,0.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(212,168,75,0.22);
+}
+.nav-inner{
+  max-width:1180px;margin:0 auto;padding:0 1.4rem;height:62px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.nav-logo{
+  font-family:var(--serif);font-size:1.15rem;color:var(--paper);
+  text-decoration:none;letter-spacing:0.12em;display:flex;align-items:center;gap:0.55rem;
+}
+.nav-logo .seal{
+  width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:var(--gold);font-family:var(--jp);
+}
+.nav-links{display:flex;gap:0.15rem;}
+.nav-links a{
+  color:rgba(244,237,224,0.7);text-decoration:none;font-size:0.78rem;
+  padding:0.45rem 0.85rem;border-radius:2px;transition:all 0.25s;
+  letter-spacing:0.04em;white-space:nowrap;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;left:50%;bottom:0.2rem;width:0;height:1px;
+  background:var(--gold);transition:all 0.25s;transform:translateX(-50%);
+}
+.nav-links a:hover{color:var(--gold-bright);}
+.nav-links a:hover::after{width:60%;}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--paper);transition:0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{
+  display:none;flex-direction:column;background:rgba(13,13,20,0.98);
+  padding:0.6rem 1rem 1.1rem;gap:0.2rem;
+  border-bottom:1px solid rgba(212,168,75,0.2);
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{
+  color:rgba(244,237,224,0.82);text-decoration:none;font-size:0.92rem;
+  padding:0.7rem 0.6rem;border-bottom:1px solid rgba(255,255,255,0.05);
+}
+.mobile-menu a:last-child{border-bottom:none;}
+@media(max-width:760px){.nav-links{display:none;}.hamburger{display:flex;}}
+
+/* ============ HERO (電影片頭) ============ */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;text-align:center;
+}
+/* 遠山雲霧層 */
+.hero-sky{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 120%, rgba(192,57,43,0.35), transparent 70%),
+    linear-gradient(180deg,#0d0d14 0%,#1a1726 45%,#2a2030 75%,#3a2b32 100%);
+}
+.hero-sun{
+  position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);
+  width:min(420px,72vw);aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(240,201,107,0.9) 0%,rgba(212,84,60,0.5) 40%,transparent 70%);
+  filter:blur(8px);opacity:0;
+  animation:sunRise 2.6s ease 2.4s forwards;
+}
+@keyframes sunRise{from{opacity:0;transform:translate(-50%,-30%);}to{opacity:0.85;transform:translate(-50%,-50%);}}
+/* 山剪影 */
+.hero-mountains{
+  position:absolute;left:0;right:0;bottom:0;height:38%;
+  background:
+    linear-gradient(170deg,transparent 48%,#0d0d14 49%) 0 0/52% 100% no-repeat,
+    linear-gradient(-160deg,transparent 55%,#15131c 56%) 100% 0/60% 100% no-repeat,
+    linear-gradient(175deg,transparent 60%,#0a0a10 61%) 30% 0/55% 100% no-repeat;
+  opacity:0.95;
+}
+/* 雲霧 */
+.hero-mist{
+  position:absolute;left:0;right:0;bottom:14%;height:140px;
+  background:linear-gradient(90deg,transparent,rgba(244,237,224,0.07),rgba(244,237,224,0.13),rgba(244,237,224,0.07),transparent);
+  filter:blur(24px);animation:mistDrift 22s ease-in-out infinite alternate;
+}
+@keyframes mistDrift{from{transform:translateX(-8%);}to{transform:translateX(8%);}}
+
+.hero-content{position:relative;z-index:5;padding:1.5rem;}
+.hero-eyebrow{
+  font-size:0.72rem;letter-spacing:0.55em;color:var(--gold);
+  margin-bottom:1.6rem;padding-left:0.55em;
+  opacity:0;animation:fadeUp 1s ease 3s forwards;
+}
+.hero-jp{
+  font-family:var(--jp);font-weight:900;
+  font-size:clamp(4.5rem,17vw,11rem);line-height:0.95;
+  color:var(--paper);letter-spacing:0.05em;
+  display:flex;justify-content:center;gap:0.05em;
+  text-shadow:0 0 60px rgba(0,0,0,0.6);
+}
+.hero-jp span{
+  opacity:0;transform:translateY(60px);
+  animation:fadeUp 1.1s cubic-bezier(.2,.7,.2,1) forwards;
+}
+.hero-jp span:nth-child(1){animation-delay:2.7s;}
+.hero-jp span:nth-child(2){animation-delay:2.9s;}
+.hero-title{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(1.1rem,3.6vw,1.9rem);
+  color:var(--paper);letter-spacing:0.18em;margin-top:1.3rem;
+  opacity:0;animation:fadeUp 1s ease 3.3s forwards;
+}
+.hero-title b{color:var(--gold-bright);font-weight:800;}
+.hero-meta{
+  display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;
+  margin-top:1.8rem;opacity:0;animation:fadeUp 1s ease 3.6s forwards;
+}
+.hero-meta a,.hero-meta span{
+  font-size:0.8rem;color:rgba(244,237,224,0.85);text-decoration:none;
+  display:inline-flex;align-items:center;gap:0.5rem;letter-spacing:0.05em;
+}
+.hero-meta a{
+  border:1px solid rgba(212,168,75,0.5);padding:0.55rem 1.3rem;border-radius:2px;
+  transition:all 0.3s;
+}
+.hero-meta a:hover{background:rgba(212,168,75,0.15);border-color:var(--gold);}
+.hero-meta i{color:var(--gold);}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0);}}
+
+.scroll-cue{
+  position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:0.6rem;z-index:5;
+  opacity:0;animation:fadeIn 1s ease 4s forwards;
+}
+.scroll-cue span{font-size:0.6rem;letter-spacing:0.4em;color:var(--gold);padding-left:0.4em;}
+.scroll-cue .line{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);position:relative;overflow:hidden;}
+.scroll-cue .line::after{
+  content:'';position:absolute;top:-50%;left:0;width:100%;height:50%;
+  background:var(--paper);animation:scrollDown 1.8s ease-in-out infinite;
+}
+@keyframes scrollDown{to{top:100%;}}
+
+/* ============ JOURNEY INTRO ============ */
+.journey-intro{
+  max-width:680px;margin:0 auto;padding:6rem 1.5rem 3rem;text-align:center;
+}
+.journey-intro .kicker{
+  font-family:var(--jp);font-size:0.8rem;letter-spacing:0.4em;
+  color:var(--gold);margin-bottom:1.2rem;
+}
+.journey-intro h2{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(1.5rem,4vw,2.4rem);color:var(--paper);
+  line-height:1.5;letter-spacing:0.06em;
+}
+.journey-intro p{
+  margin-top:1.3rem;font-size:0.9rem;line-height:2;
+  color:rgba(244,237,224,0.6);font-weight:300;
+}
+.cast{
+  max-width:760px;margin:1rem auto 0;padding:0 1.5rem;
+}
+.cast-frame{
+  position:relative;border-radius:4px;overflow:hidden;
+  border:1px solid rgba(212,168,75,0.3);
+  background:linear-gradient(160deg,var(--ink3),var(--ink2));
+  box-shadow:0 30px 70px -25px rgba(0,0,0,0.9);
+}
+.cast-frame::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.cast-photo{
+  position:relative;width:100%;display:block;
+  filter:saturate(0.92) contrast(1.03);
+}
+/* 羽化白底, 讓插畫融入深色 */
+.cast-frame::after{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  box-shadow:inset 0 0 90px 30px var(--ink2),inset 0 0 30px 8px rgba(13,13,20,0.6);
+}
+.cast-caption{
+  position:absolute;left:0;right:0;bottom:0;z-index:4;
+  padding:2.5rem 1.6rem 1.4rem;
+  background:linear-gradient(transparent,rgba(13,13,20,0.5) 40%,rgba(13,13,20,0.95));
+  text-align:center;
+}
+.cast-caption .cc-jp{
+  font-family:var(--jp);font-weight:900;font-size:clamp(1.5rem,5vw,2.4rem);
+  color:var(--paper);letter-spacing:0.15em;
+}
+.cast-caption .cc-jp em{font-style:normal;color:var(--gold-bright);}
+.cast-caption .cc-sub{
+  font-size:0.72rem;letter-spacing:0.35em;color:var(--gold);
+  margin-top:0.5rem;padding-left:0.35em;
+}
+.cast-seal{
+  position:absolute;top:1rem;right:1rem;z-index:4;
+  width:46px;height:46px;border:1.5px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--jp);font-size:0.95rem;color:var(--gold);
+  background:rgba(13,13,20,0.55);backdrop-filter:blur(4px);
+  line-height:1.1;text-align:center;
+}
+@media(max-width:560px){
+  .cast-caption{padding:2rem 1rem 1.1rem;}
+}
+.intro-rule{
+  width:1px;height:60px;margin:2.5rem auto 0;
+  background:linear-gradient(var(--gold),transparent);
+}
+
+/* ============ INFO CARDS ============ */
+.info-strip{
+  max-width:900px;margin:1rem auto 5rem;padding:0 1.4rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;
+}
+@media(max-width:680px){.info-strip{grid-template-columns:1fr;}}
+.info-card{
+  background:linear-gradient(150deg,var(--ink3),var(--ink2));
+  border:1px solid rgba(212,168,75,0.18);border-radius:3px;
+  padding:1.5rem 1.5rem 1.4rem;position:relative;overflow:hidden;
+}
+.info-card::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gold);
+}
+.info-card .ic-head{
+  display:flex;align-items:center;gap:0.6rem;margin-bottom:0.8rem;
+}
+.info-card .ic-head i{color:var(--gold);font-size:0.95rem;}
+.info-card .ic-head h3{
+  font-family:var(--serif);font-size:1rem;font-weight:800;
+  color:var(--paper);letter-spacing:0.05em;
+}
+.info-card p,.info-card li{
+  font-size:0.82rem;line-height:1.85;color:rgba(244,237,224,0.62);font-weight:300;
+}
+.info-card ul{list-style:none;}
+.info-card li{padding-left:1rem;position:relative;}
+.info-card li::before{content:'—';position:absolute;left:0;color:var(--gold);}
+
+/* ============ STATIONS (時間軸) ============ */
+.journey{
+  max-width:920px;margin:0 auto;padding:0 1.4rem 2rem;position:relative;
+}
+.station{position:relative;padding-left:54px;}
+@media(max-width:560px){.station{padding-left:38px;}}
+.station-marker{
+  position:absolute;left:0;top:0;bottom:0;width:54px;
+  display:flex;flex-direction:column;align-items:center;
+}
+@media(max-width:560px){.station-marker{width:38px;}}
+.station-dot{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:30px;
+  background:var(--ink);border:2px solid var(--day-color);
+  box-shadow:0 0 0 5px rgba(13,13,20,1),0 0 0 6px rgba(212,168,75,0.15);
+  position:relative;z-index:3;transition:all 0.5s;
+}
+.station.active .station-dot{
+  background:var(--day-color);
+  box-shadow:0 0 0 5px rgba(13,13,20,1),0 0 22px var(--day-color);
+}
+.station-dot::after{
+  content:'';position:absolute;inset:-2px;border-radius:50%;
+  border:2px solid var(--day-color);opacity:0;
+}
+.station.active .station-dot::after{animation:ping 1.6s ease-out infinite;}
+@keyframes ping{0%{opacity:0.7;transform:scale(1);}100%{opacity:0;transform:scale(2.4);}}
+.station-line{
+  width:1px;flex:1;
+  background:linear-gradient(var(--day-color),rgba(212,168,75,0.12));
+  margin-top:4px;
+}
+.station:last-child .station-line{display:none;}
+.station-content{padding-bottom:2rem;}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(40px);transition:opacity 0.9s cubic-bezier(.2,.7,.2,1),transform 0.9s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ============ DAY CARD (重新皮膚) ============ */
+.day-card{
+  background:linear-gradient(160deg,var(--ink3) 0%,var(--ink2) 100%);
+  border:1px solid rgba(212,168,75,0.16);
+  border-radius:4px;overflow:hidden;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,0.8);
+  position:relative;
+}
+.day-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--day-color),transparent);
+}
+.day-header{
+  padding:1.5rem 1.6rem 1.3rem;position:relative;
+  background:
+    linear-gradient(135deg,rgba(255,255,255,0.03),transparent),
+    var(--ink2);
+  border-bottom:1px solid rgba(212,168,75,0.12);
+  display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;
+}
+.day-header::after{
+  content:attr(data-jp);position:absolute;right:1.2rem;top:50%;
+  transform:translateY(-50%);font-family:var(--jp);font-weight:900;
+  font-size:3.6rem;color:var(--day-color);opacity:0.1;pointer-events:none;
+  letter-spacing:0.05em;
+}
+.day-num{
+  font-family:var(--serif);font-weight:800;color:var(--paper);
+  display:flex;flex-direction:column;gap:0.5rem;position:relative;z-index:2;
+}
+.day-num .dn-label{
+  font-size:0.62rem;letter-spacing:0.35em;color:var(--day-color);font-family:var(--sans);
+}
+.day-num .dn-big{
+  font-size:1.85rem;letter-spacing:0.04em;line-height:1;
+  display:flex;align-items:baseline;gap:0.5rem;
+}
+.day-num .dn-big em{
+  font-size:0.85rem;font-style:normal;color:rgba(244,237,224,0.5);
+  font-family:var(--sans);font-weight:400;letter-spacing:0.1em;
+}
+.badge{
+  font-family:var(--sans);font-size:0.74rem;font-weight:400;
+  color:rgba(244,237,224,0.78);letter-spacing:0.03em;
+  background:rgba(212,168,75,0.1);border:1px solid rgba(212,168,75,0.25);
+  padding:0.35rem 0.7rem;border-radius:2px;line-height:1.5;
+  position:relative;z-index:2;max-width:48%;text-align:right;
+}
+.day-body{padding:1.6rem;}
+
+/* activity */
+.activity{display:flex;gap:0.9rem;margin-bottom:1.4rem;}
+.activity:last-of-type{margin-bottom:0;}
+.activity-tag{
+  flex-shrink:0;font-size:0.66rem;font-weight:700;letter-spacing:0.06em;
+  padding:0.3rem 0.6rem;border-radius:2px;margin-top:2px;height:fit-content;
+  background:rgba(212,168,75,0.12)!important;
+  color:var(--gold-bright)!important;
+  border:1px solid rgba(212,168,75,0.3);white-space:nowrap;
+}
+.activity-body p{font-size:0.9rem;line-height:1.85;color:rgba(244,237,224,0.82);}
+.activity-body p b{color:var(--paper);font-weight:700;}
+.activity-body .route,.activity-body .route-return{
+  font-size:0.74rem;margin-top:0.5rem;display:flex;
+  align-items:flex-start;gap:0.4rem;line-height:1.7;
+}
+.activity-body .route{color:rgba(244,237,224,0.45);}
+.activity-body .route i{color:rgba(212,168,75,0.6);margin-top:3px;}
+.activity-body .route-return{
+  color:var(--gold-bright);font-weight:500;
+  background:rgba(212,168,75,0.07);border-left:2px solid var(--gold);
+  padding:0.5rem 0.7rem;border-radius:0 2px 2px 0;margin-top:0.7rem;
+}
+.activity-body .route-return i{color:var(--gold);margin-top:3px;}
+.activity-body .route b,.activity-body .route-return b{color:var(--paper);}
+
+.divider{
+  border:none;border-top:1px dashed rgba(212,168,75,0.2);margin:1.4rem 0;
+}
+
+/* food box */
+.food-box{
+  border-radius:3px;padding:1.2rem 1.2rem 1.1rem!important;
+  background:rgba(13,13,20,0.5)!important;
+  border:1px solid rgba(212,168,75,0.15)!important;
+}
+.food-box h4{
+  font-family:var(--serif)!important;font-size:0.82rem!important;
+  font-weight:800;letter-spacing:0.1em;color:var(--gold-bright)!important;
+  margin-bottom:0.9rem;display:flex;align-items:center;gap:0.45rem;
+  text-transform:none!important;
+}
+.food-box h4 i{color:var(--gold);}
+.food-row{
+  display:flex;gap:0.7rem;font-size:0.78rem;padding-top:0.7rem;
+  border-top:1px solid rgba(212,168,75,0.1);
+}
+.food-row:first-of-type{border-top:none;padding-top:0;}
+.food-tag{
+  flex-shrink:0;font-size:0.64rem;font-weight:700;padding:0.2rem 0.55rem;
+  border-radius:2px;margin-top:1px;white-space:nowrap;height:fit-content;
+  background:rgba(212,168,75,0.14)!important;color:var(--gold-bright)!important;
+  border:1px solid rgba(212,168,75,0.28);
+}
+.food-items{line-height:1.95;color:rgba(244,237,224,0.62);}
+.food-items b{color:rgba(244,237,224,0.9);}
+.food-items a{color:var(--gold-bright)!important;text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);transition:all 0.2s;}
+.food-items a:hover{border-color:var(--gold);color:#fff!important;}
+.food-list{list-style:none;display:flex;flex-direction:column;gap:0.4rem;}
+.food-list li{display:flex;align-items:baseline;gap:0.5rem;font-size:0.78rem;color:rgba(244,237,224,0.7);line-height:1.55;}
+.food-list li .num{
+  flex-shrink:0;width:18px;height:18px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:0.6rem;font-weight:700;color:var(--ink)!important;
+  background:var(--gold-bright)!important;margin-top:1px;
+}
+.food-list li .loc{font-size:0.68rem;color:rgba(244,237,224,0.4);flex-shrink:0;white-space:nowrap;}
+.food-list li a{color:var(--gold-bright)!important;text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);transition:all 0.2s;}
+.food-list li a:hover{border-color:var(--gold);color:#fff!important;}
+.food-list li .note{font-size:0.66rem;font-weight:600;}
+
+.tip-bar{
+  margin-top:1rem;font-size:0.78rem;padding:0.7rem 1rem;border-radius:3px;
+  background:rgba(212,168,75,0.08)!important;color:rgba(244,237,224,0.7)!important;
+  border:1px dashed rgba(212,168,75,0.3);line-height:1.7;
+}
+.tip-bar a{color:var(--gold-bright)!important;}
+
+/* ============ FOOTER ============ */
+.end-mark{
+  text-align:center;padding:4rem 1.5rem 2rem;
+}
+.end-mark .seal-big{
+  width:78px;height:78px;margin:0 auto 1.5rem;border:2px solid var(--gold);
+  border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:var(--jp);font-size:2rem;color:var(--gold);font-weight:900;
+}
+.end-mark p{
+  font-family:var(--serif);font-size:1.05rem;color:var(--paper);
+  letter-spacing:0.15em;line-height:2;
+}
+footer{
+  background:var(--ink2);border-top:1px solid rgba(212,168,75,0.18);
+  text-align:center;padding:2.5rem 1rem;
+}
+footer p{
+  font-family:var(--serif);font-size:0.85rem;
+  color:rgba(244,237,224,0.5);letter-spacing:0.15em;
+}
+footer strong{color:var(--gold);}
+
+/* ============ PROGRESS BAR ============ */
+.read-progress{
+  position:fixed;top:0;left:0;height:2px;width:0;z-index:300;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+}
+
+/* ============ FLOATING PETALS ============ */
+.petal-layer{position:fixed;inset:0;pointer-events:none;z-index:1;}
+
+/* reduced motion */
+@media(prefers-reduced-motion:reduce){
+  *{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important;}
+}
+</style>
 </head>
 <body>
 
-<canvas class="sakura-canvas" id="sakura"></canvas>
-<div class="cursor-dot" id="cursorDot"></div>
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-jp"><span>東</span><span>京</span></div>
+  <div class="loader-bar"></div>
+  <div class="loader-sub">2026 · 8 DAYS</div>
+</div>
+
+<div class="read-progress" id="readProgress"></div>
+<div class="petal-layer" id="petalLayer"></div>
 
 <!-- NAV -->
-<nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-logo">✈ <span>TOKYO</span> 2026</a>
-        <div class="nav-links">
-            <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
-            <a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
-            <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
-            <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
-        </div>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="seal">旅</span>TOKYO 2026</a>
+    <div class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
+      <a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
+      <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
+      <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
     </div>
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
-        <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
-        <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
-        <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
     </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
+    <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
+    <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
+    <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
+  </div>
 </nav>
 
 <!-- HERO -->
 <header class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-overlay"></div>
-    <div class="hero-stripe"></div>
-    <div class="hero-content">
-        <h1 class="hero-title">峰和曼曼的東京<br>8 天 7 夜</h1>
-        <div class="hero-sub">
-            <a href="https://maps.app.goo.gl/Ab949U9pBRij3jer9" target="_blank">
-                <i class="fa-solid fa-location-dot"></i> 住宿：池袋 大都會飯店
-            </a>
-        </div>
+  <div class="hero-sky"></div>
+  <div class="hero-sun"></div>
+  <div class="hero-mist"></div>
+  <div class="hero-mountains"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">A JOURNEY THROUGH TOKYO</div>
+    <div class="hero-jp"><span>東</span><span>京</span></div>
+    <div class="hero-title">峰和曼曼的東京 · <b>8 天 7 夜</b></div>
+    <div class="hero-meta">
+      <a href="https://maps.app.goo.gl/Ab949U9pBRij3jer9" target="_blank"><i class="fa-solid fa-location-dot"></i>住宿：池袋大都會飯店</a>
+      <span><i class="fa-solid fa-calendar"></i>2026 春</span>
     </div>
-    <div class="scroll-hint">
-        <span>Scroll</span>
-        <i class="fa-solid fa-chevron-down" style="color:#fff;font-size:0.7rem;"></i>
-    </div>
+  </div>
+  <div class="scroll-cue">
+    <span>SCROLL</span>
+    <div class="line"></div>
+  </div>
 </header>
 
-<!-- MAIN -->
-<main>
-    <!-- Info Cards -->
-    <div class="info-grid">
-        <div class="info-card blue" data-delay="1">
-            <h3><i class="fa-solid fa-pen" style="color:#3b82f6;margin-right:6px;"></i>Tip</h3>
-            <p>飯店到機場可搭乘利木津巴士(需預約)，回程免提大行李轉車。</p>
-        </div>
-        <div class="info-card orange" data-delay="2">
-            <h3><i class="fa-solid fa-lightbulb" style="color:#f97316;margin-right:6px;"></i>小叮嚀</h3>
-            <ul>
-                <li>手機綁定 Suica 卡方便市區轉乘</li>
-                <li>澀谷 Sky 觀景台需提前一個月預約</li>                
-            </ul>
-        </div>
+<!-- JOURNEY INTRO -->
+<div class="journey-intro reveal">
+  <div class="kicker">旅 の は じ ま り</div>
+  <h2>八天，沿著山手線<br>把東京慢慢走一遍</h2>
+  <p>從池袋的第一個夜晚，到台場海邊的最後一抹晚霞。<br>美食、購物、老街與港灣——這是專屬於峰和曼曼的東京。</p>
+  <div class="intro-rule"></div>
+</div>
+
+<!-- CAST 主角登場 -->
+<div class="cast reveal">
+  <div class="cast-frame">
+    <div class="cast-seal">峰<br>曼</div>
+    <img class="cast-photo" src="images/couple.jpg" alt="峰和曼曼">
+    <div class="cast-caption">
+      <div class="cc-jp">峰 <em>&amp;</em> 曼曼</div>
+      <div class="cc-sub">THE TRAVELLERS</div>
     </div>
+  </div>
+</div>
 
-    <!-- Day Cards -->
-    <div class="journey-line">
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-card reveal">
+    <div class="ic-head"><i class="fa-solid fa-pen-nib"></i><h3>出行小提醒</h3></div>
+    <p>飯店到機場可搭乘利木津巴士（需事先預約），回程免提大行李轉車，輕鬆又省力。</p>
+  </div>
+  <div class="info-card reveal">
+    <div class="ic-head"><i class="fa-solid fa-lightbulb"></i><h3>行前叮嚀</h3></div>
+    <ul>
+      <li>手機綁定 Suica 卡，市區轉乘更方便</li>
+      <li>澀谷 SKY 觀景台建議提前一個月預約</li>
+    </ul>
+  </div>
+</div>
 
-        <!-- DAY 01 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#1e293b;">
-                <div class="day-num">Day 01 <span class="badge">抵達與池袋初探</span></div>
-            </div>
+<!-- JOURNEY -->
+<div class="journey">
+
+    <section class="station" data-day="01" style="--day-color:#e8b04b;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="一"><div class="day-num"><span class="dn-label">DAY 01</span><span class="dn-big">一日 <em>Day 01</em></span></div><span class="badge">抵達與池袋初探</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#f1f5f9;color:#475569;">抵達</span>
@@ -584,24 +656,29 @@
                 </div>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 02 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#991b1b;">
-                <div class="day-num">Day 02 <span class="badge">老街散步、晴空塔與秋葉原挖寶</span></div>
-            </div>
+    <section class="station" data-day="02" style="--day-color:#d96c5f;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="二"><div class="day-num"><span class="dn-label">DAY 02</span><span class="dn-big">二日 <em>Day 02</em></span></div><span class="badge">老街散步、晴空塔與秋葉原挖寶</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#fef2f2;color:#991b1b;">上午</span>
                     <div class="activity-body">
-                        <p><b>上野（約 2 小時）：</b>從 JR 上野站出來，<b>阿美橫丁</b>就在鐵道旁，是條熱鬧的露天商店街，海鮮、小吃、藥妝、零食都有，邊走邊吃最對味。逛完往北走就是 <b>上野公園</b>，綠地很大、適合散步放鬆，公園裡也有星巴克可以歇腳。</p>
+                        <p><b>上野（約 2 小時）：</b>JR 上野站 <b>不忍口</b> 出來，左手邊鐵道高架旁就是 <b>阿美橫丁</b>，一條熱鬧的露天商店街，海鮮、小吃、藥妝、零食都有，邊走邊吃最對味。逛完從商店街另一頭往北走約 5 分鐘，就是 <b>上野公園</b>，綠地很大、適合散步放鬆，公園裡也有星巴克可以歇腳。</p>
                         <p class="route"><i class="fa-solid fa-train"></i>池袋 (JR山手線) → <b>上野站 (JY05)</b></p>
                     </div>
                 </div>
                 <div class="activity">
                     <span class="activity-tag" style="background:#fef2f2;color:#991b1b;">中午</span>
                     <div class="activity-body">
-                        <p><b>淺草與晴空塔（約 3 小時）：</b>到淺草站後，先看招牌地標 <b>雷門大燈籠</b>，穿過去就是 <b>仲見世通</b>——一整條都是小吃和伴手禮店，人形燒、炸肉餅邊走邊吃，走到底就是淺草寺，可以求個籤。接著搭車到 <b>晴空塔</b>，登展望台看東京全景，塔下的 Solamachi 商場也能逛能吃。</p>
+                        <p><b>淺草與晴空塔（約 3 小時）：</b>淺草站 <b>1 號出口</b> 出來步行約 1 分鐘就是地標 <b>雷門大燈籠</b>。穿過雷門就是 <b>仲見世通</b> 約 250 公尺的小吃伴手禮街，人形燒、炸肉餅邊走邊吃，直直走到底就是 <b>淺草寺</b>，可以求個籤。回淺草站搭車到 <b>押上站（晴空塔）</b>，車站直結晴空塔，登展望台看東京全景，塔下的 Solamachi 商場也能逛能吃。</p>
                         <p class="route"><i class="fa-solid fa-train"></i>上野 → 淺草站 → <b>押上站 (晴空塔)</b></p>
                     </div>
                 </div>
@@ -610,6 +687,7 @@
                     <div class="activity-body">
                         <p><b>秋葉原（約 2.5～3 小時）：</b>動漫迷的天堂。從 JR 秋葉原站「電氣街口」出來，沿著主街 <b>中央通り</b> 逛最順——先進 <b>Animate 秋葉原本店</b>（動漫周邊大本營，咒術迴戰、火影的周邊這裡最齊），旁邊就是 <b>GiGO 遊戲廳</b>，想轉扭蛋、夾娃娃有好幾棟。再往前會經過 <b>扭蛋會館</b>（整面牆的扭蛋機，很好拍）。想看 3C 家電的話，主街上的 <b>Yodobashi Akiba</b> 是超大賣場，順道進去逛逛、吹冷氣休息。<br><span style="color:#dc2626;font-size:0.8rem;">💡 動漫店多開到 20:00、遊戲廳更晚，傍晚來剛好。</span></p>
                         <p class="route"><i class="fa-solid fa-train"></i>押上站 → <b>秋葉原站 (JY03)</b></p>
+                        <p class="route-return"><i class="fa-solid fa-house"></i>回程：秋葉原站搭乘 <b>JR 山手線</b> 直達 <b>池袋站</b>（約 20 分鐘，一車直達）</p>
                     </div>
                 </div>
                 <hr class="divider">
@@ -639,12 +717,17 @@
                 </div>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 03 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#14532d;">
-                <div class="day-num">Day 03 <span class="badge">原宿澀谷逛街，慢慢吃慢慢晃</span></div>
-            </div>
+    <section class="station" data-day="03" style="--day-color:#5fa86c;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="三"><div class="day-num"><span class="dn-label">DAY 03</span><span class="dn-big">三日 <em>Day 03</em></span></div><span class="badge">原宿澀谷逛街，慢慢吃慢慢晃</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#f0fdf4;color:#14532d;">上午</span>
@@ -664,6 +747,7 @@
                     <div class="activity-body">
                         <p><b>澀谷（約 3 小時）：</b>澀谷是逛街重鎮，從車站出來先看著名的 <b>忠犬八公像</b> 和澀谷十字路口。想找 <b>HOKA、On 昂跑</b> 這類運動品牌，澀谷的 <b>MIYASHITA PARK</b> 和站前百貨都找得到，運動鞋控別錯過。傍晚登上 <b>SHIBUYA SKY</b> 戶外展望台，把整片東京夜景拍好拍滿。<br><span style="color:#dc2626;font-size:0.8rem;">💡 SHIBUYA SKY 建議事先上官網預約，傍晚時段最搶手。</span></p>
                         <p class="route"><i class="fa-solid fa-train"></i>搭車返回 <b>澀谷站 (JY20)</b></p>
+                        <p class="route-return"><i class="fa-solid fa-house"></i>回程：澀谷站搭乘 <b>JR 山手線</b> 直達 <b>池袋站</b>（約 16 分鐘，一車直達）</p>
                     </div>
                 </div>
                 <hr class="divider">
@@ -696,25 +780,31 @@
                 <p class="tip-bar" style="background:#f0fdf4;color:#14532d;">💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" target="_blank" style="color:#16a34a;text-decoration:underline;">參考逛街路線</a></p>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 04 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#1e40af;">
-                <div class="day-num">Day 04 <span class="badge">古都鎌倉與橫濱港灣夜景</span></div>
-            </div>
+    <section class="station" data-day="04" style="--day-color:#5b8fc9;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="四"><div class="day-num"><span class="dn-label">DAY 04</span><span class="dn-big">四日 <em>Day 04</em></span></div><span class="badge">古都鎌倉與橫濱港灣夜景</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#eff6ff;color:#1e40af;">上午</span>
                     <div class="activity-body">
-                        <p><b>古都鎌倉（約半天）：</b>抵達鎌倉站後，站旁的 <b>小町通商店街</b> 是熱鬧的小吃街，先吃飽再出發。接著到鎌倉站轉搭海邊小電車 <b>江之電</b>：第一站在 <b>長谷站</b> 下車，走路去看高達 11 公尺的 <b>鎌倉大佛</b>；再上車坐到 <b>鎌倉高校前站</b>，這裡就是灌籃高手片頭的經典平交道，海景超美、必拍。</p>
+                        <p><b>古都鎌倉（約半天）：</b>JR 鎌倉站下車，走 <b>東口</b> 出來就是 <b>小町通商店街</b>，一條約 360 公尺的小吃購物街，先邊走邊吃。逛完走回鎌倉站，站內轉搭海邊小電車 <b>江之電</b>（跟著月台指標走）。<br>① 坐到 <b>長谷站</b>，出站沿路標步行約 7 分鐘到 <b>鎌倉大佛（高德院）</b>，高達 11 公尺、很壯觀（喜歡賞景的話，旁邊的長谷寺也能順遊）。<br>② 回長谷站搭江之電往藤澤方向，在 <b>鎌倉高校前站</b> 下車，出站走 1～2 分鐘就是灌籃高手片頭的經典平交道，海景超美、必拍。<br><span style="color:#dc2626;font-size:0.8rem;">💡 平交道是真實道路、車流量大，拍照請站在安全範圍內。</span></p>
                         <p class="route"><i class="fa-solid fa-train"></i>池袋站搭乘 <b>JR 湘南新宿線</b> 直達 <b>鎌倉站</b></p>
                     </div>
                 </div>
                 <div class="activity">
                     <span class="activity-tag" style="background:#eff6ff;color:#1e40af;">下午</span>
                     <div class="activity-body">
-                        <p><b>橫濱港邊（約半天）：</b>下午搭車到橫濱。在 <b>JR 櫻木町站</b> 下車，先搭超浪漫的 <b>橫濱空中纜車</b> 飛越港灣上空。下纜車後沿著海邊散步到 <b>紅磚倉庫</b>（裡面有店家和餐廳可逛可吃），傍晚這一帶的港灣夜景非常美，很適合慢慢走、拍照。</p>
+                        <p><b>橫濱港邊（約半天）：</b>從鎌倉/藤澤搭 JR 到 <b>櫻木町站</b>。出站往海邊方向走，<b>空中纜車搭乘口就在站旁、步行約 3 分鐘</b>，搭纜車飛越港灣到「運河公園」站。<br>下纜車後沿著海濱步道走約 10～15 分鐘到 <b>紅磚倉庫</b>——兩棟紅磚建築裡有商店和餐廳，可逛可吃。傍晚整片港灣亮燈，沿海邊散步、拍夜景很舒服。<br><span style="color:#dc2626;font-size:0.8rem;">💡 晚餐名單的「橫濱橋商店街」離紅磚倉庫一帶有點距離，想吃那家海膽丼建議當天斟酌取捨；紅磚倉庫附近本身就有不少餐廳。</span></p>
                         <p class="route"><i class="fa-solid fa-train"></i>由鎌倉/藤澤搭乘 <b>JR 根岸線/橫濱線</b> → <b>櫻木町站</b></p>
+                        <p class="route-return"><i class="fa-solid fa-house"></i>回程：橫濱站或櫻木町站搭乘 <b>JR 湘南新宿線</b> 直達 <b>池袋站</b>（約 45 分鐘，一車直達免轉車）</p>
                     </div>
                 </div>
                 <hr class="divider">
@@ -730,26 +820,30 @@
                     <div class="food-row">
                         <span class="food-tag" style="background:#bae6fd;color:#0369a1;">晚餐</span>
                         <ul class="food-list">
-                            <li><span class="num" style="background:#0284c7;">1</span><span class="loc">橫濱商店街</span><a href="https://maps.app.goo.gl/H427W8z79gcirVXu5" target="_blank" style="color:#0284c7;">海膽丼飯</a></li>
+                            <li><span class="num" style="background:#0284c7;">1</span><span class="loc">橫濱商店街</span><a href="https://maps.app.goo.gl/H427W8z79gcirVXu5" target="_blank" style="color:#0284c7;">Iroha 海膽丼飯</a></li>
                             <li><span class="num" style="background:#0284c7;">2</span><span class="loc">橫濱</span><a href="https://maps.app.goo.gl/CHP9Ew4HgBAjJgSn7" target="_blank" style="color:#0284c7;">阿夫利 沾麵</a></li>
                         </ul>
                     </div>
                     <div class="food-row">
                         <span class="food-tag" style="background:#bae6fd;color:#0369a1;">小吃</span>
                         <div class="food-items">
-                            <b>鎌倉</b> <a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank" style="color:#0284c7;">大佛燒</a>、<a href="https://maps.app.goo.gl/rtfuR2gTYydq5kTo6" target="_blank" style="color:#0284c7;">Hannari Inari 鮭魚卵千層杯</a><br>
-                            <b>江之島</b> <a href="https://maps.app.goo.gl/C7HpSU16vBVh9GqX6" target="_blank" style="color:#0284c7;">Giraffa 咖哩麵包</a>、<a href="https://maps.app.goo.gl/H8nNqKZVbpeBUVzQ7" target="_blank" style="color:#0284c7;">朝日堂海鮮仙貝</a>
+                            <b>鎌倉</b> <a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank" style="color:#0284c7;">大佛燒</a>、<a href="https://maps.app.goo.gl/rtfuR2gTYydq5kTo6" target="_blank" style="color:#0284c7;">Hannari Inari 鮭魚卵千層杯</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 05 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#581c87;">
-                <div class="day-num">Day 05 <span class="badge">麻布台、銀座與東京車站購物日</span></div>
-            </div>
+    <section class="station" data-day="05" style="--day-color:#9b7cc4;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="五"><div class="day-num"><span class="dn-label">DAY 05</span><span class="dn-big">五日 <em>Day 05</em></span></div><span class="badge">麻布台、銀座與東京車站購物日</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#faf5ff;color:#581c87;">上午</span>
@@ -761,7 +855,7 @@
                 <div class="activity">
                     <span class="activity-tag" style="background:#faf5ff;color:#581c87;">下午</span>
                     <div class="activity-body">
-                        <p><b>銀座（購物時間）：</b>逛逛 Ginza Six、超大間的無印良品旗艦店，喜歡文具的話別錯過十二層樓的伊東屋 Itoya，還有銀座地標和光百貨的鐘塔。盡情買，把想要的都帶回家！</p>
+                        <p><b>銀座（購物時間 · 約 2～3 小時）：</b>銀座站下車後，整區精華都在 <b>中央通り</b> 這條主街上，沿著走最順。<b>A1 出口</b> 上來先逛 <b>無印良品銀座旗艦店</b>（全球最大、有 MUJI 飯店）；往南走幾分鐘到 <b>Ginza Six</b>，是銀座最大的精品百貨，記得上頂樓免費花園透透氣。回頭往三越方向走，路口的 <b>和光百貨鐘塔</b> 是銀座地標、適合拍照；喜歡文具的話，旁邊十二層樓的 <b>伊東屋 Itoya</b> 別錯過。整條街逛下來，想買的差不多都能收齊。</p>
                         <p class="route"><i class="fa-solid fa-train"></i>神谷町站搭 <b>地鐵日比谷線</b> 直達 <b>銀座站 (H08)</b>（約 8 分鐘）</p>
                     </div>
                 </div>
@@ -801,12 +895,17 @@
                 <p class="tip-bar" style="background:#faf5ff;color:#581c87;">💡 今日動線：麻布台之丘 ➔ 銀座 ➔ 東京車站，由南往北一條線，不繞路、不趕路，逛得輕鬆又盡興。</p>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 06 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#92400e;">
-                <div class="day-num">Day 06 <span class="badge">川越小江戶老街與新宿不夜城</span></div>
-            </div>
+    <section class="station" data-day="06" style="--day-color:#d99a4b;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="六"><div class="day-num"><span class="dn-label">DAY 06</span><span class="dn-big">六日 <em>Day 06</em></span></div><span class="badge">川越小江戶老街與新宿不夜城</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#fff7ed;color:#92400e;">上午</span>
@@ -818,7 +917,7 @@
                 <div class="activity">
                     <span class="activity-tag" style="background:#fff7ed;color:#92400e;">中午</span>
                     <div class="activity-body">
-                        <p><b>川越老街（約 2.5 小時）：</b>從神社往車站方向走，會進入充滿江戶風情的 <b>藏造老街（一番街）</b>。沿路朝聖地標 <b>時之鐘</b>，邊走邊吃川越名物地瓜點心，也有融入老街木造風格的 <b>星巴克鐘撞通店</b> 可以歇腳。慢慢逛回川越站搭車。</p>
+                        <p><b>川越老街（約 2.5 小時）：</b>從冰川神社往車站方向步行約 15 分鐘，就會進入充滿江戶風情的 <b>藏造老街（一番街）</b>。主街上朝聖地標鐘樓 <b>時之鐘</b>，再鑽進旁邊的 <b>菓子屋橫丁</b> 小巷邊走邊吃川越名物地瓜點心，也有融入老街木造風格的 <b>星巴克鐘撞通店</b> 可以歇腳。順著老街一路慢慢逛回川越站搭車。</p>
                     </div>
                 </div>
                 <div class="activity">
@@ -832,6 +931,7 @@
                     <span class="activity-tag" style="background:#fff7ed;color:#92400e;">晚間</span>
                     <div class="activity-body">
                         <p><b>西口電器與深夜美食：</b>穿過車站到 <b>西口</b>，這裡有大型 <b>Bic Camera</b>、<b>Yodobashi</b>，想看家電 3C 的話一次逛個夠。晚餐／宵夜可以鑽進懷舊氣氛滿滿的 <b>思出橫丁</b> 吃串燒小酒館；想看夜景的話，<b>新宿都廳</b> 45 樓展望台免費開放，能看到整片東京燈海。</p>
+                        <p class="route-return"><i class="fa-solid fa-house"></i>回程：新宿站搭乘 <b>JR 山手線</b> 直達 <b>池袋站</b>（約 9 分鐘，一車直達）</p>
                     </div>
                 </div>
                 <hr class="divider">
@@ -861,12 +961,17 @@
                 <p class="tip-bar" style="background:#fff7ed;color:#92400e;">💡 川越市內景點距 JR 川越站步行約 20-30 分鐘，建議抵達時先搭巴士到最遠的冰川神社，再一路慢慢逛回車站！</p>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 07 -->
-        <div class="day-card">
-            <div class="day-header" style="background:#0c4a6e;">
-                <div class="day-num">Day 07 <span class="badge">豐洲海鮮與台場海邊一日遊</span></div>
-            </div>
+    <section class="station" data-day="07" style="--day-color:#5fa3c4;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="七"><div class="day-num"><span class="dn-label">DAY 07</span><span class="dn-big">七日 <em>Day 07</em></span></div><span class="badge">豐洲海鮮與台場海邊一日遊</span></div>
             <div class="day-body">
                 <div class="activity">
                     <span class="activity-tag" style="background:#f0f9ff;color:#0c4a6e;">上午</span>
@@ -880,13 +985,14 @@
                     <div class="activity-body">
                         <p><b>台場（約 3～4 小時）：</b>從豐洲搭百合海鷗號到台場。先到 <b>DiverCity</b> 商場，門口就是 1:1 實物大的 <b>獨角獸鋼彈</b>（晚上會點燈變身，很值得等），裡面有鋼彈基地和動漫周邊可逛。接著散步去看 <b>富士電視台</b> 造型超特別的球體大樓，沿海邊還有 <b>AQUA CiTY</b> 等大型購物中心可以慢慢逛。</p>
                         <p class="route"><i class="fa-solid fa-train"></i>從豐洲站轉乘 <b>百合海鷗號</b> → <b>台場站 (U07)</b></p>
+                       
                     </div>
                 </div>
                 <div class="activity">
                     <span class="activity-tag" style="background:#f0f9ff;color:#0c4a6e;">晚間</span>
                     <div class="activity-body">
                         <p><b>台場海邊看夜景（約 1.5～2 小時）：</b>傍晚從商場往海邊走，<b>台場海濱公園</b> 沿岸有一段很好散步的木棧道。這裡能同時拍到小一號的 <b>自由女神像</b> 和點燈後的 <b>彩虹大橋</b>，天還沒全黑的「魔幻時刻」最美、最好拍。海邊的 AQUA CiTY、DECKS 兩個商場都有面海的餐廳，挑一間邊看夜景邊吃晚餐，幫這天畫下句點。</p>
-                        <p class="route"><i class="fa-solid fa-train"></i>自台場 <b>東京電訊站</b> 搭乘 <b>JR 埼京線</b>，30 分鐘直達池袋！</p>
+                         <p class="route-return"><i class="fa-solid fa-house"></i>回程：台場 <b>東京電訊站 (臨海線)</b> 搭乘 <b>JR 埼京線</b> 直通運轉，一車直達 <b>池袋站</b>（約 30 分鐘，免轉車）</p>
                     </div>
                 </div>
                 <hr class="divider">
@@ -917,110 +1023,119 @@
                 </div>
             </div>
         </div>
+        </div>
+    </section>
 
-        <!-- DAY 08 -->
-        <div class="day-card" style="background:#f8fafc;">
-            <div class="day-header" style="background:#64748b;">
-                <div class="day-num">Day 08 <span class="badge">平安歸賦</span></div>
-            </div>
-            <div class="day-body" style="text-align:center;">
-                <p style="color:#475569;font-size:0.9rem;margin-bottom:1rem;">池袋 Sunshine City 或是車站周邊進行伴手禮最後衝刺與補漏。</p>
-                <div style="display:inline-flex;align-items:center;gap:0.5rem;background:#f1f5f9;padding:0.6rem 1.2rem;border-radius:30px;font-size:0.82rem;color:#475569;">
-                    <i class="fa-solid fa-bus" style="color:#64748b;"></i>
-                    池袋大都會飯店大廳直接搭乘利木津巴士直達成田機場
+    <section class="station" data-day="08" style="--day-color:#8a93a3;">
+        <div class="station-marker">
+            <span class="station-dot"></span>
+            <span class="station-line"></span>
+        </div>
+        <div class="station-content reveal">
+            <div class="day-card">
+            <div class="day-header" data-jp="八"><div class="day-num"><span class="dn-label">DAY 08</span><span class="dn-big">八日 <em>Day 08</em></span></div><span class="badge">平安歸賦</span></div>
+            <div class="day-body">
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f1f5f9;color:#475569;">上午</span>
+                    <div class="activity-body">
+                        <p><b>池袋最後採買（約 2～3 小時）：</b>退房前把行李寄放在飯店櫃台，輕鬆出門。從池袋站 <b>東口</b> 出來，步行約 8 分鐘就是 <b>Sunshine City</b> 大型購物城，伴手禮、藥妝、雜貨一次補齊；想就近解決的話，池袋站本身的 <b>西武、東武百貨</b> 地下美食街也能買名產。抓緊時間採買，買完回飯店拿行李。</p>
+                        <p class="route-return"><i class="fa-solid fa-house"></i>回程：回池袋大都會飯店櫃台取行李、辦理退房</p>
+                    </div>
+                </div>
+                <div class="activity">
+                    <span class="activity-tag" style="background:#f1f5f9;color:#475569;">中午</span>
+                    <div class="activity-body">
+                        <p><b>前往機場：</b>飯店大廳直接搭乘 <b>利木津巴士</b> 直達成田機場，免提大行李轉車，輕鬆又省力。<br><span style="color:#dc2626;font-size:0.8rem;">💡 利木津巴士回程務必事先預約（可於 Day 1 入住時請櫃台代訂），並對照機票確認航廈與發車時間。</span></p>
+                    </div>
                 </div>
             </div>
         </div>
+        </div>
+    </section>
+</div><!-- /journey -->
 
-    </div><!-- /journey-line -->
-</main>
+<!-- END MARK -->
+<div class="end-mark reveal">
+  <div class="seal-big">完</div>
+  <p>八天的旅程，到這裡告一段落<br>願峰和曼曼，旅途平安、滿載而歸</p>
+</div>
 
 <footer>
-    <p><strong>峰和曼曼</strong> 創造美好回憶 ✈</p>
+  <p><strong>峰和曼曼</strong> ・ 創造美好回憶 ✈</p>
 </footer>
 
 <script>
-// Cursor dot
-const dot = document.getElementById('cursorDot');
-document.addEventListener('mousemove', e => {
-    dot.style.left = e.clientX + 'px';
-    dot.style.top  = e.clientY + 'px';
+/* ===== LOADER ===== */
+window.addEventListener('load',()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('done'),2100);
 });
 
-// Hamburger
-function toggleMenu() {
-    document.getElementById('hamburger').classList.toggle('open');
-    document.getElementById('mobileMenu').classList.toggle('open');
+/* ===== NAV ===== */
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
+const nav=document.getElementById('nav');
+const progress=document.getElementById('readProgress');
+window.addEventListener('scroll',()=>{
+  nav.classList.toggle('scrolled',window.scrollY>60);
+  const h=document.documentElement.scrollHeight-window.innerHeight;
+  progress.style.width=(window.scrollY/h*100)+'%';
+},{passive:true});
+document.querySelectorAll('.mobile-menu a').forEach(a=>{
+  a.addEventListener('click',()=>{
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('mobileMenu').classList.remove('open');
+  });
+});
+
+/* ===== REVEAL ON SCROLL ===== */
+const revealObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); revealObs.unobserve(e.target);} });
+},{threshold:0.12,rootMargin:'0px 0px -60px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+/* ===== ACTIVE STATION (燈號) ===== */
+const stationObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    e.target.classList.toggle('active',e.isIntersecting);
+  });
+},{threshold:0.25,rootMargin:'-30% 0px -45% 0px'});
+document.querySelectorAll('.station').forEach(s=>stationObs.observe(s));
+
+/* ===== PETALS (桌機才跑, 手機省效能) ===== */
+if(window.innerWidth>760 && !window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const layer=document.getElementById('petalLayer');
+  for(let i=0;i<14;i++){
+    const p=document.createElement('div');
+    const size=6+Math.random()*8;
+    p.style.cssText=`position:absolute;top:-30px;left:${Math.random()*100}%;
+      width:${size}px;height:${size*1.25}px;
+      background:radial-gradient(circle at 30% 30%,rgba(240,201,107,0.7),rgba(192,57,43,0.45));
+      border-radius:0 100% 0 100%;opacity:${0.25+Math.random()*0.4};
+      animation:petalFall ${9+Math.random()*11}s linear ${Math.random()*10}s infinite;`;
+    layer.appendChild(p);
+  }
+  const st=document.createElement('style');
+  st.textContent=`@keyframes petalFall{
+    0%{transform:translateY(-30px) translateX(0) rotate(0);}
+    100%{transform:translateY(105vh) translateX(${Math.random()>0.5?'':'-'}80px) rotate(540deg);}
+  }`;
+  document.head.appendChild(st);
 }
 
-// Intersection Observer for scroll animations
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.day-card, .info-card').forEach(el => observer.observe(el));
-
-// Sakura canvas
-(function() {
-    const canvas = document.getElementById('sakura');
-    const ctx = canvas.getContext('2d');
-    let W, H, petals = [];
-
-    function resize() {
-        W = canvas.width  = window.innerWidth;
-        H = canvas.height = window.innerHeight;
+/* ===== HERO PARALLAX (桌機) ===== */
+if(window.innerWidth>760){
+  const sun=document.querySelector('.hero-sun');
+  const mtn=document.querySelector('.hero-mountains');
+  window.addEventListener('scroll',()=>{
+    const y=window.scrollY;
+    if(y<window.innerHeight){
+      sun.style.transform=`translate(-50%,calc(-50% + ${y*0.3}px))`;
+      mtn.style.transform=`translateY(${y*0.12}px)`;
     }
-    resize();
-    window.addEventListener('resize', resize);
-
-    function randomPetal() {
-        return {
-            x: Math.random() * W,
-            y: -20,
-            r: 4 + Math.random() * 5,
-            speed: 0.6 + Math.random() * 1.2,
-            drift: (Math.random() - 0.5) * 0.8,
-            rot: Math.random() * Math.PI * 2,
-            rotSpeed: (Math.random() - 0.5) * 0.04,
-            opacity: 0.4 + Math.random() * 0.5
-        };
-    }
-
-    for (let i = 0; i < 18; i++) {
-        let p = randomPetal();
-        p.y = Math.random() * H;
-        petals.push(p);
-    }
-
-    function drawPetal(p) {
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.globalAlpha = p.opacity;
-        ctx.fillStyle = '#e88ea0';
-        ctx.beginPath();
-        ctx.ellipse(0, 0, p.r, p.r * 1.5, 0, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, W, H);
-        petals.forEach((p, i) => {
-            drawPetal(p);
-            p.y += p.speed;
-            p.x += p.drift;
-            p.rot += p.rotSpeed;
-            if (p.y > H + 20) petals[i] = randomPetal();
-        });
-        requestAnimationFrame(animate);
-    }
-    animate();
-})();
+  },{passive:true});
+}
 </script>
 
 </body>

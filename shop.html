@@ -1,184 +1,192 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>逛街地圖</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --ink: #1a1a2e; --red: #c0392b; --gold: #d4a017; --paper: #faf7f2; }
-        * { box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', sans-serif; background: var(--paper); overflow-x: hidden; margin: 0; }
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>逛街地圖</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600;900&family=Shippori+Mincho:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d14;--ink2:#15151f;--ink3:#1e1e2c;
+  --paper:#f4ede0;--gold:#d4a84b;--gold-bright:#f0c96b;
+  --red:#c0392b;
+  --serif:'Shippori Mincho','Noto Serif JP',serif;
+  --jp:'Noto Serif JP',serif;--sans:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ink);color:var(--paper);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
-        nav { background: rgba(26,26,46,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,160,23,0.2); position: sticky; top: 0; z-index: 100; }
-        .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; height: 60px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-        .nav-logo span { color: var(--gold); }
-        .nav-links { display: flex; gap: 0.25rem; }
-        .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.78rem; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.25s; white-space: nowrap; }
-        .nav-links a:hover { color: #fff; background: rgba(212,160,23,0.2); }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,13,20,0.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(212,168,75,0.22);}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 1.4rem;height:62px;display:flex;justify-content:space-between;align-items:center;}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;color:var(--paper);text-decoration:none;letter-spacing:0.12em;display:flex;align-items:center;gap:0.55rem;}
+.nav-logo .seal{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold);font-family:var(--jp);}
+.nav-links{display:flex;gap:0.15rem;}
+.nav-links a{color:rgba(244,237,224,0.7);text-decoration:none;font-size:0.78rem;padding:0.45rem 0.85rem;transition:all 0.25s;letter-spacing:0.04em;white-space:nowrap;position:relative;}
+.nav-links a.active{color:var(--gold-bright);}
+.nav-links a::after{content:'';position:absolute;left:50%;bottom:0.2rem;width:0;height:1px;background:var(--gold);transition:all 0.25s;transform:translateX(-50%);}
+.nav-links a:hover::after,.nav-links a.active::after{width:60%;}
+.nav-links a:hover{color:var(--gold-bright);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--paper);transition:0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;flex-direction:column;background:rgba(13,13,20,0.98);padding:0.6rem 1rem 1.1rem;gap:0.2rem;border-bottom:1px solid rgba(212,168,75,0.2);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:rgba(244,237,224,0.82);text-decoration:none;font-size:0.92rem;padding:0.7rem 0.6rem;border-bottom:1px solid rgba(255,255,255,0.05);}
+@media(max-width:760px){.nav-links{display:none;}.hamburger{display:flex;}}
 
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .mobile-menu { display: none; flex-direction: column; background: rgba(26,26,46,0.98); padding: 0.75rem 1rem 1rem; gap: 0.25rem; }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; padding: 0.6rem 0.75rem; border-radius: 8px; transition: background 0.2s; }
-        .mobile-menu a:hover { background: rgba(212,160,23,0.15); }
-        @media (max-width: 640px) { .nav-links { display: none; } .hamburger { display: flex; } }
+/* PAGE HERO */
+.page-hero{position:relative;padding:8rem 1.5rem 3.5rem;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(192,57,43,0.25),transparent 70%),linear-gradient(180deg,#15131c,#0d0d14);}
+.page-hero::before{content:'土 産';position:absolute;font-family:var(--jp);font-weight:900;
+  font-size:13rem;color:rgba(212,168,75,0.05);right:2%;top:48%;transform:translateY(-50%);letter-spacing:0.1em;pointer-events:none;}
+.ph-eyebrow{font-size:0.7rem;letter-spacing:0.5em;color:var(--gold);margin-bottom:1.1rem;padding-left:0.5em;}
+.ph-title{font-family:var(--jp);font-weight:900;font-size:clamp(2.2rem,7vw,4rem);color:var(--paper);letter-spacing:0.08em;}
+.ph-sub{margin-top:1rem;font-size:0.9rem;color:rgba(244,237,224,0.6);font-weight:300;letter-spacing:0.05em;}
+.ph-rule{width:1px;height:50px;margin:1.8rem auto 0;background:linear-gradient(var(--gold),transparent);}
 
-        .page-hero {
-            background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 50%, #1a1a2e 100%);
-            padding: 3.5rem 1rem 2.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .page-hero::before { content: '🛍'; font-size: 8rem; position: absolute; right: -1rem; top: -1rem; opacity: 0.08; }
-        .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: #fff; font-weight: 900; }
-        .page-hero p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; font-size: 0.95rem; }
+/* FILTER */
+.filter-bar{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:900px;margin:2.5rem auto 0;padding:0 1.4rem;}
+.filter-btn{font-family:var(--sans);font-size:0.78rem;letter-spacing:0.05em;color:rgba(244,237,224,0.7);
+  background:var(--ink3);border:1px solid rgba(212,168,75,0.2);padding:0.5rem 1.2rem;border-radius:2px;cursor:pointer;transition:all 0.25s;}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold-bright);}
+.filter-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:700;}
 
-        /* Maps grid */
-        .maps-container {
-            max-width: 900px;
-            margin: 2.5rem auto 4rem;
-            padding: 0 1.25rem;
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+/* GRID */
+.gift-grid{max-width:1140px;margin:2.5rem auto 4rem;padding:0 1.4rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+@media(max-width:980px){.gift-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:680px){.gift-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}}
+@media(max-width:420px){.gift-grid{grid-template-columns:1fr;}}
 
-        .map-card {
-            background: #fff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0,0,0,0.09);
-            border: 1px solid #e2e8f0;
-            opacity: 0;
-            transform: translateY(28px);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
+.gift-card{background:linear-gradient(160deg,var(--ink3),var(--ink2));border:1px solid rgba(212,168,75,0.16);
+  border-radius:4px;overflow:hidden;position:relative;
+  opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(.2,.7,.2,1),transform 0.7s cubic-bezier(.2,.7,.2,1),box-shadow 0.3s,border-color 0.3s;}
+.gift-card.in{opacity:1;transform:translateY(0);}
+.gift-card.hide{display:none;}
+.gift-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.gift-card:hover{border-color:rgba(212,168,75,0.5);box-shadow:0 18px 40px -18px rgba(0,0,0,0.85);transform:translateY(-5px);}
+.gift-card:hover::before{opacity:1;}
+.card-img-wrap{aspect-ratio:1;overflow:hidden;background:var(--ink);}
+.card-img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;filter:saturate(0.95);}
+.gift-card:hover .card-img{transform:scale(1.07);}
+.card-body{padding:1rem 1.1rem 1.2rem;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.6rem;}
+.tag{font-size:0.62rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:2px;letter-spacing:0.03em;}
+.tag-gift{background:rgba(95,168,108,0.15);color:#7fc88c;border:1px solid rgba(95,168,108,0.35);}
+.tag-drug{background:rgba(91,143,201,0.15);color:#86b3e8;border:1px solid rgba(91,143,201,0.35);}
+.tag-want{background:rgba(217,108,159,0.15);color:#e89ec0;border:1px solid rgba(217,108,159,0.35);}
+.tag-net{background:rgba(212,168,75,0.15);color:var(--gold-bright);border:1px solid rgba(212,168,75,0.35);}
+.tag-area{background:rgba(244,237,224,0.08);color:rgba(244,237,224,0.6);border:1px solid rgba(244,237,224,0.15);}
+.card-title{font-family:var(--serif);font-size:0.98rem;font-weight:800;color:var(--paper);line-height:1.5;margin-bottom:0.4rem;}
+.card-loc{font-size:0.74rem;color:rgba(244,237,224,0.5);line-height:1.65;}
+.card-loc a{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);}
+.card-note{font-size:0.72rem;color:rgba(240,201,107,0.85);margin-top:0.4rem;line-height:1.6;}
 
-        .map-card.visible {
-            animation: fadeUp 0.6s ease forwards;
-        }
+footer{background:var(--ink2);border-top:1px solid rgba(212,168,75,0.18);text-align:center;padding:2.5rem 1rem;}
+footer p{font-family:var(--serif);font-size:0.85rem;color:rgba(244,237,224,0.5);letter-spacing:0.15em;}
+footer strong{color:var(--gold);}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}
+</style>
 
-        @keyframes fadeUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .map-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.13); }
-
-        .map-label {
-            padding: 0.75rem 1.25rem;
-            font-size: 0.78rem;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            text-transform: uppercase;
-            color: #fff;
-        }
-
-        .map-card img {
-            width: 100%;
-            display: block;
-            transition: transform 0.5s ease;
-        }
-
-        .map-card:hover img { transform: scale(1.01); }
-
-        footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem 1rem; font-size: 0.8rem; }
-        footer strong { color: var(--gold); }
-    </style>
+<style>
+.map-stage{max-width:1180px;margin:2.5rem auto 4rem;padding:0 1.4rem;}
+.map-frame{background:linear-gradient(160deg,var(--ink3),var(--ink2));border:1px solid rgba(212,168,75,0.22);
+  border-radius:4px;overflow:hidden;box-shadow:0 30px 70px -25px rgba(0,0,0,0.9);position:relative;
+  opacity:0;transform:translateY(30px);transition:opacity 0.8s cubic-bezier(.2,.7,.2,1),transform 0.8s cubic-bezier(.2,.7,.2,1);}
+.map-frame.in{opacity:1;transform:translateY(0);}
+.map-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.map-frame iframe{width:100%;height:clamp(420px,68vw,780px);display:block;border:none;filter:saturate(0.9) brightness(0.92);}
+.map-hint{display:flex;align-items:center;gap:0.5rem;padding:0.9rem 1.3rem;
+  background:rgba(212,168,75,0.07);border-top:1px solid rgba(212,168,75,0.18);
+  font-size:0.78rem;color:rgba(244,237,224,0.6);}
+.map-hint i{color:var(--gold);}
+/* shop area cards */
+.area-stack{max-width:920px;margin:2.5rem auto 4rem;padding:0 1.4rem;display:flex;flex-direction:column;gap:2rem;}
+.area-card{background:linear-gradient(160deg,var(--ink3),var(--ink2));border:1px solid rgba(212,168,75,0.18);
+  border-radius:4px;overflow:hidden;position:relative;box-shadow:0 20px 50px -22px rgba(0,0,0,0.85);
+  opacity:0;transform:translateY(34px);transition:opacity 0.8s cubic-bezier(.2,.7,.2,1),transform 0.8s cubic-bezier(.2,.7,.2,1),box-shadow 0.3s;}
+.area-card.in{opacity:1;transform:translateY(0);}
+.area-card:hover{box-shadow:0 26px 60px -22px rgba(0,0,0,0.95);}
+.area-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--day-c),transparent);}
+.area-head{padding:1.3rem 1.5rem;display:flex;align-items:center;gap:0.9rem;position:relative;
+  border-bottom:1px solid rgba(212,168,75,0.12);}
+.area-head::after{content:attr(data-jp);position:absolute;right:1.3rem;font-family:var(--jp);font-weight:900;
+  font-size:3rem;color:var(--day-c);opacity:0.12;}
+.area-no{font-family:var(--jp);font-weight:900;font-size:1.5rem;color:var(--day-c);
+  width:48px;height:48px;border:1.5px solid var(--day-c);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.area-name{font-family:var(--serif);font-weight:800;}
+.area-name .an-jp{font-size:1.15rem;color:var(--paper);letter-spacing:0.06em;}
+.area-name .an-en{font-size:0.68rem;letter-spacing:0.25em;color:var(--day-c);margin-top:0.2rem;}
+.area-card img{width:100%;display:block;transition:transform 0.6s ease;filter:saturate(0.95);}
+.area-card:hover img{transform:scale(1.02);}
+</style>
 </head>
 <body>
-
 <nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-logo">✈ <span>TOKYO</span> 2026</a>
-        <div class="nav-links">
-            <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
-            <a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
-            <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
-            <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
-        </div>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
-        <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
-        <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
-        <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
-    </div>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="seal">旅</span>TOKYO 2026</a>
+    <div class="nav-links"><a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a><a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a><a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a><a href="shop.html" class="active"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a></div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu"><a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a><a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a><a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a><a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a></div>
 </nav>
-
 <div class="page-hero">
-    <h1>🛍 逛街地圖</h1>
-    <p>澀谷、原宿、上野、淺草完整逛街攻略</p>
+  <div class="ph-eyebrow">SHOPPING DISTRICTS</div>
+  <h1 class="ph-title">逛 街 地 圖</h1>
+  <p class="ph-sub">澀谷・原宿・上野・淺草・完整逛街攻略</p>
+  <div class="ph-rule"></div>
 </div>
-
-<div class="maps-container">
-
-    <div class="map-card">
-        <div class="map-label" style="background:linear-gradient(90deg,#0f766e,#0d9488);">
-            <i class="fa-solid fa-location-dot"></i> 澀谷 Shibuya
-        </div>
-        <img src="images/shibuya.jpg" alt="澀谷逛街地圖">
+<div class="area-stack">
+  <div class="area-card" style="--day-c:#5fa86c;">
+    <div class="area-head" data-jp="渋">
+      <div class="area-no">一</div>
+      <div class="area-name"><div class="an-jp">澀谷 逛街地圖</div><div class="an-en">SHIBUYA</div></div>
     </div>
-
-    <div class="map-card">
-        <div class="map-label" style="background:linear-gradient(90deg,#be185d,#db2777);">
-            <i class="fa-solid fa-location-dot"></i> 原宿 Harajuku
-        </div>
-        <img src="images/harajuku.jpg" alt="原宿逛街地圖">
+    <img src="images/shibuya.jpg" alt="澀谷逛街地圖">
+  </div>
+  <div class="area-card" style="--day-c:#d96c5f;">
+    <div class="area-head" data-jp="原">
+      <div class="area-no">二</div>
+      <div class="area-name"><div class="an-jp">原宿 逛街地圖</div><div class="an-en">HARAJUKU</div></div>
     </div>
-
-    <div class="map-card">
-        <div class="map-label" style="background:linear-gradient(90deg,#b45309,#d97706);">
-            <i class="fa-solid fa-location-dot"></i> 上野 Ueno
-        </div>
-        <img src="images/ueno.jpg" alt="上野逛街地圖">
+    <img src="images/harajuku.jpg" alt="原宿逛街地圖">
+  </div>
+  <div class="area-card" style="--day-c:#d99a4b;">
+    <div class="area-head" data-jp="上">
+      <div class="area-no">三</div>
+      <div class="area-name"><div class="an-jp">上野 逛街地圖</div><div class="an-en">UENO</div></div>
     </div>
-
-    <div class="map-card">
-        <div class="map-label" style="background:linear-gradient(90deg,#7c3aed,#8b5cf6);">
-            <i class="fa-solid fa-location-dot"></i> 淺草 Asakusa
-        </div>
-        <img src="images/asakusa.jpg" alt="淺草逛街地圖">
+    <img src="images/ueno.jpg" alt="上野逛街地圖">
+  </div>
+  <div class="area-card" style="--day-c:#9b7cc4;">
+    <div class="area-head" data-jp="浅">
+      <div class="area-no">四</div>
+      <div class="area-name"><div class="an-jp">淺草 逛街地圖</div><div class="an-en">ASAKUSA</div></div>
     </div>
-
+    <img src="images/asakusa.jpg" alt="淺草逛街地圖">
+  </div>
 </div>
-
-<footer>
-    <p><strong>峰和曼曼</strong> 創造美好回憶 ✈</p>
-</footer>
-
+<footer><p><strong>峰和曼曼</strong> ・ 創造美好回憶 ✈</p></footer>
 <script>
-function toggleMenu() {
-    document.getElementById('hamburger').classList.toggle('open');
-    document.getElementById('mobileMenu').classList.toggle('open');
-}
-
-const observer = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-            e.target.style.animationDelay = (i * 0.12) + 's';
-            e.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('.map-card').forEach(c => observer.observe(c));
+function toggleMenu(){document.getElementById('hamburger').classList.toggle('open');document.getElementById('mobileMenu').classList.toggle('open');}
+const o=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target);}}),{threshold:0.1});
+document.querySelectorAll('.area-card').forEach(c=>o.observe(c));
 </script>
 </body>
 </html>

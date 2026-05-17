@@ -1,165 +1,144 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="favicon.svg">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>東京伴手禮清單</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --ink: #1a1a2e;
-            --red: #c0392b;
-            --gold: #d4a017;
-            --paper: #faf7f2;
-        }
+<meta charset="UTF-8">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>東京伴手禮清單</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&family=Noto+Serif+JP:wght@400;600;900&family=Shippori+Mincho:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0d0d14;--ink2:#15151f;--ink3:#1e1e2c;
+  --paper:#f4ede0;--gold:#d4a84b;--gold-bright:#f0c96b;
+  --red:#c0392b;
+  --serif:'Shippori Mincho','Noto Serif JP',serif;
+  --jp:'Noto Serif JP',serif;--sans:'Noto Sans TC',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--ink);color:var(--paper);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0.04;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
-        * { box-sizing: border-box; }
-        body { font-family: 'Noto Sans TC', sans-serif; background: var(--paper); overflow-x: hidden; }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,13,20,0.92);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(212,168,75,0.22);}
+.nav-inner{max-width:1180px;margin:0 auto;padding:0 1.4rem;height:62px;display:flex;justify-content:space-between;align-items:center;}
+.nav-logo{font-family:var(--serif);font-size:1.15rem;color:var(--paper);text-decoration:none;letter-spacing:0.12em;display:flex;align-items:center;gap:0.55rem;}
+.nav-logo .seal{width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;color:var(--gold);font-family:var(--jp);}
+.nav-links{display:flex;gap:0.15rem;}
+.nav-links a{color:rgba(244,237,224,0.7);text-decoration:none;font-size:0.78rem;padding:0.45rem 0.85rem;transition:all 0.25s;letter-spacing:0.04em;white-space:nowrap;position:relative;}
+.nav-links a.active{color:var(--gold-bright);}
+.nav-links a::after{content:'';position:absolute;left:50%;bottom:0.2rem;width:0;height:1px;background:var(--gold);transition:all 0.25s;transform:translateX(-50%);}
+.nav-links a:hover::after,.nav-links a.active::after{width:60%;}
+.nav-links a:hover{color:var(--gold-bright);}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;}
+.hamburger span{display:block;width:24px;height:2px;background:var(--paper);transition:0.3s;}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mobile-menu{display:none;flex-direction:column;background:rgba(13,13,20,0.98);padding:0.6rem 1rem 1.1rem;gap:0.2rem;border-bottom:1px solid rgba(212,168,75,0.2);}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:rgba(244,237,224,0.82);text-decoration:none;font-size:0.92rem;padding:0.7rem 0.6rem;border-bottom:1px solid rgba(255,255,255,0.05);}
+@media(max-width:760px){.nav-links{display:none;}.hamburger{display:flex;}}
 
-        /* NAV */
-        nav { background: rgba(26,26,46,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(212,160,23,0.2); position: sticky; top: 0; z-index: 100; }
-        .nav-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; height: 60px; display: flex; justify-content: space-between; align-items: center; }
-        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
-        .nav-logo span { color: var(--gold); }
-        .nav-links { display: flex; gap: 0.25rem; }
-        .nav-links a { color: rgba(255,255,255,0.75); text-decoration: none; font-size: 0.78rem; padding: 0.4rem 0.75rem; border-radius: 20px; transition: all 0.25s; white-space: nowrap; }
-        .nav-links a:hover { color: #fff; background: rgba(212,160,23,0.2); }
+/* PAGE HERO */
+.page-hero{position:relative;padding:8rem 1.5rem 3.5rem;text-align:center;overflow:hidden;
+  background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(192,57,43,0.25),transparent 70%),linear-gradient(180deg,#15131c,#0d0d14);}
+.page-hero::before{content:'土 産';position:absolute;font-family:var(--jp);font-weight:900;
+  font-size:13rem;color:rgba(212,168,75,0.05);right:2%;top:48%;transform:translateY(-50%);letter-spacing:0.1em;pointer-events:none;}
+.ph-eyebrow{font-size:0.7rem;letter-spacing:0.5em;color:var(--gold);margin-bottom:1.1rem;padding-left:0.5em;}
+.ph-title{font-family:var(--jp);font-weight:900;font-size:clamp(2.2rem,7vw,4rem);color:var(--paper);letter-spacing:0.08em;}
+.ph-sub{margin-top:1rem;font-size:0.9rem;color:rgba(244,237,224,0.6);font-weight:300;letter-spacing:0.05em;}
+.ph-rule{width:1px;height:50px;margin:1.8rem auto 0;background:linear-gradient(var(--gold),transparent);}
 
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: #fff; border-radius: 2px; transition: all 0.3s; }
-        .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .hamburger.open span:nth-child(2) { opacity: 0; }
-        .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-        .mobile-menu { display: none; flex-direction: column; background: rgba(26,26,46,0.98); padding: 0.75rem 1rem 1rem; gap: 0.25rem; }
-        .mobile-menu.open { display: flex; }
-        .mobile-menu a { color: rgba(255,255,255,0.8); text-decoration: none; font-size: 0.9rem; padding: 0.6rem 0.75rem; border-radius: 8px; transition: background 0.2s; }
-        .mobile-menu a:hover { background: rgba(212,160,23,0.15); }
+/* FILTER */
+.filter-bar{display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;max-width:900px;margin:2.5rem auto 0;padding:0 1.4rem;}
+.filter-btn{font-family:var(--sans);font-size:0.78rem;letter-spacing:0.05em;color:rgba(244,237,224,0.7);
+  background:var(--ink3);border:1px solid rgba(212,168,75,0.2);padding:0.5rem 1.2rem;border-radius:2px;cursor:pointer;transition:all 0.25s;}
+.filter-btn:hover{border-color:var(--gold);color:var(--gold-bright);}
+.filter-btn.active{background:var(--gold);color:var(--ink);border-color:var(--gold);font-weight:700;}
 
-        @media (max-width: 640px) { .nav-links { display: none; } .hamburger { display: flex; } }
+/* GRID */
+.gift-grid{max-width:1140px;margin:2.5rem auto 4rem;padding:0 1.4rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1.4rem;}
+@media(max-width:980px){.gift-grid{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:680px){.gift-grid{grid-template-columns:repeat(2,1fr);gap:1rem;}}
+@media(max-width:420px){.gift-grid{grid-template-columns:1fr;}}
 
-        /* HERO */
-        .page-hero { background: linear-gradient(135deg, #c0392b 0%, #8b0000 50%, #1a1a2e 100%); padding: 3.5rem 1rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
-        .page-hero::before { content: '🎁'; font-size: 8rem; position: absolute; right: -1rem; top: -1rem; opacity: 0.08; }
-        .page-hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 4vw, 2.8rem); color: #fff; font-weight: 900; }
-        .page-hero p { color: rgba(255,255,255,0.8); margin-top: 0.5rem; font-size: 0.95rem; }
+.gift-card{background:linear-gradient(160deg,var(--ink3),var(--ink2));border:1px solid rgba(212,168,75,0.16);
+  border-radius:4px;overflow:hidden;position:relative;
+  opacity:0;transform:translateY(30px);transition:opacity 0.7s cubic-bezier(.2,.7,.2,1),transform 0.7s cubic-bezier(.2,.7,.2,1),box-shadow 0.3s,border-color 0.3s;}
+.gift-card.in{opacity:1;transform:translateY(0);}
+.gift-card.hide{display:none;}
+.gift-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity 0.3s;}
+.gift-card:hover{border-color:rgba(212,168,75,0.5);box-shadow:0 18px 40px -18px rgba(0,0,0,0.85);transform:translateY(-5px);}
+.gift-card:hover::before{opacity:1;}
+.card-img-wrap{aspect-ratio:1;overflow:hidden;background:var(--ink);}
+.card-img{width:100%;height:100%;object-fit:cover;transition:transform 0.6s ease;filter:saturate(0.95);}
+.gift-card:hover .card-img{transform:scale(1.07);}
+.card-body{padding:1rem 1.1rem 1.2rem;}
+.card-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.6rem;}
+.tag{font-size:0.62rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:2px;letter-spacing:0.03em;}
+.tag-gift{background:rgba(95,168,108,0.15);color:#7fc88c;border:1px solid rgba(95,168,108,0.35);}
+.tag-drug{background:rgba(91,143,201,0.15);color:#86b3e8;border:1px solid rgba(91,143,201,0.35);}
+.tag-want{background:rgba(217,108,159,0.15);color:#e89ec0;border:1px solid rgba(217,108,159,0.35);}
+.tag-net{background:rgba(212,168,75,0.15);color:var(--gold-bright);border:1px solid rgba(212,168,75,0.35);}
+.tag-area{background:rgba(244,237,224,0.08);color:rgba(244,237,224,0.6);border:1px solid rgba(244,237,224,0.15);}
+.card-title{font-family:var(--serif);font-size:0.98rem;font-weight:800;color:var(--paper);line-height:1.5;margin-bottom:0.4rem;}
+.card-loc{font-size:0.74rem;color:rgba(244,237,224,0.5);line-height:1.65;}
+.card-loc a{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);}
+.card-note{font-size:0.72rem;color:rgba(240,201,107,0.85);margin-top:0.4rem;line-height:1.6;}
 
-        /* FILTER TABS */
-        .filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center; padding: 1.5rem 1rem 0.5rem; max-width: 1100px; margin: 0 auto; }
-        .filter-btn { padding: 0.4rem 1.1rem; border-radius: 30px; font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.22s; border: 2px solid transparent; background: #fff; color: #64748b; box-shadow: 0 1px 6px rgba(0,0,0,0.06); }
-        .filter-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .filter-btn.active { color: #fff; border-color: transparent; }
-        .filter-btn[data-cat="all"].active { background: var(--ink); }
-        .filter-btn[data-cat="gift"].active { background: #16a34a; }
-        .filter-btn[data-cat="drug"].active { background: #3b82f6; }
-        .filter-btn[data-cat="want"].active { background: #ec4899; }
-        .filter-btn[data-cat="net"].active { background: #64748b; }
-
-        /* GRID */
-        .grid-wrap { max-width: 1200px; margin: 1.5rem auto 4rem; padding: 0 1rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
-        @media (max-width: 1024px) { .grid-wrap { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 700px)  { .grid-wrap { grid-template-columns: repeat(2, 1fr); gap: 0.85rem; } }
-        @media (max-width: 420px)  { .grid-wrap { grid-template-columns: 1fr; } }
-
-        /* CARD */
-        .gift-card {
-            background: #fff;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 14px rgba(0,0,0,0.07);
-            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, opacity 0.4s;
-            opacity: 0;
-            transform: translateY(24px);
-            cursor: default;
-        }
-
-        .gift-card.visible { opacity: 1; transform: translateY(0); }
-        .gift-card.hidden  { opacity: 0; transform: scale(0.94); pointer-events: none; }
-
-        .gift-card:hover {
-            transform: translateY(-6px) scale(1.02);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.13);
-        }
-
-        .card-img {
-            width: 100%;
-            aspect-ratio: 4/3;
-            object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .gift-card:hover .card-img { transform: scale(1.06); }
-
-        .card-img-wrap { overflow: hidden; position: relative; }
-
-        /* Image with contain variant */
-        .card-img.contain { object-fit: contain; background: #f1f5f9; }
-
-        .card-body { padding: 0.85rem 1rem 1rem; }
-        .card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.45rem; }
-        .tag { font-size: 0.62rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 20px; letter-spacing: 0.03em; }
-        .tag-gift { background: #dcfce7; color: #15803d; }
-        .tag-drug { background: #dbeafe; color: #1d4ed8; }
-        .tag-want { background: #fce7f3; color: #be185d; }
-        .tag-net  { background: #f1f5f9; color: #475569; }
-        .tag-area { background: #fef3c7; color: #92400e; }
-
-        .card-title { font-weight: 700; font-size: 0.9rem; line-height: 1.4; color: var(--ink); margin-bottom: 0.3rem; }
-        .card-loc   { font-size: 0.72rem; color: #64748b; line-height: 1.5; }
-        .card-loc a { color: #3b82f6; text-decoration: underline; }
-        .card-rank  { font-size: 0.68rem; color: #f97316; font-weight: 600; margin-top: 0.25rem; }
-
-        /* footer */
-        footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 2rem 1rem; font-size: 0.8rem; }
-        footer strong { color: var(--gold); }
-    </style>
+footer{background:var(--ink2);border-top:1px solid rgba(212,168,75,0.18);text-align:center;padding:2.5rem 1rem;}
+footer p{font-family:var(--serif);font-size:0.85rem;color:rgba(244,237,224,0.5);letter-spacing:0.15em;}
+footer strong{color:var(--gold);}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}
+</style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-    <div class="nav-inner">
-        <a href="index.html" class="nav-logo">✈ <span>TOKYO</span> 2026</a>
-        <div class="nav-links">
-            <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
-            <a href="souvenirs.html"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
-            <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
-            <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
-        </div>
-        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </div>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="seal">旅</span>TOKYO 2026</a>
+    <div class="nav-links">
+      <a href="index.html"><i class="fa-solid fa-calendar-days"></i> 行程總覽</a>
+      <a href="souvenirs.html" class="active"><i class="fa-solid fa-gift"></i> 伴手禮清單</a>
+      <a href="foodmap.html"><i class="fa-solid fa-map-location-dot"></i> 美食地圖</a>
+      <a href="shop.html"><i class="fa-solid fa-bag-shopping"></i> 逛街地圖</a>
     </div>
-    <div class="mobile-menu" id="mobileMenu">
-        <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
-        <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
-        <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
-        <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
-    </div>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html"><i class="fa-solid fa-calendar-days mr-2"></i>行程總覽</a>
+    <a href="souvenirs.html"><i class="fa-solid fa-gift mr-2"></i>伴手禮清單</a>
+    <a href="foodmap.html"><i class="fa-solid fa-map-location-dot mr-2"></i>美食地圖</a>
+    <a href="shop.html"><i class="fa-solid fa-bag-shopping mr-2"></i>逛街地圖</a>
+  </div>
 </nav>
 
-<!-- HERO -->
 <div class="page-hero">
-    <h1>🎁 東京必買伴手禮</h1>
-    <p>美食、藥妝、想買的東西一次收集</p>
+  <div class="ph-eyebrow">SOUVENIRS &amp; GIFTS</div>
+  <h1 class="ph-title">伴 手 禮 帖</h1>
+  <p class="ph-sub">美食、藥妝、想買的，一次收藏</p>
+  <div class="ph-rule"></div>
 </div>
 
-<!-- FILTER TABS -->
-<div class="filter-bar">
-    <button class="filter-btn active" data-cat="all">全部</button>
-    <button class="filter-btn" data-cat="gift">🍪 伴手禮</button>
-    <button class="filter-btn" data-cat="drug">💊 藥妝</button>
-    <button class="filter-btn" data-cat="want">🛍 想買的</button>
-    <button class="filter-btn" data-cat="net">👥 網友推薦</button>
+<div class="filter-bar" id="filterBar">
+  <button class="filter-btn active" data-filter="all">全部</button>
+  <button class="filter-btn" data-filter="gift">伴手禮</button>
+  <button class="filter-btn" data-filter="drug">藥妝</button>
+  <button class="filter-btn" data-filter="want">想買的</button>
+  <button class="filter-btn" data-filter="net">網友推薦</button>
 </div>
 
-<!-- GRID -->
-<div class="grid-wrap" id="cardGrid">
-
-    <div class="gift-card" data-cat="gift">
+<div class="gift-grid" id="giftGrid">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/butterTree.jpg" class="card-img" alt="砂糖樹餅乾"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span></div>
@@ -167,8 +146,7 @@
             <div class="card-loc">地點：7-11</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/PRESS_BUTTER_SAND.jpg" class="card-img" alt="PRESS BUTTER SAND"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -176,8 +154,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/brulee_merize.jpg" class="card-img" alt="BRULEE MERIZE"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -185,8 +162,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/gateau_festa_harada.jpg" class="card-img" alt="GATEAU FESTA HARADA"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -194,8 +170,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/vanillabeans.jpg" class="card-img" alt="vanillabeans"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -203,8 +178,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/butter_no_itoko.jpg" class="card-img" alt="butter no itoko"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -212,8 +186,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/Life_Pudding.jpg" class="card-img" alt="人生布丁"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -221,8 +194,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/PISTA&TOKYO.jpg" class="card-img" alt="PISTA&TOKYO"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -230,8 +202,7 @@
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="drug">
+        <div class="gift-card" data-cat="drug">
         <div class="card-img-wrap"><img src="images/TOKIO.jpg" class="card-img" alt="京喚羽"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-drug">藥妝</span><span class="tag tag-area">銀座</span></div>
@@ -239,8 +210,7 @@
             <div class="card-loc"><a href="https://maps.app.goo.gl/nQNsGGsobddC1NZ26" target="_blank">地點：銀座一丁目站 7號出口 ONE GINZA 3階</a><br>店名：SEAM GINZA</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/(NO) RAISIN SANDWICH.jpg" class="card-img" alt="(NO) RAISIN SANDWICH"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -249,8 +219,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第10名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/Now on Cheese.jpg" class="card-img" alt="Now on Cheese"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -259,8 +228,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第9名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/jb.jpg" class="card-img" alt="喫茶店に恋して"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -269,9 +237,8 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第8名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
-        <div class="card-img-wrap"><img src="images/Curly's Croissant TOKYO BAKE STAND.jpg" class="card-img" alt="Curly's Croissant"></div>
+        <div class="gift-card" data-cat="gift">
+        <div class="card-img-wrap"><img src="images/Curly’s Croissant TOKYO BAKE STAND.jpg" class="card-img" alt="Curly's Croissant"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
             <div class="card-title">Curly's Croissant TOKYO BAKE STAND 頂級可頌禮盒</div>
@@ -279,8 +246,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第7名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/Jaga Boulde.jpg" class="card-img" alt="Jaga Boulde"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -289,8 +255,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第6名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/COCORIS.jpg" class="card-img" alt="COCORIS"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -299,8 +264,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第5名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/red.jpg" class="card-img" alt="東京紅豆麵包"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -309,8 +273,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第4名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/The Maple Mania.jpg" class="card-img" alt="The Maple Mania"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -319,8 +282,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第3名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/KOURO-AN.jpg" class="card-img" alt="香爐庵"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -329,8 +291,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · 第2名</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="gift">
+        <div class="gift-card" data-cat="gift">
         <div class="card-img-wrap"><img src="images/Brick Bake Bakers by Pâtisserie ease.jpg" class="card-img" alt="Brick Bake Bakers"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-gift">伴手禮</span><span class="tag tag-area">東京</span></div>
@@ -339,8 +300,7 @@
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · <strong>第1名</strong></div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="net">
+        <div class="gift-card" data-cat="net">
         <div class="card-img-wrap"><img src="images/薯條1.jpg" class="card-img" alt="網友推薦薯條"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-net">網友推薦</span></div>
@@ -348,8 +308,7 @@
             <div class="card-loc">地點：7-11</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="net">
+        <div class="gift-card" data-cat="net">
         <div class="card-img-wrap"><img src="images/薯條2.jpg" class="card-img" alt="網友推薦薯條"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-net">網友推薦</span></div>
@@ -357,8 +316,7 @@
             <div class="card-loc">地點：7-11</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="want">
+        <div class="gift-card" data-cat="want">
         <div class="card-img-wrap"><img src="images/背包.jpg" class="card-img contain" alt="抽繩肩背包"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-want">想買的</span></div>
@@ -366,8 +324,7 @@
             <div class="card-loc">地點：UNIQLO</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="drug">
+        <div class="gift-card" data-cat="drug">
         <div class="card-img-wrap"><img src="images/指甲刀.jpg" class="card-img contain" alt="指甲刀"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-drug">藥妝</span></div>
@@ -375,8 +332,7 @@
             <div class="card-loc">地點：藥妝店、激胺殿堂<br>網友推薦用超過5年以上，很好用!!</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="drug">
+        <div class="gift-card" data-cat="drug">
         <div class="card-img-wrap"><img src="images/洗臉粉.jpg" class="card-img contain" alt="洗臉粉"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-drug">藥妝</span></div>
@@ -384,8 +340,7 @@
             <div class="card-loc">地點：藥妝店</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="want">
+        <div class="gift-card" data-cat="want">
         <div class="card-img-wrap"><img src="images/背心.jpg" class="card-img contain" alt="背心"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-want">想買的</span></div>
@@ -393,8 +348,7 @@
             <div class="card-loc">地點：UNIQLO</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="want">
+        <div class="gift-card" data-cat="want">
         <div class="card-img-wrap"><img src="images/妹妹想買.jpg" class="card-img contain" alt="妹妹想買的"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-want">想買的</span><span class="tag tag-area">新宿</span></div>
@@ -402,8 +356,7 @@
             <div class="card-loc"><a href="https://maps.app.goo.gl/jKAUuiRwHzzAzwzq7" target="_blank">地點：Lumine Est (JR新宿站東口)</a><br>3樓 ante by intesucre</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="drug">
+        <div class="gift-card" data-cat="drug">
         <div class="card-img-wrap"><img src="images/洗髮精.jpg" class="card-img" alt="去頭皮味洗髮精"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-drug">藥妝</span></div>
@@ -411,8 +364,7 @@
             <div class="card-loc">地點：藥妝店</div>
         </div>
     </div>
-
-    <div class="gift-card" data-cat="want">
+        <div class="gift-card" data-cat="want">
         <div class="card-img-wrap"><img src="images/手提袋.jpg" class="card-img contain" alt="TRAVEL SHOP MILESTO 手提袋"></div>
         <div class="card-body">
             <div class="card-tags"><span class="tag tag-want">想買的</span></div>
@@ -423,48 +375,35 @@
             </div>
         </div>
     </div>
-
-</div><!-- /grid-wrap -->
+</div>
 
 <footer>
-    <p><strong>峰和曼曼</strong> 創造美好回憶 ✈</p>
+  <p><strong>峰和曼曼</strong> ・ 創造美好回憶 ✈</p>
 </footer>
 
 <script>
-function toggleMenu() {
-    document.getElementById('hamburger').classList.toggle('open');
-    document.getElementById('mobileMenu').classList.toggle('open');
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
 }
-
-// Filter
-const btns  = document.querySelectorAll('.filter-btn');
-const cards = document.querySelectorAll('.gift-card');
-
-btns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        btns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const cat = btn.dataset.cat;
-        cards.forEach(c => {
-            if (cat === 'all' || c.dataset.cat === cat) {
-                c.classList.remove('hidden');
-            } else {
-                c.classList.add('hidden');
-            }
-        });
-    });
+/* reveal */
+const obs=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');obs.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.gift-card').forEach((c,i)=>{
+  c.style.transitionDelay=(i%4*0.06)+'s';obs.observe(c);
 });
-
-// Scroll-in animation
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); }
+/* filter */
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const f=btn.dataset.filter;
+    document.querySelectorAll('.gift-card').forEach(c=>{
+      const show=(f==='all'||c.dataset.cat===f);
+      c.classList.toggle('hide',!show);
     });
-}, { threshold: 0.08 });
-
-cards.forEach((c, i) => {
-    c.style.transitionDelay = (i % 4) * 60 + 'ms';
-    observer.observe(c);
+  });
 });
 </script>
 </body>
