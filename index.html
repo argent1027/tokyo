@@ -410,7 +410,7 @@ footer strong{color:var(--gold);}
         <path id="fp-d7-a" d="M403,207 Q450,240 498,280" class="flight-path" data-day="7"/>
         <path id="fp-d7-b" d="M498,280 Q450,240 403,207" class="flight-path" data-day="7"/>
         <!-- D8: 池袋→成田（往右上淡出） -->
-        <path id="fp-d8" d="M403,207 Q560,110 720,30" class="flight-path" data-day="8" opacity="0.35"/>
+        <path id="fp-d8" d="M403,207  840,180" class="flight-path" data-day="8" opacity="0.35"/>
       </g>
       <!-- D1 池袋 -->
       <g class="map-pin active" data-day="1" onclick="selectDay(1)" id="pin1" filter="url(#pinGlow)">
@@ -478,6 +478,12 @@ footer strong{color:var(--gold);}
         <circle cx="498" cy="280" r="4" class="pin-inner"/>
         <text x="513" y="276" class="map-pin-day" text-anchor="start">D7</text>
         <text x="513" y="285" class="map-pin-label" text-anchor="start">豐洲・台場</text>
+      </g>
+	  <g class="map-pin" data-day="7" onclick="selectDay(8)" id="pin8" filter="url(#pinGlow)">
+        <circle cx="840" cy="180" r="10" class="pin-outer"/>
+        <circle cx="840" cy="180" r="4" class="pin-inner"/>
+        <text x="832" y="158" class="map-pin-day" text-anchor="start">D8</text>
+        <text x="810" y="170" class="map-pin-label" text-anchor="start">成田機場</text>
       </g>
       <!-- 版權 -->
       <text x="838" y="550" font-family="Noto Sans TC,sans-serif" font-size="9" fill="rgba(244,237,224,0.2)" text-anchor="end">© OpenStreetMap contributors</text>
@@ -1171,7 +1177,7 @@ const DAY_PINS = {
   5: ['pin1','pin5'],
   6: ['pin1','pin6-kawagoe','pin6-shinjuku'],
   7: ['pin1','pin7'],
-  8: ['pin1'],
+  8: ['pin1','pin8'],
 };
 
 function selectDay(day) {
