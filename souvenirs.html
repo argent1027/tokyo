@@ -88,7 +88,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,13,20,0.9
 .tag-gift{background:rgba(95,168,108,0.15);color:#7fc88c;border:1px solid rgba(95,168,108,0.35);}
 .tag-drug{background:rgba(91,143,201,0.15);color:#86b3e8;border:1px solid rgba(91,143,201,0.35);}
 .tag-want{background:rgba(217,108,159,0.15);color:#e89ec0;border:1px solid rgba(217,108,159,0.35);}
-.tag-net{background:rgba(212,168,75,0.15);color:var(--gold-bright);border:1px solid rgba(212,168,75,0.35);}
+.tag-convenience{background:rgba(212,168,75,0.15);color:var(--gold-bright);border:1px solid rgba(212,168,75,0.35);}
 .tag-area{background:rgba(244,237,224,0.08);color:rgba(244,237,224,0.6);border:1px solid rgba(244,237,224,0.15);}
 .card-title{font-family:var(--serif);font-size:0.98rem;font-weight:800;color:var(--paper);line-height:1.5;margin-bottom:0.4rem;}
 .card-loc{font-size:0.74rem;color:rgba(244,237,224,0.5);line-height:1.65;}
@@ -134,14 +134,14 @@ footer strong{color:var(--gold);}
   <button class="filter-btn" data-filter="gift">伴手禮</button>
   <button class="filter-btn" data-filter="drug">藥妝</button>
   <button class="filter-btn" data-filter="want">想買的</button>
-  <button class="filter-btn" data-filter="net">網友推薦</button>
+  <button class="filter-btn" data-filter="convenience">便利商店</button>
 </div>
 
 <div class="gift-grid" id="giftGrid">
-    <div class="gift-card" data-cat="gift">
+    <div class="gift-card" data-cat="convenience">
         <div class="card-img-wrap"><img src="images/butterTree.jpg" class="card-img" alt="砂糖樹餅乾"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-gift">伴手禮</span></div>
+            <div class="card-tags"><span class="tag tag-convenience">便利商店</span></div>
             <div class="card-title">砂糖樹餅乾</div>
             <div class="card-loc">地點：7-11</div>
         </div>
@@ -309,18 +309,18 @@ footer strong{color:var(--gold);}
             <div class="card-rank">🏆 2026東京車站伴手禮 TOP 10 · <strong>第1名</strong></div>
         </div>
     </div>
-    <div class="gift-card" data-cat="net">
+    <div class="gift-card" data-cat="convenience">
         <div class="card-img-wrap"><img src="images/薯條1.jpg" class="card-img" alt="網友推薦薯條"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-net">網友推薦</span></div>
+            <div class="card-tags"><span class="tag tag-convenience">便利商店</span></div>
             <div class="card-title">網友推薦薯條</div>
             <div class="card-loc">地點：7-11</div>
         </div>
     </div>
-    <div class="gift-card" data-cat="net">
+    <div class="gift-card" data-cat="convenience">
         <div class="card-img-wrap"><img src="images/薯條2.jpg" class="card-img" alt="網友推薦薯條"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-net">網友推薦</span></div>
+            <div class="card-tags"><span class="tag tag-convenience">便利商店</span></div>
             <div class="card-title">網友推薦薯條</div>
             <div class="card-loc">地點：7-11</div>
         </div>
@@ -408,7 +408,22 @@ footer strong{color:var(--gold);}
             <div class="card-loc">地點：唐吉軻德</div>
         </div>
     </div>
-	
+	<div class="gift-card" data-cat="convenience">
+        <div class="card-img-wrap"><img src="images/爆漿泡芙.jpg" class="card-img" alt="爆漿泡芙"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-convenience">便利商店</span></div>
+            <div class="card-title">爆漿泡芙</div>
+            <div class="card-loc">地點：LAWSON</div>
+        </div>
+    </div>
+	<div class="gift-card" data-cat="drug">
+        <div class="card-img-wrap"><img src="images/護唇膏.jpg" class="card-img contain" alt="護唇膏"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-drug">藥妝</span></div>
+            <div class="card-title">護唇膏</div>
+            <div class="card-loc">地點：藥妝店</div>
+        </div>
+    </div>
 	
 	
 </div>
