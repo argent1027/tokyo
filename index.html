@@ -392,13 +392,13 @@ footer strong{color:var(--gold);}
         <path id="fp-d2-a" d="M403,207 Q432,208 462,209" class="flight-path" data-day="2"/>
         <path id="fp-d2-b" d="M462,209 Q453,217 444,225" class="flight-path" data-day="2"/>
         <path id="fp-d2-c" d="M444,225 Q424,216 403,207" class="flight-path" data-day="2"/>
-        <!-- D3: 池袋→原宿→澀谷→池袋 -->
-        <path id="fp-d3-a" d="M403,207 Q391,231 379,256" class="flight-path" data-day="3"/>
-        <path id="fp-d3-b" d="M379,256 Q391,231 403,207" class="flight-path" data-day="3"/>
-        <!-- D4: 池袋→橫濱→鎌倉→池袋 -->
-        <path id="fp-d4-a" d="M403,207 Q382,333 360,460" class="flight-path" data-day="4"/>
-        <path id="fp-d4-b" d="M360,460 Q345,505 330,550" class="flight-path" data-day="4"/>
-        <path id="fp-d4-c" d="M330,550 Q367,378 403,207" class="flight-path" data-day="4"/>
+        <!-- D3: 池袋→橫濱→鎌倉→池袋 -->
+        <path id="fp-d3-a" d="M403,207 Q382,333 360,460" class="flight-path" data-day="3"/>
+        <path id="fp-d3-b" d="M360,460 Q345,505 330,550" class="flight-path" data-day="3"/>
+        <path id="fp-d3-c" d="M330,550 Q367,378 403,207" class="flight-path" data-day="3"/>
+        <!-- D4: 池袋→原宿→澀谷→池袋 -->
+        <path id="fp-d4-a" d="M403,207 Q391,231 379,256" class="flight-path" data-day="4"/>
+        <path id="fp-d4-b" d="M379,256 Q391,231 403,207" class="flight-path" data-day="4"/>
         <!-- D5: 池袋→麻布台→銀座→池袋 -->
         <path id="fp-d5-a" d="M403,207 Q419,234 436,261" class="flight-path" data-day="5"/>
         <path id="fp-d5-b" d="M436,261 Q419,234 403,207" class="flight-path" data-day="5"/>
@@ -432,25 +432,25 @@ footer strong{color:var(--gold);}
         <text x="459" y="221" class="map-pin-day" text-anchor="start">D2</text>
         <text x="459" y="230" class="map-pin-label" text-anchor="start">秋葉原</text>
       </g>
-      <!-- D3 原宿・澀谷 -->
+      <!-- D3 橫濱・鎌倉 -->
       <g class="map-pin" data-day="3" onclick="selectDay(3)" id="pin3" filter="url(#pinGlow)">
-        <circle cx="379" cy="256" r="10" class="pin-outer"/>
-        <circle cx="379" cy="256" r="4" class="pin-inner"/>
-        <text x="364" y="248" class="map-pin-day" text-anchor="end">D3</text>
-        <text x="364" y="257" class="map-pin-label" text-anchor="end">原宿・澀谷</text>
-      </g>
-      <!-- D4 橫濱・鎌倉（你調好的座標） -->
-      <g class="map-pin" data-day="4" onclick="selectDay(4)" id="pin4-yokohama" filter="url(#pinGlow)">
         <circle cx="360" cy="460" r="10" class="pin-outer"/>
         <circle cx="360" cy="460" r="4" class="pin-inner"/>
-        <text x="365" y="438" class="map-pin-day" text-anchor="end">D4</text>
-        <text x="365" y="448" class="map-pin-label" text-anchor="end">橫濱</text>
+        <text x="355" y="438" class="map-pin-day" text-anchor="end">D3</text>
+        <text x="355" y="448" class="map-pin-label" text-anchor="end">橫濱</text>
       </g>
-      <g class="map-pin" data-day="4" onclick="selectDay(4)" id="pin4-kamakura" filter="url(#pinGlow)">
+      <g class="map-pin" data-day="3" onclick="selectDay(3)" id="pin3-kamakura" filter="url(#pinGlow)">
         <circle cx="330" cy="550" r="10" class="pin-outer"/>
         <circle cx="330" cy="550" r="4" class="pin-inner"/>
-        <text x="330" y="526" class="map-pin-day" text-anchor="end">D4</text>
-        <text x="335" y="538" class="map-pin-label" text-anchor="end">鎌倉</text>
+        <text x="325" y="526" class="map-pin-day" text-anchor="end">D3</text>
+        <text x="325" y="538" class="map-pin-label" text-anchor="end">鎌倉</text>
+      </g>
+      <!-- D4 原宿・澀谷 -->
+      <g class="map-pin" data-day="4" onclick="selectDay(4)" id="pin4" filter="url(#pinGlow)">
+        <circle cx="379" cy="256" r="10" class="pin-outer"/>
+        <circle cx="379" cy="256" r="4" class="pin-inner"/>
+        <text x="364" y="248" class="map-pin-day" text-anchor="end">D4</text>
+        <text x="364" y="257" class="map-pin-label" text-anchor="end">原宿・澀谷</text>
       </g>
       <!-- D5 銀座・麻布台 -->
       <g class="map-pin" data-day="5" onclick="selectDay(5)" id="pin5" filter="url(#pinGlow)">
@@ -493,8 +493,8 @@ footer strong{color:var(--gold);}
   <div class="day-nav" id="dayNav">
     <button class="day-pill active" onclick="selectDay(1)" data-day="1">DAY 1 池袋</button>
     <button class="day-pill" onclick="selectDay(2)" data-day="2">DAY 2 上野・淺草</button>
-    <button class="day-pill" onclick="selectDay(3)" data-day="3">DAY 3 原宿・澀谷</button>
-    <button class="day-pill" onclick="selectDay(4)" data-day="4">DAY 4 鎌倉・橫濱</button>
+    <button class="day-pill" onclick="selectDay(3)" data-day="3">DAY 3 鎌倉・橫濱</button>
+    <button class="day-pill" onclick="selectDay(4)" data-day="4">DAY 4 原宿・澀谷</button>
     <button class="day-pill" onclick="selectDay(5)" data-day="5">DAY 5 銀座・麻布台</button>
     <button class="day-pill" onclick="selectDay(6)" data-day="6">DAY 6 川越・新宿</button>
     <button class="day-pill" onclick="selectDay(7)" data-day="7">DAY 7 豐洲・台場</button>
@@ -688,81 +688,11 @@ footer strong{color:var(--gold);}
   <!-- DAY 03 -->
   <div class="station reveal" style="--day-c:#5fa86c;">
     <div class="day-scene">
-      <div class="day-scene-bg" style="background-image:url('images/day3.jpg')"></div>
+      <div class="day-scene-bg" style="background-image:url('images/day4.jpg')"></div>
       <div class="day-scene-vignette"></div>
       <div class="day-scene-watermark">三</div>
       <div class="day-scene-content">
         <div class="day-num-label">DAY 03 · 6/15</div>
-        <div class="day-big">原宿澀谷逛街<br>慢慢吃慢慢晃</div>
-        <span class="day-badge">原宿 · 表參道 · 代官山 · 澀谷 Sky</span>
-      </div>
-    </div>
-    <div class="day-card">
-      <div class="day-body">
-        <div class="activity">
-          <span class="activity-tag">上午</span>
-          <div class="activity-body">
-            <p><b>原宿與表參道（約 3 小時）：</b>從 JR 原宿站出來，先到旁邊的 <b>明治神宮</b> 走走、被森林包圍很療癒（約 1 小時）。回到站前的 <b>竹下通</b> 是年輕人的潮流小街，可麗餅、雜貨很好逛。接著沿 <b>表參道</b> 大道往下走，兩側精品店和好拍的櫥窗一路相連；想找 <b>Onitsuka Tiger 鬼塚虎</b>，表參道上就有專門店，順路必逛！</p>
-            <p class="route"><i class="fa-solid fa-train"></i>池袋 (JR山手線) → <b>原宿站 (JY19)</b></p>
-          </div>
-        </div>
-        <div class="activity">
-          <span class="activity-tag">下午</span>
-          <div class="activity-body">
-            <p><b>代官山 / 中目黑（約 2 小時）：</b>從表參道搭車到代官山，<b>代官山蔦屋書店</b> 是質感超高的書店，書、雜貨、咖啡都有，逛起來很愜意。再散步或搭一站到中目黑，<b>中目黑星巴克臻選旗艦店</b> 是棟超美的烘焙工坊，買杯特色咖啡坐下來放空一下。</p>
-          </div>
-        </div>
-        <div class="activity">
-          <span class="activity-tag">晚上</span>
-          <div class="activity-body">
-            <p><b>澀谷（約 3 小時）：</b>澀谷是逛街重鎮，從車站出來先看著名的 <b>忠犬八公像</b> 和澀谷十字路口。想找 <b>HOKA、On 昂跑</b> 這類運動品牌，澀谷的 <b>MIYASHITA PARK</b> 和站前百貨都找得到，運動鞋控別錯過。傍晚登上 <b>SHIBUYA SKY</b> 戶外展望台，把整片東京夜景拍好拍滿。<br><span style="color:#ea580c;font-size:0.8rem;">💡 SHIBUYA SKY 建議事先上官網預約，傍晚時段最搶手。</span></p>
-            <p class="route"><i class="fa-solid fa-train"></i>搭車返回 <b>澀谷站 (JY20)</b></p>
-            <p class="route-return"><i class="fa-solid fa-house"></i>回程：澀谷站搭乘 <b>JR 山手線</b> 直達 <b>池袋站</b>（約 16 分鐘，一車直達）</p>
-          </div>
-        </div>
-        <hr class="divider">
-        <div class="food-box">
-          <h4><i class="fa-solid fa-utensils"></i>美食名單</h4>
-          <div class="food-row">
-            <span class="food-tag">午餐</span>
-            <ul class="food-list">
-              <li><span class="num">1</span><span class="loc">表參道</span><a href="https://maps.app.goo.gl/mkBq54FbL1faCXpGA" target="_blank">山笑 壽喜燒</a></li>
-              <li><span class="num">2</span><span class="loc">原宿</span><a href="https://maps.app.goo.gl/RdHntmo7FDGGFsNe6" target="_blank">原宿餃子</a></li>
-            </ul>
-          </div>
-          <div class="food-row">
-            <span class="food-tag">晚餐</span>
-            <ul class="food-list">
-              <li><span class="num">1</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/ZR5EdH3UCCSbv1j36" target="_blank">⭐⭐️yellow 蛋包飯 <span style="color:#ea580c;font-size:0.68rem;">💡與池袋店選擇其一</span></a></li>
-              <li><span class="num">2</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/fp7Sc4ZKypnGzD8Y6" target="_blank">センタービーフ 牛肉飯</a></li>
-              <li><span class="num">3</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">Hayashi Ramen 拉麵</a></li>
-              <li><span class="num">4</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/u6YtiUh3VGrDSjRu7" target="_blank">《米其林必比登》副大統領 咖哩飯 🌟</a></li>
-              <li><span class="num">5</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/GG3LpDjjCEXAHN4v9" target="_blank">山下本氣 烏龍麵</a></li>
-            </ul>
-          </div>
-          <div class="food-row">
-            <span class="food-tag">小吃</span>
-            <div class="food-items"><b>澀谷</b> <a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">⭐️GARIGUETTE 千層派</a>、<a href="https://maps.app.goo.gl/ACA68DhGnvZnPVQo9" target="_blank">⭐️I'm donut</a></div>
-			
-          </div>
-        </div>
-        <p class="tip-bar">
-		💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" target="_blank">參考逛街路線</a><br>
-		💡 <a href="https://maps.app.goo.gl/BqjvKQz5Fxzj6KLB6" target="_blank">澀谷 SHIBUYA SKY 位置</a>
-		</p>
-		
-      </div>
-    </div>
-  </div>
-
-  <!-- DAY 04 -->
-  <div class="station reveal" style="--day-c:#5b8fc9;">
-    <div class="day-scene">
-      <div class="day-scene-bg" style="background-image:url('images/day4.jpg')"></div>
-      <div class="day-scene-vignette"></div>
-      <div class="day-scene-watermark">四</div>
-      <div class="day-scene-content">
-        <div class="day-num-label">DAY 04 · 6/16</div>
         <div class="day-big">古都鎌倉<br>橫濱港灣夜景</div>
         <span class="day-badge">大佛 · 江之電 · 灌籃高手平交道 · 紅磚倉庫</span>
       </div>
@@ -819,6 +749,76 @@ footer strong{color:var(--gold);}
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 04 -->
+  <div class="station reveal" style="--day-c:#5b8fc9;">
+    <div class="day-scene">
+      <div class="day-scene-bg" style="background-image:url('images/day3.jpg')"></div>
+      <div class="day-scene-vignette"></div>
+      <div class="day-scene-watermark">四</div>
+      <div class="day-scene-content">
+        <div class="day-num-label">DAY 04 · 6/16</div>
+        <div class="day-big">原宿澀谷逛街<br>慢慢吃慢慢晃</div>
+        <span class="day-badge">原宿 · 表參道 · 代官山 · 澀谷 Sky</span>
+      </div>
+    </div>
+    <div class="day-card">
+      <div class="day-body">
+        <div class="activity">
+          <span class="activity-tag">上午</span>
+          <div class="activity-body">
+            <p><b>原宿與表參道（約 3 小時）：</b>從 JR 原宿站出來，先到旁邊的 <b>明治神宮</b> 走走、被森林包圍很療癒（約 1 小時）。回到站前的 <b>竹下通</b> 是年輕人的潮流小街，可麗餅、雜貨很好逛。接著沿 <b>表參道</b> 大道往下走，兩側精品店和好拍的櫥窗一路相連；想找 <b>Onitsuka Tiger 鬼塚虎</b>，表參道上就有專門店，順路必逛！</p>
+            <p class="route"><i class="fa-solid fa-train"></i>池袋 (JR山手線) → <b>原宿站 (JY19)</b></p>
+          </div>
+        </div>
+        <div class="activity">
+          <span class="activity-tag">下午</span>
+          <div class="activity-body">
+            <p><b>代官山 / 中目黑（約 2 小時）：</b>從表參道搭車到代官山，<b>代官山蔦屋書店</b> 是質感超高的書店，書、雜貨、咖啡都有，逛起來很愜意。再散步或搭一站到中目黑，<b>中目黑星巴克臻選旗艦店</b> 是棟超美的烘焙工坊，買杯特色咖啡坐下來放空一下。</p>
+          </div>
+        </div>
+        <div class="activity">
+          <span class="activity-tag">晚上</span>
+          <div class="activity-body">
+            <p><b>澀谷（約 3 小時）：</b>澀谷是逛街重鎮，從車站出來先看著名的 <b>忠犬八公像</b> 和澀谷十字路口。想找 <b>HOKA、On 昂跑</b> 這類運動品牌，澀谷的 <b>MIYASHITA PARK</b> 和站前百貨都找得到，運動鞋控別錯過。傍晚登上 <b>SHIBUYA SKY</b> 戶外展望台，把整片東京夜景拍好拍滿。<br><span style="color:#ea580c;font-size:0.8rem;">💡 SHIBUYA SKY 建議事先上官網預約，傍晚時段最搶手。</span></p>
+            <p class="route"><i class="fa-solid fa-train"></i>搭車返回 <b>澀谷站 (JY20)</b></p>
+            <p class="route-return"><i class="fa-solid fa-house"></i>回程：澀谷站搭乘 <b>JR 山手線</b> 直達 <b>池袋站</b>（約 16 分鐘，一車直達）</p>
+          </div>
+        </div>
+        <hr class="divider">
+        <div class="food-box">
+          <h4><i class="fa-solid fa-utensils"></i>美食名單</h4>
+          <div class="food-row">
+            <span class="food-tag">午餐</span>
+            <ul class="food-list">
+              <li><span class="num">1</span><span class="loc">表參道</span><a href="https://maps.app.goo.gl/mkBq54FbL1faCXpGA" target="_blank">山笑 壽喜燒</a></li>
+              <li><span class="num">2</span><span class="loc">原宿</span><a href="https://maps.app.goo.gl/RdHntmo7FDGGFsNe6" target="_blank">原宿餃子</a></li>
+            </ul>
+          </div>
+          <div class="food-row">
+            <span class="food-tag">晚餐</span>
+            <ul class="food-list">
+              <li><span class="num">1</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/ZR5EdH3UCCSbv1j36" target="_blank">⭐⭐️yellow 蛋包飯 <span style="color:#ea580c;font-size:0.68rem;">💡與池袋店選擇其一</span></a></li>
+              <li><span class="num">2</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/fp7Sc4ZKypnGzD8Y6" target="_blank">センタービーフ 牛肉飯</a></li>
+              <li><span class="num">3</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">Hayashi Ramen 拉麵</a></li>
+              <li><span class="num">4</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/u6YtiUh3VGrDSjRu7" target="_blank">《米其林必比登》副大統領 咖哩飯 🌟</a></li>
+              <li><span class="num">5</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/GG3LpDjjCEXAHN4v9" target="_blank">山下本氣 烏龍麵</a></li>
+            </ul>
+          </div>
+          <div class="food-row">
+            <span class="food-tag">小吃</span>
+            <div class="food-items"><b>澀谷</b> <a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">⭐️GARIGUETTE 千層派</a>、<a href="https://maps.app.goo.gl/ACA68DhGnvZnPVQo9" target="_blank">⭐️I'm donut</a></div>
+
+          </div>
+        </div>
+        <p class="tip-bar">
+		💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" target="_blank">參考逛街路線</a><br>
+		💡 <a href="https://maps.app.goo.gl/BqjvKQz5Fxzj6KLB6" target="_blank">澀谷 SHIBUYA SKY 位置<span style="color:#ea580c;font-size:0.68rem;">  已訂好20:20的票</span></a>
+		</p>
+
       </div>
     </div>
   </div>
@@ -1198,8 +1198,8 @@ if (window.innerWidth > 760) {
 const DAY_DATA = {
   1: { label:'DAY 01 · 6/13', title:'抵達與池袋初探', img:'images/day1.jpg', badges:['成田 Skyliner','池袋','宵夜犒賞'] },
   2: { label:'DAY 02 · 6/14', title:'老街散步・晴空塔・秋葉原挖寶', img:'images/day2.jpg', badges:['上野','淺草寺','晴空塔','秋葉原'] },
-  3: { label:'DAY 03 · 6/15', title:'原宿澀谷逛街，慢慢吃慢慢晃', img:'images/day3.jpg', badges:['原宿','表參道','代官山','澀谷 Sky'] },
-  4: { label:'DAY 04 · 6/16', title:'古都鎌倉・橫濱港灣夜景', img:'images/day4.jpg', badges:['大佛','江之電','灌籃高手平交道','紅磚倉庫'] },
+  3: { label:'DAY 03 · 6/15', title:'古都鎌倉・橫濱港灣夜景', img:'images/day4.jpg', badges:['大佛','江之電','灌籃高手平交道','紅磚倉庫'] },
+  4: { label:'DAY 04 · 6/16', title:'原宿澀谷逛街，慢慢吃慢慢晃', img:'images/day3.jpg', badges:['原宿','表參道','代官山','澀谷 Sky'] },
   5: { label:'DAY 05 · 6/17', title:'麻布台・銀座・東京車站購物日', img:'images/day5.jpg', badges:['麻布台之丘','Ginza Six','伊東屋','KITTE'] },
   6: { label:'DAY 06 · 6/18', title:'川越小江戶老街・新宿不夜城', img:'images/day6.jpg', badges:['冰川神社','時之鐘','哥吉拉','思出橫丁'] },
   7: { label:'DAY 07 · 6/19', title:'豐洲海鮮・台場海邊一日遊', img:'images/day7.jpg', badges:['千客萬來','鋼彈','彩虹大橋夜景'] },
@@ -1211,8 +1211,8 @@ let currentDay = 1;
 const DAY_PINS = {
   1: ['pin1'],
   2: ['pin1','pin2','pin2-akiba'],
-  3: ['pin1','pin3'],
-  4: ['pin1','pin4-yokohama','pin4-kamakura'],
+  3: ['pin1','pin3','pin3-kamakura'],
+  4: ['pin1','pin4'],
   5: ['pin1','pin5'],
   6: ['pin1','pin6-kawagoe','pin6-shinjuku'],
   7: ['pin1','pin7'],
