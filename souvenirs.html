@@ -90,10 +90,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,13,20,0.9
 .tag-want{background:rgba(217,108,159,0.15);color:#e89ec0;border:1px solid rgba(217,108,159,0.35);}
 .tag-convenience{background:rgba(212,168,75,0.15);color:var(--gold-bright);border:1px solid rgba(212,168,75,0.35);}
 .tag-area{background:rgba(244,237,224,0.08);color:rgba(244,237,224,0.6);border:1px solid rgba(244,237,224,0.15);}
+.tag-donki{background:rgba(230,80,30,0.15);color:#f0936a;border:1px solid rgba(230,80,30,0.35);}
+.tag-uniqlo{background:rgba(200,30,30,0.15);color:#f07070;border:1px solid rgba(200,30,30,0.35);}
+.tag-3coins{background:rgba(60,180,160,0.15);color:#6de0cc;border:1px solid rgba(60,180,160,0.35);}
 .card-title{font-family:var(--serif);font-size:0.98rem;font-weight:800;color:var(--paper);line-height:1.5;margin-bottom:0.4rem;}
 .card-loc{font-size:0.74rem;color:rgba(244,237,224,0.5);line-height:1.65;}
 .card-loc a{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);}
 .card-note{font-size:0.72rem;color:rgba(240,201,107,0.85);margin-top:0.4rem;line-height:1.6;}
+
+/* LIGHTBOX */
+.lb-overlay{position:fixed;inset:0;z-index:5000;background:rgba(5,5,10,0.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s;}
+.lb-overlay.open{opacity:1;pointer-events:all;}
+.lb-img{max-width:min(90vw,820px);max-height:85vh;object-fit:contain;border:1px solid rgba(212,168,75,0.25);border-radius:3px;
+  transform:scale(0.92);transition:transform 0.35s cubic-bezier(.2,.7,.2,1);touch-action:pinch-zoom;user-select:none;}
+.lb-overlay.open .lb-img{transform:scale(1);}
+.lb-close{position:fixed;top:max(1rem,env(safe-area-inset-top));right:max(1rem,env(safe-area-inset-right));
+  width:44px;height:44px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  color:rgba(244,237,224,0.7);font-size:1.4rem;border:1px solid rgba(244,237,224,0.2);border-radius:50%;
+  transition:all 0.2s;-webkit-tap-highlight-color:transparent;}
+.lb-close:hover{color:var(--gold-bright);border-color:var(--gold);}
+.lb-nav{position:fixed;top:50%;transform:translateY(-50%);width:44px;height:72px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:rgba(244,237,224,0.55);font-size:2.2rem;
+  background:rgba(13,13,20,0.5);border:1px solid rgba(212,168,75,0.12);transition:all 0.2s;
+  -webkit-tap-highlight-color:transparent;-webkit-appearance:none;appearance:none;}
+.lb-nav:hover,.lb-nav:focus{color:var(--gold-bright);border-color:var(--gold);background:rgba(13,13,20,0.85);outline:none;}
+.lb-prev{left:0;border-radius:0 3px 3px 0;border-left:none;}
+.lb-next{right:0;border-radius:3px 0 0 3px;border-right:none;}
+.lb-nav.hidden{opacity:0;pointer-events:none;}
+.card-img-wrap{cursor:zoom-in;touch-action:manipulation;}
 
 footer{background:var(--ink2);border-top:1px solid rgba(212,168,75,0.18);text-align:center;padding:2.5rem 1rem;}
 footer p{font-family:var(--serif);font-size:0.85rem;color:rgba(244,237,224,0.5);letter-spacing:0.15em;}
@@ -135,6 +160,9 @@ footer strong{color:var(--gold);}
   <button class="filter-btn" data-filter="drug">藥妝</button>
   <button class="filter-btn" data-filter="want">想買的</button>
   <button class="filter-btn" data-filter="convenience">便利商店</button>
+  <button class="filter-btn" data-filter="donki">唐吉軻德</button>
+  <button class="filter-btn" data-filter="uniqlo">UNIQLO</button>
+  <button class="filter-btn" data-filter="3coins">3coins</button>
 </div>
 
 <div class="gift-grid" id="giftGrid">
@@ -210,10 +238,10 @@ footer strong{color:var(--gold);}
             <div class="card-loc">地點：東京車站</div>
         </div>
     </div>
-    <div class="gift-card" data-cat="drug">
+    <div class="gift-card" data-cat="donki">
         <div class="card-img-wrap"><img src="images/TOKIO.jpg" class="card-img" alt="京喚羽"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-drug">藥妝</span><span class="tag tag-area">銀座</span></div>
+            <div class="card-tags"><span class="tag tag-area">銀座</span><span class="tag tag-donki">唐吉軻德</span></div>
             <div class="card-title">京喚羽</div>
             <div class="card-loc"><a href="https://maps.app.goo.gl/nQNsGGsobddC1NZ26" target="_blank">地點：銀座一丁目站 7號出口 ONE GINZA 3階</a><br>店名：SEAM GINZA</div>
 			<div class="card-loc">地點：唐吉軻德</div>
@@ -325,10 +353,10 @@ footer strong{color:var(--gold);}
             <div class="card-loc">地點：7-11</div>
         </div>
     </div>
-    <div class="gift-card" data-cat="want">
+    <div class="gift-card" data-cat="uniqlo">
         <div class="card-img-wrap"><img src="images/背包.jpg" class="card-img contain" alt="抽繩肩背包"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-want">想買的</span></div>
+            <div class="card-tags"><span class="tag tag-uniqlo">UNIQLO</span></div>
             <div class="card-title">抽繩肩背包</div>
             <div class="card-loc">地點：UNIQLO</div>
         </div>
@@ -349,10 +377,10 @@ footer strong{color:var(--gold);}
             <div class="card-loc">地點：藥妝店</div>
         </div>
     </div>
-    <div class="gift-card" data-cat="want">
+    <div class="gift-card" data-cat="uniqlo">
         <div class="card-img-wrap"><img src="images/背心.jpg" class="card-img contain" alt="背心"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-want">想買的</span></div>
+            <div class="card-tags"><span class="tag tag-uniqlo">UNIQLO</span></div>
             <div class="card-title">背心</div>
             <div class="card-loc">地點：UNIQLO</div>
         </div>
@@ -384,26 +412,26 @@ footer strong{color:var(--gold);}
             </div>
         </div>
     </div>
-	<div class="gift-card" data-cat="want">
+	<div class="gift-card" data-cat="donki">
         <div class="card-img-wrap"><img src="images/猩猩之握憤怒版.jpg" class="card-img contain" alt="猩猩之握憤怒版"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-want">想買的</span></div>
+            <div class="card-tags"><span class="tag tag-donki">唐吉軻德</span></div>
             <div class="card-title">猩猩之握憤怒版</div>
             <div class="card-loc">地點：唐吉軻德</div>
         </div>
     </div>
-	<div class="gift-card" data-cat="want">
+	<div class="gift-card" data-cat="donki">
         <div class="card-img-wrap"><img src="images/蛋黃醬.jpg" class="card-img contain" alt="蛋黃醬"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-want">想買的</span></div>
+            <div class="card-tags"><span class="tag tag-donki">唐吉軻德</span></div>
             <div class="card-title">蛋黃醬</div>
             <div class="card-loc">地點：唐吉軻德</div>
         </div>
     </div>
-	<div class="gift-card" data-cat="want">
+	<div class="gift-card" data-cat="donki">
         <div class="card-img-wrap"><img src="images/干貝糖.jpg" class="card-img contain" alt="干貝糖"></div>
         <div class="card-body">
-            <div class="card-tags"><span class="tag tag-want">想買的</span></div>
+            <div class="card-tags"><span class="tag tag-donki">唐吉軻德</span></div>
             <div class="card-title">一榮燒帆立貝、山榮起司干貝糖</div>
             <div class="card-loc">地點：唐吉軻德</div>
         </div>
@@ -424,8 +452,159 @@ footer strong{color:var(--gold);}
             <div class="card-loc">地點：藥妝店</div>
         </div>
     </div>
-	
-	
+	<div class="gift-card" data-cat="donki">
+        <div class="card-img-wrap"><img src="images/男用面膜.jpg" class="card-img contain" alt="男用面膜"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-donki">唐吉軻德</span></div>
+            <div class="card-title">男用面膜</div>
+            <div class="card-loc">地點：唐吉軻德</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+        <div class="card-img-wrap"><img src="images/壓縮袋.jpg" class="card-img contain" alt="壓縮袋"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">壓縮袋</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="uniqlo">
+        <div class="card-img-wrap"><img src="images/防曬帽.jpg" class="card-img contain" alt="防曬帽"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-uniqlo">UNIQLO</span></div>
+            <div class="card-title">防曬帽</div>
+            <div class="card-loc">地點：UNIQLO</div>
+        </div>
+    </div>
+	<div class="gift-card" data-cat="drug">
+        <div class="card-img-wrap"><img src="images/粉餅.jpg" class="card-img contain" alt="粉餅"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-drug">藥妝</span></div>
+            <div class="card-title">粉餅</div>
+            <div class="card-loc">地點：藥妝店</div>
+        </div>
+    </div>
+
+    <div class="gift-card" data-cat="3coins">
+        <div class="card-img-wrap"><img src="images/行李飲料袋.jpg" class="card-img contain" alt="行李飲料袋"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">行李飲料袋</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+        <div class="card-img-wrap"><img src="images/寶特瓶保冰杯.jpg" class="card-img contain" alt="寶特瓶保冰杯"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">寶特瓶保冰杯</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+        <div class="card-img-wrap"><img src="images/貓眼凝膠.jpg" class="card-img contain" alt="貓眼凝膠"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">貓眼凝膠</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/貓眼凝膠磁吸棒.jpg" class="card-img contain" alt="貓眼凝膠磁吸棒"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">貓眼凝膠磁吸棒</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/行李袋.jpg" class="card-img contain" alt="行李袋"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">行李袋(直的可上飛機)</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/日幣零錢袋.jpg" class="card-img contain" alt="日幣零錢袋"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">日幣零錢袋</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/行李袋2.jpg" class="card-img contain" alt="行李袋2"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">行李袋</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/手機磁吸綁帶.jpg" class="card-img contain" alt="手機磁吸綁帶"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">手機磁吸綁帶</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/行李綁帶.jpg" class="card-img contain" alt="行李綁帶"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">行李綁帶</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/洗衣防染增色吸色片.jpg" class="card-img contain" alt="洗衣防染增色吸色片"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">洗衣防染增色吸色片</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/洗碗手套.jpg" class="card-img contain" alt="洗碗手套"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">洗碗手套</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/清潔筆.jpg" class="card-img contain" alt="清潔筆"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">手機&耳機清潔筆</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/車內小餐桌.jpg" class="card-img contain" alt="車內小餐桌"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">車內小餐桌</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+    <div class="gift-card" data-cat="3coins">
+    <div class="card-img-wrap"><img src="images/微波調理鍋.jpg" class="card-img contain" alt="微波調理鍋"></div>
+        <div class="card-body">
+            <div class="card-tags"><span class="tag tag-3coins">3coins</span></div>
+            <div class="card-title">微波調理鍋</div>
+            <div class="card-loc">地點：3coins</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="lb-overlay" id="lb">
+  <span class="lb-close" id="lbClose">&#x2715;</span>
+  <button class="lb-nav lb-prev" id="lbPrev">&#8249;</button>
+  <img class="lb-img" id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" id="lbNext">&#8250;</button>
 </div>
 
 <footer>
@@ -444,6 +623,38 @@ const obs=new IntersectionObserver((es)=>{
 document.querySelectorAll('.gift-card').forEach((c,i)=>{
   c.style.transitionDelay=(i%4*0.06)+'s';obs.observe(c);
 });
+/* lightbox */
+const lb=document.getElementById('lb'),lbImg=document.getElementById('lbImg');
+const lbAllImgs=[...document.querySelectorAll('.card-img-wrap .card-img')];
+let lbIdx=0;
+function lbShow(i){
+  lbIdx=i;const img=lbAllImgs[i];
+  lbImg.src=img.src;lbImg.alt=img.alt;
+  document.getElementById('lbPrev').classList.toggle('hidden',i===0);
+  document.getElementById('lbNext').classList.toggle('hidden',i===lbAllImgs.length-1);
+}
+function lbOpen(i){lbShow(i);lb.classList.add('open');document.body.style.overflow='hidden';}
+function lbClose(){lb.classList.remove('open');document.body.style.overflow='';}
+function lbPrev(){if(lbIdx>0)lbShow(lbIdx-1);}
+function lbNext(){if(lbIdx<lbAllImgs.length-1)lbShow(lbIdx+1);}
+document.querySelectorAll('.card-img-wrap').forEach((w,i)=>w.addEventListener('click',()=>lbOpen(i)));
+document.getElementById('lbClose').addEventListener('click',lbClose);
+document.getElementById('lbPrev').addEventListener('click',e=>{e.stopPropagation();lbPrev();});
+document.getElementById('lbNext').addEventListener('click',e=>{e.stopPropagation();lbNext();});
+lb.addEventListener('click',e=>{if(e.target===lb)lbClose();});
+document.addEventListener('keydown',e=>{
+  if(!lb.classList.contains('open'))return;
+  if(e.key==='Escape')lbClose();
+  if(e.key==='ArrowLeft')lbPrev();
+  if(e.key==='ArrowRight')lbNext();
+});
+let tsX=0,tsY=0;
+lbImg.addEventListener('touchstart',e=>{tsX=e.touches[0].clientX;tsY=e.touches[0].clientY;},{passive:true});
+lbImg.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tsX,dy=e.changedTouches[0].clientY-tsY;
+  if(Math.abs(dy)>Math.abs(dx)&&dy>60)lbClose();
+  else if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){dx<0?lbNext():lbPrev();}
+},{passive:true});
 /* filter */
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
@@ -451,7 +662,8 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
     btn.classList.add('active');
     const f=btn.dataset.filter;
     document.querySelectorAll('.gift-card').forEach(c=>{
-      const show=(f==='all'||c.dataset.cat===f);
+      const cats=c.dataset.cat?c.dataset.cat.split(' '):[];
+      const show=(f==='all'||cats.includes(f));
       c.classList.toggle('hide',!show);
     });
   });
