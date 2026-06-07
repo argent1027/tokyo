@@ -18,8 +18,8 @@
   --sans:'Noto Sans TC',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{font-family:var(--sans);background:var(--ink);color:var(--paper);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+html{scroll-behavior:smooth;} /* 修正：移除 overflow-x:hidden 避免 iOS 滾動衝突 */
+body{font-family:var(--sans);background:var(--ink);color:var(--paper);width:100%;position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased;} /* 修正：加上 width 與 position 確保版面不跑位 */
 body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0.04;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
@@ -162,7 +162,8 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
 .journey{max-width:900px;margin:0 auto;padding:0 1.4rem 4rem;}
 
 /* ===== DAY SCENE (新增：電影感滿版圖) ===== */
-.day-scene{position:relative;height:65vh;min-height:340px;overflow:hidden;border-radius:4px 4px 0 0;}
+/* 修正：將 height:65vh 改為 65svh，避免 iOS 網址列縮放造成的跳動 */
+.day-scene{position:relative;height:65svh;min-height:340px;overflow:hidden;border-radius:4px 4px 0 0;}
 .day-scene-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.05);filter:brightness(0.42) saturate(0.8);transition:filter 0.5s;}
 .day-scene:hover .day-scene-bg{filter:brightness(0.5) saturate(0.9);}
 .day-scene-vignette{position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 40%,transparent 30%,rgba(13,13,20,0.6) 100%),linear-gradient(180deg,rgba(13,13,20,0.55) 0%,transparent 30%,transparent 60%,rgba(13,13,20,0.95) 100%);}
@@ -242,7 +243,7 @@ footer strong{color:var(--gold);}
 .map-pin:hover circle.pin-outer,.map-pin.active circle.pin-outer{opacity:1;stroke:var(--gold-bright);}
 .map-pin:hover circle.pin-inner,.map-pin.active circle.pin-inner{fill:var(--gold-bright);}
 .map-pin.active circle.pin-outer{animation:pinPulse 1.8s ease-in-out infinite;}
-@keyframes pinPulse{0%,100%{r:14;opacity:1;}50%{r:19;opacity:0.3;}}
+@keyframes pinPulse{0%,100%{r:14;opacity:1;}50%{r:19;opacity:0.3;} }
 .map-pin-label{font-family:'Noto Sans TC',sans-serif;font-size:11.5px;fill:rgba(244,237,224,0.85);pointer-events:none;text-shadow:0 1px 4px rgba(0,0,0,0.9);}
 .map-pin:hover .map-pin-label,.map-pin.active .map-pin-label{fill:#fff;}
 .map-pin-day{font-family:'Noto Serif JP',serif;font-size:9px;fill:var(--gold);pointer-events:none;text-shadow:0 1px 3px rgba(0,0,0,0.9);}
@@ -326,7 +327,6 @@ footer strong{color:var(--gold);}
 </head>
 <body>
 
-<!-- LOADER -->
 <div id="loader">
   <div class="loader-jp"><span>東</span><span>京</span></div>
   <div class="loader-bar"></div>
@@ -335,7 +335,6 @@ footer strong{color:var(--gold);}
 
 <div class="read-progress" id="readProgress"></div>
 
-<!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
     <a href="index.html" class="nav-logo"><span class="seal">旅</span>TOKYO 2026</a>
@@ -355,7 +354,6 @@ footer strong{color:var(--gold);}
   </div>
 </nav>
 
-<!-- ===== HERO ===== -->
 <header class="hero">
   <div class="hero-sky"></div>
   <div class="hero-sun"></div>
@@ -373,7 +371,6 @@ footer strong{color:var(--gold);}
   <div class="scroll-cue"><span>SCROLL</span><div class="line"></div></div>
 </header>
 
-<!-- ===== SVG 互動地圖 ===== -->
 <section class="map-section reveal">
   <div class="map-section-header">
     <div class="ms-eyebrow">INTERACTIVE MAP · 點擊地標</div>
@@ -397,49 +394,35 @@ footer strong{color:var(--gold);}
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-      <!-- 真實地圖底圖 -->
       <image href="images/map.jpg" x="0" y="0" width="860" height="560"
              clip-path="url(#mapClip)" filter="url(#mapDark)" preserveAspectRatio="xMidYMid slice"/>
-      <!-- 深色遮罩 -->
       <rect width="860" height="560" rx="8" fill="rgba(8,8,18,0.42)" clip-path="url(#mapClip)"/>
-      <!-- 邊框 -->
       <rect width="860" height="560" rx="8" fill="none" stroke="rgba(212,168,75,0.35)" stroke-width="1.5"/>
-      <!-- 航線：每天池袋出發，多點串連後回池袋 -->
       <g id="flightPaths">
-        <!-- D1 池袋本身 -->
         <path id="fp-d1" d="M403,207 Q403,207 403,207" class="flight-path" data-day="1"/>
-        <!-- D2: 池袋→上野→淺草→秋葉原→池袋 -->
         <path id="fp-d2-a" d="M403,207 Q432,208 462,209" class="flight-path" data-day="2"/>
         <path id="fp-d2-b" d="M462,209 Q453,217 444,225" class="flight-path" data-day="2"/>
         <path id="fp-d2-c" d="M444,225 Q424,216 403,207" class="flight-path" data-day="2"/>
-        <!-- D3: 池袋→橫濱→鎌倉→池袋 -->
         <path id="fp-d3-a" d="M403,207 Q382,333 360,460" class="flight-path" data-day="3"/>
         <path id="fp-d3-b" d="M360,460 Q345,505 330,550" class="flight-path" data-day="3"/>
         <path id="fp-d3-c" d="M330,550 Q367,378 403,207" class="flight-path" data-day="3"/>
-        <!-- D4: 池袋→原宿→澀谷→池袋 -->
         <path id="fp-d4-a" d="M403,207 Q391,231 379,256" class="flight-path" data-day="4"/>
         <path id="fp-d4-b" d="M379,256 Q391,231 403,207" class="flight-path" data-day="4"/>
-        <!-- D5: 池袋→麻布台→銀座→池袋 -->
         <path id="fp-d5-a" d="M403,207 Q419,234 436,261" class="flight-path" data-day="5"/>
         <path id="fp-d5-b" d="M436,261 Q419,234 403,207" class="flight-path" data-day="5"/>
-        <!-- D6: 池袋→川越→新宿→池袋 -->
         <path id="fp-d6-a" d="M403,207 Q323,130 244,60" class="flight-path" data-day="6"/>
         <path id="fp-d6-b" d="M244,60 Q320,148 379,256" class="flight-path" data-day="6"/>
         <path id="fp-d6-c" d="M379,256 Q391,231 403,207" class="flight-path" data-day="6"/>
-        <!-- D7: 池袋→豐洲→台場→池袋 -->
         <path id="fp-d7-a" d="M403,207 Q450,240 498,280" class="flight-path" data-day="7"/>
         <path id="fp-d7-b" d="M498,280 Q450,240 403,207" class="flight-path" data-day="7"/>
-        <!-- D8: 池袋→成田（往右上淡出） -->
         <path id="fp-d8" d="M403,207  840,180" class="flight-path" data-day="8" opacity="0.35"/>
       </g>
-      <!-- D1 池袋 -->
       <g class="map-pin active" data-day="1" onclick="selectDay(1)" id="pin1" filter="url(#pinGlow)">
         <circle cx="403" cy="207" r="13" class="pin-outer"/>
         <circle cx="403" cy="207" r="5" class="pin-inner"/>
         <text x="403" y="186" class="map-pin-day" text-anchor="middle">D1・D8</text>
         <text x="403" y="196" class="map-pin-label" text-anchor="middle">池袋 🏨</text>
       </g>
-      <!-- D2 上野・淺草・秋葉原 -->
       <g class="map-pin" data-day="2" onclick="selectDay(2)" id="pin2" filter="url(#pinGlow)">
         <circle cx="462" cy="209" r="10" class="pin-outer"/>
         <circle cx="462" cy="209" r="4" class="pin-inner"/>
@@ -452,7 +435,6 @@ footer strong{color:var(--gold);}
         <text x="459" y="221" class="map-pin-day" text-anchor="start">D2</text>
         <text x="459" y="230" class="map-pin-label" text-anchor="start">秋葉原</text>
       </g>
-      <!-- D3 橫濱・鎌倉 -->
       <g class="map-pin" data-day="3" onclick="selectDay(3)" id="pin3" filter="url(#pinGlow)">
         <circle cx="360" cy="460" r="10" class="pin-outer"/>
         <circle cx="360" cy="460" r="4" class="pin-inner"/>
@@ -465,21 +447,18 @@ footer strong{color:var(--gold);}
         <text x="325" y="526" class="map-pin-day" text-anchor="end">D3</text>
         <text x="325" y="538" class="map-pin-label" text-anchor="end">鎌倉</text>
       </g>
-      <!-- D4 原宿・澀谷 -->
       <g class="map-pin" data-day="4" onclick="selectDay(4)" id="pin4" filter="url(#pinGlow)">
         <circle cx="379" cy="256" r="10" class="pin-outer"/>
         <circle cx="379" cy="256" r="4" class="pin-inner"/>
         <text x="364" y="248" class="map-pin-day" text-anchor="end">D4</text>
         <text x="364" y="257" class="map-pin-label" text-anchor="end">原宿・澀谷</text>
       </g>
-      <!-- D5 銀座・麻布台 -->
       <g class="map-pin" data-day="5" onclick="selectDay(5)" id="pin5" filter="url(#pinGlow)">
         <circle cx="436" cy="261" r="10" class="pin-outer"/>
         <circle cx="436" cy="261" r="4" class="pin-inner"/>
         <text x="451" y="257" class="map-pin-day" text-anchor="start">D5</text>
         <text x="451" y="266" class="map-pin-label" text-anchor="start">銀座・麻布台・東京車站</text>
       </g>
-      <!-- D6 川越・新宿 -->
       <g class="map-pin" data-day="6" onclick="selectDay(6)" id="pin6-kawagoe" filter="url(#pinGlow)">
         <circle cx="244" cy="60" r="10" class="pin-outer"/>
         <circle cx="244" cy="60" r="4" class="pin-inner"/>
@@ -492,7 +471,6 @@ footer strong{color:var(--gold);}
         <text x="364" y="270" class="map-pin-day" text-anchor="end">D6</text>
         <text x="364" y="279" class="map-pin-label" text-anchor="end">新宿</text>
       </g>
-      <!-- D7 豐洲・台場 -->
       <g class="map-pin" data-day="7" onclick="selectDay(7)" id="pin7" filter="url(#pinGlow)">
         <circle cx="498" cy="280" r="10" class="pin-outer"/>
         <circle cx="498" cy="280" r="4" class="pin-inner"/>
@@ -505,11 +483,9 @@ footer strong{color:var(--gold);}
         <text x="832" y="158" class="map-pin-day" text-anchor="start">D8</text>
         <text x="810" y="170" class="map-pin-label" text-anchor="start">成田機場</text>
       </g>
-      <!-- 版權 -->
       <text x="838" y="550" font-family="Noto Sans TC,sans-serif" font-size="9" fill="rgba(244,237,224,0.2)" text-anchor="end">© OpenStreetMap contributors</text>
     </svg>
   </div>
-  <!-- Day Pills -->
   <div class="day-nav" id="dayNav">
     <button class="day-pill active" onclick="selectDay(1)" data-day="1">DAY 1 池袋</button>
     <button class="day-pill" onclick="selectDay(2)" data-day="2">DAY 2 上野・淺草</button>
@@ -520,7 +496,6 @@ footer strong{color:var(--gold);}
     <button class="day-pill" onclick="selectDay(7)" data-day="7">DAY 7 豐洲・台場</button>
     <button class="day-pill" onclick="selectDay(8)" data-day="8">DAY 8 平安歸賦</button>
   </div>
-  <!-- Preview Card -->
   <div class="map-preview open" id="mapPreview">
     <div class="mp-inner">
       <div class="mp-img"><img src="images/day1.jpg" alt="" id="mpImgEl"></div>
@@ -540,7 +515,6 @@ footer strong{color:var(--gold);}
   </div>
 </section>
 
-<!-- ===== JOURNEY INTRO (原版) ===== -->
 <div class="journey-intro reveal">
   <div class="kicker">旅 の は じ ま り</div>
   <h2>八天，沿著山手線<br>把東京慢慢走一遍</h2>
@@ -548,26 +522,18 @@ footer strong{color:var(--gold);}
   <div class="intro-rule"></div>
 </div>
 
-<!-- ===== CAST 主角登場 (原版) ===== -->
 <div class="cast reveal">
   <div class="cast-frame">
     <img class="cast-photo" src="images/couple.jpg" alt="峰和曼曼">
     <div class="cast-caption">
-      <div class="cc-jp">曼曼 <em>&amp;</em> 峰</div>
+      <div class="cc-jp">曼曼 <em>&</em> 峰</div>
       <div class="cc-sub">THE TRAVELLERS</div>
     </div>
   </div>
 </div>
 
-<!-- ===== INFO STRIP ===== -->
 <div class="info-strip">
-<!--
-  <div class="info-card reveal">
-    <div class="ic-head"><i class="fa-solid fa-ticket"></i><h3>票券策略</h3></div>
-    <p><b>Day 4 ~ Day 6</b> 連續三天啟用 <b>JR 東京廣域周遊券</b>，搭乘新幹線與跨縣市特急，極大化高鐵價值！</p>
-  </div>
---> 
-  <div class="info-card reveal">
+<div class="info-card reveal">
     <div class="ic-head"><i class="fa-solid fa-pen-nib"></i><h3>票券策略</h3></div>
     <p>Day6 川越行程可購買川越一日周遊券升級版。(包含東武東上線來回，搭乘川越市區巴士)</p>
   </div>
@@ -585,10 +551,8 @@ footer strong{color:var(--gold);}
   </div>
 </div>
 
-<!-- ===== JOURNEY ===== -->
 <div class="journey">
 
-  <!-- DAY 01 -->
   <div class="station reveal" style="--day-c:#e8b04b;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day1.jpg')"></div>
@@ -637,7 +601,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 02 -->
   <div class="station reveal" style="--day-c:#d96c5f;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day2.jpg')"></div>
@@ -695,7 +658,7 @@ footer strong{color:var(--gold);}
           <div class="food-row">
             <span class="food-tag">小吃</span>
             <div class="food-items">
-              <b>阿美橫丁</b> 鰻魚飯、<a href="https://maps.app.goo.gl/CoEsxzbQF3Ro8ksdA" target="_blank">肉的大山(肉餅&amp;可樂餅)</a>、<a href="https://maps.app.goo.gl/Ncz6F6dp2s5SBXPf6" target="_blank">大章魚燒 みなとや</a><br>
+              <b>阿美橫丁</b> 鰻魚飯、<a href="https://maps.app.goo.gl/CoEsxzbQF3Ro8ksdA" target="_blank">肉的大山(肉餅&可樂餅)</a>、<a href="https://maps.app.goo.gl/Ncz6F6dp2s5SBXPf6" target="_blank">大章魚燒 みなとや</a><br>
               <b>淺草寺</b> <a href="https://maps.app.goo.gl/u714mUQzD49gsaR59" target="_blank">⭐️淺草炸肉餅</a>、章魚燒仙貝、 <a href="https://maps.app.goo.gl/4HkSqYmQp8QrBtyV6" target="_blank">⭐Asakusa Unana 鰻魚飯糰</a>、<a href="https://maps.app.goo.gl/tWUBED1EsB7DndZp9" target="_blank">花月堂菠蘿麵包</a><br>
               <b>秋葉原</b> ⭐️月台牛奶、<a href="https://maps.app.goo.gl/H8MbhsdKqJTe4UtE9" target="_blank">⭐️Cow Cow Kitchen 牛奶派</a>
             </div>
@@ -705,7 +668,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 03 -->
   <div class="station reveal" style="--day-c:#5fa86c;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day4.jpg')"></div>
@@ -740,7 +702,6 @@ footer strong{color:var(--gold);}
           <span class="activity-tag">下午</span>
           <div class="activity-body">
             <p><b>橫濱港邊（約半天）：</b> <b>櫻木町站</b> 出站往海邊方向走，<b>空中纜車搭乘口就在站旁、步行約 3 分鐘</b>，搭纜車飛越港灣到「運河公園」站。下纜車後沿著海濱步道走約 10～15 分鐘到 <b>紅磚倉庫</b>——兩棟紅磚建築裡有商店和餐廳，可逛可吃。傍晚整片港灣亮燈，沿海邊散步、拍夜景很舒服。<br><span style="color:#ea580c;font-size:0.8rem;">💡 晚餐名單的「橫濱橋商店街」離紅磚倉庫有點距離，建議當天斟酌；紅磚倉庫附近本身就有不少餐廳。</span></p>
-           <!-- <p class="route"><i class="fa-solid fa-train"></i>①從 <b>藤澤站</b> 搭乘 <b>JR 東海道本線</b> 直達 <b>橫濱站</b></p> -->
 			<p class="route"><i class="fa-solid fa-train"></i>從 <b>橫濱站</b> 搭乘 <b>JR 根岸線</b> 直達 <b>櫻木町站</b></p>
             <p class="route-return"><i class="fa-solid fa-house"></i>回程：<b>櫻木町站</b> 搭乘 <b>JR 根岸線</b> → <b>橫濱站</b>，站內轉乘 <b>JR 湘南新宿線</b>（往池袋/大宮方向）直達 <b>池袋站</b>（約 45 分鐘）</p>
           </div>
@@ -773,7 +734,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 04 -->
   <div class="station reveal" style="--day-c:#5b8fc9;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day3.jpg')"></div>
@@ -843,7 +803,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 05 -->
   <div class="station reveal" style="--day-c:#9b7cc4;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day5.jpg')"></div>
@@ -912,7 +871,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 06 -->
   <div class="station reveal" style="--day-c:#d99a4b;">
 	  <div class="day-scene">
 		<div class="day-scene-bg" style="background-image:url('images/day6.jpg')"></div>
@@ -956,7 +914,7 @@ footer strong{color:var(--gold);}
 			<span class="activity-tag">傍晚</span>
 			<div class="activity-body">
 			  <p><b>新宿逛街（約 2.5 小時）：</b>回程在新宿站下車，從 <b>東口</b> 出站。先去看新宿地標——路口大樓上的 <b>3D 立體貓</b> 廣告，往歌舞伎町方向還能看到大樓頂的 <b>哥吉拉頭</b>。接著逛東口的 <b>Lumine EST</b>、<b>NEWoMan</b>，流行服飾、雜貨、品牌都很齊，曼曼想找的時尚單品這裡好挖寶。</p>
-			  <p class="route"><i class="fa-solid fa-train"></i>川越站（東武東上線）→ <b>池袋站</b>（約 30 分）→ 轉 <b>JR 山手線</b> → <b>新宿站</b>（約 9 分）</p>
+			  <p class="route"><i class="fa-solid fa-train"></i>川越站（東武東上線）→ <b>池袋站</b>（約 30 分）→ 轉 <b>JR 山手弱線</b> → <b>新宿站</b>（約 9 分）</p>
 			</div>
 		  </div>
 
@@ -1003,7 +961,6 @@ footer strong{color:var(--gold);}
 	  </div>
 	</div>
 
-  <!-- DAY 07 -->
   <div class="station reveal" style="--day-c:#5fa3c4;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day7.jpg')"></div>
@@ -1020,7 +977,7 @@ footer strong{color:var(--gold);}
         <div class="activity">
           <span class="activity-tag">上午</span>
           <div class="activity-body">
-            <p><b>豐洲市場 &amp; 千客萬來（約 3 小時）：</b>從豐洲站走到市場，先衝 <b>水產仲卸賣場棟</b> 吃一頓超新鮮的海鮮丼或壽司當早午餐（名店要早點到、會排隊）。吃飽後到旁邊 2024 開幕的 <b>千客萬來</b>，是重現江戶老街風情的木造商場，小吃、伴手禮、足湯都有，很好逛也很好拍。</p>
+            <p><b>豐洲市場 & 千客萬來（約 3 小時）：</b>從豐洲站走到市場，先衝 <b>水產仲卸賣場棟</b> 吃一頓超新鮮的海鮮丼或壽司當早午餐（名店要早點到、會排隊）。吃飽後到旁邊 2024 開幕的 <b>千客萬來</b>，是重現江戶老街風情的木造商場，小吃、伴手禮、足湯都有，很好逛也很好拍。</p>
             <p class="route"><i class="fa-solid fa-train"></i>池袋站搭乘 <b>地鐵有樂町線</b> 直達 <b>豐洲站</b>（約 30 分鐘）</p>
           </div>
         </div>
@@ -1068,7 +1025,6 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-  <!-- DAY 08 -->
   <div class="station reveal" style="--day-c:#8a93a3;">
     <div class="day-scene">
       <div class="day-scene-bg" style="background-image:url('images/day8.jpg')"></div>
@@ -1099,10 +1055,7 @@ footer strong{color:var(--gold);}
     </div>
   </div>
 
-</div><!-- end journey -->
-
-<!-- ===== 池袋備用景點 ===== -->
-<div class="ikebukuro-section">
+</div><div class="ikebukuro-section">
   <div class="ik-header reveal">
     <div class="ik-eyebrow">BONUS · 池袋備用指南</div>
     <h2>行程有空檔？<br>池袋其實很好逛</h2>
@@ -1174,12 +1127,9 @@ footer strong{color:var(--gold);}
 
 </div>
 
-<!-- END MARK -->
-
 <div class="end-mark reveal">
   <div class="seal-big">完</div>
-  <!--<p>峰和曼曼 · 創造美好回憶<br>TOKYO 2026</p>-->
-</div>
+  </div>
 
 <footer><p><strong>峰和曼曼</strong> ・ 創造美好回憶 ✈</p></footer>
 
