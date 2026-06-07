@@ -18,8 +18,8 @@
   --sans:'Noto Sans TC',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;} /* 修正：移除 overflow-x:hidden 避免 iOS 滾動衝突 */
-body{font-family:var(--sans);background:var(--ink);color:var(--paper);width:100%;position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased;} /* 修正：加上 width 與 position 確保版面不跑位 */
+html{scroll-behavior:smooth;} 
+body{font-family:var(--sans);background:var(--ink);color:var(--paper);width:100%;position:relative;overflow-x:hidden;-webkit-font-smoothing:antialiased;} 
 body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:0.04;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 
@@ -73,7 +73,6 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   overflow:hidden;text-align:center;
 }
-/* 背景實景照 */
 .hero-sky{
   position:absolute;inset:0;
   background-image:linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url('images/tokyo.jpg');
@@ -85,7 +84,6 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
   from{transform:scale(1.04) translateY(0);}
   to{transform:scale(1.08) translateY(-1%);}
 }
-/* 遮罩：讓文字清晰、底部融黑 */
 .hero-sky::after{
   content:'';
   position:absolute;inset:0;
@@ -97,10 +95,8 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
     rgba(13,13,20,0.90) 100%
   );
 }
-/* 原本的太陽光暈和山剪影由照片取代 */
 .hero-sun{ display:none; }
 .hero-mountains{ display:none; }
-/* 雲霧 */
 .hero-mist{
   position:absolute;left:0;right:0;bottom:14%;height:140px;
   background:linear-gradient(90deg,transparent,rgba(244,237,224,0.07),rgba(244,237,224,0.13),rgba(244,237,224,0.07),transparent);
@@ -127,14 +123,14 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
 .scroll-cue .line::after{content:'';position:absolute;top:-50%;left:0;width:100%;height:50%;background:var(--paper);animation:scrollDown 1.8s ease-in-out infinite;}
 @keyframes scrollDown{to{top:100%;}}
 
-/* ===== JOURNEY INTRO (原版保留) ===== */
+/* ===== JOURNEY INTRO ===== */
 .journey-intro{max-width:680px;margin:0 auto;padding:6rem 1.5rem 3rem;text-align:center;}
 .journey-intro .kicker{font-family:var(--jp);font-size:0.8rem;letter-spacing:0.4em;color:var(--gold);margin-bottom:1.2rem;}
 .journey-intro h2{font-family:var(--serif);font-weight:800;font-size:clamp(1.5rem,4vw,2.4rem);color:var(--paper);line-height:1.5;letter-spacing:0.06em;}
 .journey-intro p{margin-top:1.3rem;font-size:0.9rem;line-height:2;color:rgba(244,237,224,0.6);font-weight:300;}
 .intro-rule{width:1px;height:60px;margin:2.5rem auto 0;background:linear-gradient(var(--gold),transparent);}
 
-/* ===== CAST 主角登場 (原版保留) ===== */
+/* ===== CAST 主角登場 ===== */
 .cast{max-width:760px;margin:1rem auto 0;padding:0 1.5rem;}
 .cast-frame{position:relative;border-radius:4px;overflow:hidden;border:1px solid rgba(212,168,75,0.3);background:linear-gradient(160deg,var(--ink3),var(--ink2));box-shadow:0 30px 70px -25px rgba(0,0,0,0.9);}
 .cast-frame::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;z-index:3;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
@@ -160,9 +156,6 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
 
 /* ===== JOURNEY ===== */
 .journey{max-width:900px;margin:0 auto;padding:0 1.4rem 4rem;}
-
-/* ===== DAY SCENE (新增：電影感滿版圖) ===== */
-/* 修正：將 height:65vh 改為 65svh，避免 iOS 網址列縮放造成的跳動 */
 .day-scene{position:relative;height:65svh;min-height:340px;overflow:hidden;border-radius:4px 4px 0 0;}
 .day-scene-bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.05);filter:brightness(0.42) saturate(0.8);transition:filter 0.5s;}
 .day-scene:hover .day-scene-bg{filter:brightness(0.5) saturate(0.9);}
@@ -193,24 +186,32 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
 .route b,.route-return b{color:var(--paper);}
 .divider{border:none;border-top:1px dashed rgba(212,168,75,0.2);margin:1.5rem 0;}
 
-/* ===== FOOD BOX ===== */
+/* ===== FOOD BOX 統一排版修正 ===== */
 .food-box{border-radius:3px;padding:1.2rem 1.3rem 1.1rem;background:rgba(13,13,20,0.5)!important;border:1px solid rgba(212,168,75,0.15)!important;}
 .food-box h4{font-family:var(--serif)!important;font-size:0.82rem!important;font-weight:800;letter-spacing:0.1em;color:var(--gold-bright)!important;margin-bottom:0.9rem;display:flex;align-items:center;gap:0.45rem;}
 .food-box h4 i{color:var(--gold);}
 .food-row{display:flex;gap:0.7rem;font-size:0.78rem;padding-top:0.7rem;border-top:1px solid rgba(212,168,75,0.1);}
 .food-row:first-of-type{border-top:none;padding-top:0;}
 .food-tag{flex-shrink:0;font-size:0.63rem;font-weight:700;padding:0.2rem 0.55rem;border-radius:2px;margin-top:1px;white-space:nowrap;height:fit-content;background:rgba(212,168,75,0.14)!important;color:var(--gold-bright)!important;border:1px solid rgba(212,168,75,0.28);}
-.food-items{line-height:2;color:rgba(244,237,224,0.62);}
+
+/* 讓列表區塊佔據剩餘空間，防止內容把版面撐破 */
+.food-list, .food-items { flex: 1; min-width: 0; }
+.food-items{line-height:2;color:rgba(244,237,224,0.62); word-break: break-word;}
 .food-items b{color:rgba(244,237,224,0.9);}
 .food-items a{color:var(--gold-bright)!important;text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);transition:all 0.2s;}
 .food-items a:hover{border-color:var(--gold);color:#fff!important;}
+
 .food-list{list-style:none;display:flex;flex-direction:column;gap:0.45rem;}
-.food-list li{display:flex;align-items:baseline;gap:0.5rem;font-size:0.78rem;color:rgba(244,237,224,0.72);line-height:1.6;}
-.food-list li .num{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--ink)!important;background:var(--gold-bright)!important;margin-top:1px;}
+/* 將對齊改為 flex-start，文字折行時數字才不會掉下去 */
+.food-list li{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.78rem;color:rgba(244,237,224,0.72);line-height:1.6;}
+.food-list li .num{flex-shrink:0;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:var(--ink)!important;background:var(--gold-bright)!important;margin-top:2px;}
 .food-list li .loc{font-size:0.67rem;color:rgba(244,237,224,0.38);flex-shrink:0;white-space:nowrap;}
+/* 允許長文字與連結自然折行 */
+.food-list li a, .food-list li span {word-break: break-word;}
 .food-list li a{color:var(--gold-bright)!important;text-decoration:none;border-bottom:1px solid rgba(212,168,75,0.3);transition:all 0.2s;}
 .food-list li a:hover{border-color:var(--gold);color:#fff!important;}
 .food-list li .note{font-size:0.65rem;font-weight:600;color:#ea580c;}
+
 .tip-bar{margin-top:1rem;font-size:0.78rem;padding:0.7rem 1rem;border-radius:3px;background:rgba(212,168,75,0.08)!important;color:rgba(244,237,224,0.7)!important;border:1px dashed rgba(212,168,75,0.3);line-height:1.75;}
 .tip-bar a{color:var(--gold-bright)!important;}
 
@@ -225,8 +226,6 @@ nav.scrolled{background:rgba(13,13,20,0.93);backdrop-filter:blur(14px);border-bo
 footer{background:var(--ink2);border-top:1px solid rgba(212,168,75,0.18);text-align:center;padding:2.5rem 1rem;}
 footer p{font-family:var(--serif);font-size:0.85rem;color:rgba(244,237,224,0.5);letter-spacing:0.15em;}
 footer strong{color:var(--gold);}
-
-
 
 /* ===== SVG MAP ===== */
 .map-section{max-width:1060px;margin:0 auto;padding:5rem 1.4rem 3rem;}
@@ -293,6 +292,7 @@ footer strong{color:var(--gold);}
 .ik-transport b{color:var(--paper);}
 .ik-transport i{color:var(--gold);margin-right:0.3rem;}
 
+/* 手機版排版修正，移除了容易跑版的強制換行 */
 @media(max-width:760px){
   .hero-sky{background-position:62% 30%;}
   .mp-inner{flex-direction:column;}
@@ -310,11 +310,7 @@ footer strong{color:var(--gold);}
   .cast{padding:0 1rem;}
   .route,.route-return{display:block;word-break:break-word;overflow-wrap:break-word;font-size:0.7rem;}
   .route i,.route-return i{float:left;margin-right:0.4rem;margin-top:3px;}
-  .food-row{flex-wrap:wrap;}
-  .food-items{word-break:break-word;overflow-wrap:break-word;font-size:0.74rem;}
-  .food-list li{flex-wrap:wrap;}
-  .food-list li .loc{white-space:normal;}
-  .food-list li a{word-break:break-word;}
+  .food-list li .loc{white-space:normal;} /* 手機上地點允許換行 */
   .tip-bar{font-size:0.74rem;word-break:break-word;overflow-wrap:break-word;}
   .journey{padding:0 0.8rem 3rem;}
   .map-section{padding:3rem 0.8rem 2rem;}
@@ -533,7 +529,7 @@ footer strong{color:var(--gold);}
 </div>
 
 <div class="info-strip">
-<div class="info-card reveal">
+  <div class="info-card reveal">
     <div class="ic-head"><i class="fa-solid fa-pen-nib"></i><h3>票券策略</h3></div>
     <p>Day6 川越行程可購買川越一日周遊券升級版。(包含東武東上線來回，搭乘川越市區巴士)</p>
   </div>
@@ -591,7 +587,7 @@ footer strong{color:var(--gold);}
           <div class="food-row">
             <span class="food-tag">晚餐</span>
             <ul class="food-list">
-              <li><span class="num">1</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/ssvaxapTJAtPQeqY9" target="_blank">⭐️⭐️yellow 蛋包飯 <span style="color:#ea580c;font-size:0.68rem;">💡與澀谷店選擇其一</span></a></li>
+              <li><span class="num">1</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/ssvaxapTJAtPQeqY9" target="_blank">⭐️⭐️yellow 蛋包飯 <span class="note">💡與澀谷店選擇其一</span></a></li>
               <li><span class="num">2</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/QTypV34XB3y6A8c79" target="_blank">元祖明太煮沾麵</a></li>
               <li><span class="num">3</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/q2RduZATB8t89UnTA" target="_blank">⭐️無敵家拉麵</a>（至凌晨 4 點）</li>
             </ul>
@@ -712,8 +708,8 @@ footer strong{color:var(--gold);}
           <div class="food-row">
             <span class="food-tag">午餐</span>
             <ul class="food-list">
-              <li><span class="num"></span>1.<span class="loc">鎌倉</span><a href="https://maps.app.goo.gl/UCCRMc5VFFTZZu8Q8" target="_blank">《米其林》Caraway 咖哩飯</a> <span class="note">💡千萬不要點大碗!</span></li>
-              <li><span class="num"></span>2.<span class="loc">鎌倉</span><a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank">《百年老店》峰本吻仔魚茶泡飯</a></li>
+              <li><span class="num">1</span><span class="loc">鎌倉</span><a href="https://maps.app.goo.gl/UCCRMc5VFFTZZu8Q8" target="_blank">《米其林》Caraway 咖哩飯</a> <span class="note">💡千萬不要點大碗!</span></li>
+              <li><span class="num">2</span><span class="loc">鎌倉</span><a href="https://maps.app.goo.gl/D6TSv4wh9DjDWJmZA" target="_blank">《百年老店》峰本吻仔魚茶泡飯</a></li>
             </ul>
           </div>
           <div class="food-row">
@@ -741,7 +737,7 @@ footer strong{color:var(--gold);}
       <div class="day-scene-watermark">四</div>
       <div class="day-scene-content">
         <div class="day-num-label">DAY 04 · 6/16</div>
-        <div class="day-big">原宿澀谷逛街<br>慢慢吃慢慢晃</div>
+        <div class="day-big">竹下通、表參道、澀谷逛街<br>血拚鐵腿殺戮日</div>
         <span class="day-badge">原宿 · 表參道 · 代官山 · 澀谷 Sky</span>
       </div>
     </div>
@@ -781,7 +777,7 @@ footer strong{color:var(--gold);}
           <div class="food-row">
             <span class="food-tag">晚餐</span>
             <ul class="food-list">
-              <li><span class="num">1</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/ZR5EdH3UCCSbv1j36" target="_blank">⭐⭐️yellow 蛋包飯 <span style="color:#ea580c;font-size:0.68rem;">💡與池袋店選擇其一</span></a></li>
+              <li><span class="num">1</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/ZR5EdH3UCCSbv1j36" target="_blank">⭐⭐️yellow 蛋包飯 <span class="note">💡與池袋店選擇其一</span></a></li>
               <li><span class="num">2</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/fp7Sc4ZKypnGzD8Y6" target="_blank">センタービーフ 牛肉飯</a></li>
               <li><span class="num">3</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">Hayashi Ramen 拉麵</a></li>
               <li><span class="num">4</span><span class="loc">澀谷</span><a href="https://maps.app.goo.gl/u6YtiUh3VGrDSjRu7" target="_blank">《米其林必比登》副大統領 咖哩飯 🌟</a></li>
@@ -791,14 +787,12 @@ footer strong{color:var(--gold);}
           <div class="food-row">
             <span class="food-tag">小吃</span>
             <div class="food-items"><b>澀谷</b> <a href="https://maps.app.goo.gl/P8NKCLxopKSPwiL86" target="_blank">⭐️GARIGUETTE 千層派</a>、<a href="https://maps.app.goo.gl/ACA68DhGnvZnPVQo9" target="_blank">⭐️I'm donut</a></div>
-
           </div>
         </div>
         <p class="tip-bar">
 		💡 <a href="https://www.facebook.com/share/v/19C5RkRTYt/?mibextid=wwXIfr" target="_blank">參考逛街路線</a><br>
 		💡 <a href="https://maps.app.goo.gl/BqjvKQz5Fxzj6KLB6" target="_blank">澀谷 SHIBUYA SKY 位置<span style="color:#ea580c;font-size:0.68rem;">  已訂好20:20的票</span></a>
 		</p>
-
       </div>
     </div>
   </div>
@@ -861,7 +855,7 @@ footer strong{color:var(--gold);}
             <span class="food-tag">小吃</span>
             <div class="food-items">
               <b>銀座</b> <a href="https://maps.app.goo.gl/ZrTNsXxSvYmT9B7aA" target="_blank">Ginza Orions 高級布丁</a>、<a href="https://maps.app.goo.gl/ZHpXNywyArpNTmSU8" target="_blank">⭐️Age3 炸三明治</a><br>
-              <b>東京車站</b> <a href="https://maps.app.goo.gl/iSTjKSz11xsSeb5t6" target="_blank">⭐⭐⭐️PATISSERIE 天花板泡芙</a> <span style="color:#ea580c;font-size:0.68rem;">💡一定要去吃❗❗</span>、<a href="https://maps.app.goo.gl/ngBFLW1wy9xmebKE7" target="_blank">DEPOT 高級布丁</a>、<a href="https://maps.app.goo.gl/kG7VRcnyTvh2SWrWA" target="_blank">⭐治一郎 布丁</a><br>
+              <b>東京車站</b> <a href="https://maps.app.goo.gl/iSTjKSz11xsSeb5t6" target="_blank">⭐⭐⭐️PATISSERIE 天花板泡芙</a> <span class="note">💡一定要去吃❗❗</span>、<a href="https://maps.app.goo.gl/ngBFLW1wy9xmebKE7" target="_blank">DEPOT 高級布丁</a>、<a href="https://maps.app.goo.gl/kG7VRcnyTvh2SWrWA" target="_blank">⭐治一郎 布丁</a><br>
 			  <b>有樂町</b> <a href="https://maps.app.goo.gl/YqywWkHHMogD2E7q9" target="_blank">⭐️Kougnane no Mise 奶油酥</a> 
             </div>
           </div>
@@ -884,7 +878,6 @@ footer strong{color:var(--gold);}
 	  </div>
 	  <div class="day-card">
 		<div class="day-body">
-
 		  <div class="activity">
 			<span class="activity-tag">上午</span>
 			<div class="activity-body">
@@ -914,7 +907,7 @@ footer strong{color:var(--gold);}
 			<span class="activity-tag">傍晚</span>
 			<div class="activity-body">
 			  <p><b>新宿逛街（約 2.5 小時）：</b>回程在新宿站下車，從 <b>東口</b> 出站。先去看新宿地標——路口大樓上的 <b>3D 立體貓</b> 廣告，往歌舞伎町方向還能看到大樓頂的 <b>哥吉拉頭</b>。接著逛東口的 <b>Lumine EST</b>、<b>NEWoMan</b>，流行服飾、雜貨、品牌都很齊，曼曼想找的時尚單品這裡好挖寶。</p>
-			  <p class="route"><i class="fa-solid fa-train"></i>川越站（東武東上線）→ <b>池袋站</b>（約 30 分）→ 轉 <b>JR 山手弱線</b> → <b>新宿站</b>（約 9 分）</p>
+			  <p class="route"><i class="fa-solid fa-train"></i>川越站（東武東上線）→ <b>池袋站</b>（約 30 分）→ 轉 <b>JR 山手線</b> → <b>新宿站</b>（約 9 分）</p>
 			</div>
 		  </div>
 
@@ -940,7 +933,7 @@ footer strong{color:var(--gold);}
 			<div class="food-row">
 			  <span class="food-tag">晚餐</span>
 			  <ul class="food-list">
-				<li><span class="num">1</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/vG9yuUAftFzM6Q347" target="_blank">⭐ 一心炭助 仙台牛舌（ken推薦）<span style="color:#ea580c;">已訂位 18:30</span></a></li>
+				<li><span class="num">1</span><span class="loc">池袋</span><a href="https://maps.app.goo.gl/vG9yuUAftFzM6Q347" target="_blank">⭐ 一心炭助 仙台牛舌 <span class="note">已訂位 18:30</span></a></li>
 				<li><span class="num">2</span><span class="loc">有樂町</span><a href="https://maps.app.goo.gl/q9W7yAnmPFnh1Y5FA" target="_blank">根室花丸 迴轉壽司</a></li>
 			  </ul>
 			</div>
@@ -1041,14 +1034,14 @@ footer strong{color:var(--gold);}
         <div class="activity">
           <span class="activity-tag">上午</span>
           <div class="activity-body">
-            <p><b>池袋最後採買（約 2～3 小時）：</b>退房前把行李寄放在飯店櫃台，輕鬆出門。從池袋站 <b>東口</b> 出來，步行約 8 分鐘就是 <b>Sunshine City</b> 大型購物城，伴手禮、藥妝、雜貨一次補齊；想就近解決的話，池袋站本身的 <b>西武、東武百貨</b> 地下美食街也能買名產。抓緊時間採買，買完回飯店拿行李。</p>
-            <p class="route-return"><i class="fa-solid fa-house"></i>回池袋大都會飯店櫃台取行李、辦理退房</p>
+            <p><b>池袋最後採買（約 2～3 小時）：</b>從池袋站 <b>東口</b> 出來，步行約 8 分鐘就是 <b>Sunshine City</b> 大型購物城，伴手禮、藥妝、雜貨一次補齊；想就近解決的話，池袋站本身的 <b>西武、東武百貨</b> 地下美食街也能買名產。抓緊時間採買，買完回民宿拿行李。</p>
+            <p class="route-return"><i class="fa-solid fa-house"></i>回民宿取行李、辦理退房</p>
           </div>
         </div>
         <div class="activity">
           <span class="activity-tag">中午</span>
           <div class="activity-body">
-            <p><b>前往機場：</b>飯店大廳直接搭乘 <b>利木津巴士</b> 直達成田機場，免提大行李轉車，輕鬆又省力。<br><span style="color:#ea580c;font-size:0.8rem;">💡 利木津巴士回程務必事先預約（可於 Day 1 入住時請櫃台代訂），並對照機票確認航廈與發車時間。</span></p>
+            <p><b>前往機場：</b>飯店大廳直接搭乘 <b>利木津巴士</b> 直達成田機場，免提大行李轉車，輕鬆又省力。<br></p>
           </div>
         </div>
       </div>
@@ -1129,7 +1122,7 @@ footer strong{color:var(--gold);}
 
 <div class="end-mark reveal">
   <div class="seal-big">完</div>
-  </div>
+</div>
 
 <footer><p><strong>峰和曼曼</strong> ・ 創造美好回憶 ✈</p></footer>
 
@@ -1177,7 +1170,6 @@ const DAY_DATA = {
 };
 let currentDay = 1;
 
-// 每天點亮的 pin id 清單
 const DAY_PINS = {
   1: ['pin1'],
   2: ['pin1','pin2','pin2-akiba'],
@@ -1192,15 +1184,12 @@ const DAY_PINS = {
 function selectDay(day) {
   currentDay = day;
   const data = DAY_DATA[day];
-  // 所有 pin 先暗掉，點亮該天所有 pin
   document.querySelectorAll('.map-pin').forEach(p => p.classList.remove('active'));
   (DAY_PINS[day] || []).forEach(id => {
     const el = document.getElementById(id);
     if (el) el.classList.add('active');
   });
-  // 更新 pill
   document.querySelectorAll('.day-pill').forEach(p => p.classList.toggle('active', parseInt(p.dataset.day) === day));
-  // 更新 preview card
   document.getElementById('mpDayLabel').textContent = data.label;
   document.getElementById('mpTitle').textContent = data.title;
   document.getElementById('mpImgEl').src = data.img;
@@ -1208,7 +1197,6 @@ function selectDay(day) {
   const preview = document.getElementById('mapPreview');
   preview.classList.remove('open');
   requestAnimationFrame(() => requestAnimationFrame(() => preview.classList.add('open')));
-  // 只高亮該天的航線（data-day 對應）
   document.querySelectorAll('.flight-path').forEach(fp => fp.classList.remove('active-path'));
   document.querySelectorAll(`.flight-path[data-day="${day}"]`).forEach(fp => fp.classList.add('active-path'));
 }
